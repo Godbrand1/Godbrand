@@ -1,0 +1,61 @@
+.link-change {
+padding-left: 800px;
+text-align: center;
+}
+
+.lettuce {
+  
+}
+
+.input_Lettuce {
+  display: block;
+}
+
+.body {
+  background-color: rgba(0, 24, 23, 0.952);
+}
+
+.input_Chz {
+  display: block;
+}
+.input_3Chz {
+  display: block;
+}
+
+.input_Beef {
+  display: block;
+}
+
+.input_Chicken {
+  display: block;
+}
+
+.input_Steak {
+  display: block;
+}
+
+.input_LTO {
+  display: block;
+}
+
+
+.button_Lettuce {
+  cursor: pointer;
+  border-radius: 20px;
+  color: blueviolet;
+}
+.button_Lettuce:hover {
+  opacity: 0.7;
+}
+
+.calculate-change {
+  cursor: pointer;
+  color: blueviolet;
+}
+
+
+/* This is where change.html starts */
+
+.q1 {
+  color: black;
+}
