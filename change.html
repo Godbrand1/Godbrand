@@ -3,12 +3,13 @@
 
   <head>
     <link rel="stylesheet" href="styles/website-styles.css">
-    <script src="JavaScript/scripts.js"></script>
 
     <title>Change Counter</title>
   </head>
-
+    
   <body style="background-color: cadetblue;">
+    <a href="/index.html">Return to home</a>
+    
     <!-- dollars -->
     <div>
       <p>Fifties</p>
@@ -40,25 +41,30 @@
       
     </table>
     <p class="output" id="output1" style="width: 150px; background-color: rgb(136, 136, 136);">.</p>
-
+    
+    <p class="extra_money">Enter extra amount here</p>
+    <div>
+      <input id="extra_moneyz" type="text">
+    </div>
 
     <script>
       // variables declared
-      //let fifties = 0.0;
-      //let twenties = 0.0;
-      //let tens = 0.0;
-      //let fives = 0.0;
-      //let ones = 0.0;
-      //let quarters = 0.0;
-      //let dimes = 0.0;
-      //let nickels = 0.0;
-      //let pennies = 0.0;
-
+      // fifties = 0.0;
+      // twenties = 0.0;
+      // tens = 0.0;
+      // fives = 0.0;
+      // ones = 0.0;
+      // quarters = 0.0;
+      // dimes = 0.0;
+      // nickels = 0.0;
+      // pennies = 0.0;
       
       
       
+          
       // function
       function calculateMoney() {
+      
       let fifties = document.getElementById('fifty').value;
       let twenties = document.getElementById('twenty').value;
       let tens = document.getElementById('ten').value;
@@ -68,23 +74,43 @@
       let dimes = document.getElementById('dime').value;
       let nickels = document.getElementById('nickel').value;
       let pennies = document.getElementById('penny').value;
+      let extra_money = document.getElementById('extra_moneyz').value;
+      // default value
+      
       // parse the values so they're numbers and not strings
-      let fiftyValue = parseInt(fifties);
-      let twentyValue = parseInt(twenties);
-      let tenValue = parseInt(tens);
-      let fiveValue = parseInt(fives);
-      let oneValue = parseInt(ones);
-      let quarterValue = parseInt(quarters);
-      let dimeValue = parseInt(dimes);
-      let nickelValue = parseInt(nickels);
-      let pennyValue = parseInt(pennies);
-      //calculate moneyz
-      let totalAmount = fiftyValue * 50 + twentyValue * 20 + tenValue * 10 + fiveValue * 5 + oneValue * 1 + quarterValue * 0.25 + dimeValue * 0.1 + nickelValue * 0.05 + pennyValue * 0.01;
-      console.log(totalAmount);
+      let extraMoneyValue = parseInt(extra_money) || 0;
+      let fiftyValue = parseInt(fifties) || 0;
+      let twentyValue = parseInt(twenties) || 0;
+      let tenValue = parseInt(tens) || 0;
+      let fiveValue = parseInt(fives) || 0;
+      let oneValue = parseInt(ones) || 0;
+      let quarterValue = parseInt(quarters) || 0;
+      let dimeValue = parseInt(dimes) || 0;
+      let nickelValue = parseInt(nickels) || 0;
+      let pennyValue = parseInt(pennies) || 0;
+      // let extraMoney = parseInt()
+      // calculate moneyz 
+      let totalAmount1 = fiftyValue * 50;
+      let totalAmount2 = twentyValue * 20;
+      let totalAmount3 = tenValue * 10;
+      let totalAmount4 = fiveValue * 5;
+      let totalAmount5 = oneValue * 1;
+      let totalAmount6 = quarterValue * 0.25;
+      let totalAmount7 = dimeValue * 0.1;
+      let totalAmount8 = nickelValue * 0.05;
+      let totalAmount9 = pennyValue * 0.01;
+      //calculate moneyz again
+      let totalAmount = totalAmount1 + totalAmount2 + totalAmount3 + totalAmount4 + totalAmount5 + totalAmount6 + totalAmount7 + totalAmount8 + totalAmount9;
+      let roundedToHundredth = Math.round(totalAmount * 100) / 100;
+      // console.log(roundedToHundredth);
+      
+      
       let out1 = document.getElementById('output1');
-      out1.innerHTML = totalAmount;
+       out1.innerHTML = roundedToHundredth;
+      out1.innerHTML = roundedToHundredth;
       
       }
+      
     </script>
   </body>
 </html>
