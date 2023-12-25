@@ -1,10 +1,32 @@
+.first_row {
+ display: inline-block; 
+ width: 50px;
+}
+.second_row {
+  display: flex;
+  width: 200px;
+}
+.third_row {
+  display: flex;
+  width: 200px;
+  vertical-align: top;
+}
+.link-change {
+padding-left: 800px;
+text-align: center;
+}
+
+.lettuce {
+  display: inline-block;
+  width: 200px;
+}
 
 .input_Lettuce {
   display: block;
 }
 
 .body {
-  background-color: rgba(0, 44, 42, 0.952);
+  background-color: rgba(0, 24, 23, 0.952);
 }
 
 .input_Chz {
@@ -39,3 +61,21 @@
 .button_Lettuce:hover {
   opacity: 0.7;
 }
+
+.calculate-change {
+  cursor: pointer;
+  color: blueviolet;
+}
+
+
+/* This is where change.html starts */
+
+.q1 {
+  color: black;
+}
+
+.extra_money {
+  display: inline-block;
+  width: 300px;
+}
+
