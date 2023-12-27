@@ -7,11 +7,23 @@
     <title>Change Counter</title>
   </head>
     
-  <body style="background-color: cadetblue;">
-    <a href="/index.html">Return to home</a>
+  <body class="changeBody" style="background-color: cadetblue;">
     
+    <header class="header">
+      <img src="images/gb.jpg" width="25px">
+
+      <nav class="menu">
+        <a class="link-change" href="/change.html">Change Counter</a>
+        <a href="/index.html">Home</a>
+        <!--<a href="#">#</a> 
+        <a href="#">#</a>-->
+      </nav>
+    </header>
+    <br/> 
+    <br/>
+    <br/>
     <!-- dollars -->
-    <div>
+    <div class="change_firstRow">
       <p>Fifties</p>
       <input id="fifty" type="text" placeholder="50's">
       <p>Twenties</p>
@@ -48,19 +60,6 @@
     </div>
 
     <script>
-      // variables declared
-      // fifties = 0.0;
-      // twenties = 0.0;
-      // tens = 0.0;
-      // fives = 0.0;
-      // ones = 0.0;
-      // quarters = 0.0;
-      // dimes = 0.0;
-      // nickels = 0.0;
-      // pennies = 0.0;
-      
-      
-      
           
       // function
       function calculateMoney() {
