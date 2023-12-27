@@ -14,7 +14,7 @@
 
       <nav class="menu">
         <a class="link-change" href="/change.html">Change Counter</a>
-        <a href="/index.html">Inventory</a>
+        <a href="/index.html">Home</a>
         <!--<a href="#">#</a> 
         <a href="#">#</a>-->
       </nav>
@@ -103,11 +103,24 @@
       let roundedToHundredth = Math.round(totalAmount * 100) / 100;
       // console.log(roundedToHundredth);
       
-      
-      let out1 = document.getElementById('output1');
-       out1.innerHTML = roundedToHundredth;
-      out1.innerHTML = roundedToHundredth;
-      
+      // do not use innerHTML as it is a security risk
+      //let out1 = document.getElementById('output1');
+      // out1.innerHTML = roundedToHundredth;
+     // out1.innerHTML = roundedToHundredth;
+
+  let out1 = document.getElementById('output1');
+
+// Clear any existing content
+  out1.textContent = '';
+
+// Create a text node with the result
+  let resultText = document.createTextNode(roundedToHundredth);
+
+// Append the text node to the element
+  out1.appendChild(resultText);
+
+
+
       }
       
     </script>
