@@ -1,74 +1,185 @@
-.first_row {
- display: inline-block; 
- width: 50px;
+/* this is where index.html starts */ 
+.lettuce {
+padding: 0;
+margin: 0;
 }
-.second_row {
-  display: flex;
-  width: 200px;
+.chz {
+padding: 0;
+margin: 0;
 }
-.third_row {
-  display: flex;
-  width: 200px;
-  vertical-align: top;
+.ThreeChz {
+padding: 0;
+margin: 0;
 }
-.link-change {
-padding-left: 800px;
-text-align: center;
+.beef {
+  padding: 0;
+margin: 0;
+}
+.chicken {
+padding: 0;
+margin: 0;
+}
+.steak {
+  padding: 0;
+  margin: 0;
+}
+.LTO {
+  padding: 0;
+  margin: 0;
 }
 
 .lettuce {
+  padding-top: 50px;
   display: inline-block;
   width: 200px;
 }
 
 .input_Lettuce {
-  display: block;
+  display: inline-block;
 }
 
+/*
+gb starts here 
+ */
+ .gb {
+  padding-top: 50px;
+  position: center;
+ }
+
+/* Website style here */
 .body {
+  
   background-color: rgba(0, 24, 23, 0.952);
+  /*background: url() no-repeat;
+  background-size: cover;
+  background-position: center;*/
 }
 
-.input_Chz {
-  display: block;
-}
-.input_3Chz {
-  display: block;
-}
-
-.input_Beef {
-  display: block;
+/* This targets everything */
+* {
+  
+  font-family: Arial, Helvetica, sans-serif;
+  text-decoration: none;
 }
 
-.input_Chicken {
-  display: block;
+/* the a in this .menu a (function?) is targeting all <a> elements */
+.menu a {
+position: relative;
+font-size: 18px;
+color: white;
+font-weight: 500;
+text-decoration: none;
+margin-left: 40px;
+border-bottom: 1px solid black;
 }
 
-.input_Steak {
-  display: block;
+
+
+/* header / nav starts here */
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  padding: 20px 100px;
+  background: seagreen;
+  display: flex;
+  align-items: center;
+  z-index: 100;
 }
 
-.input_LTO {
-  display: block;
-}
-
+/* this is where my buttons start */ 
 
 .button_Lettuce {
   cursor: pointer;
-  border-radius: 20px;
   color: blueviolet;
+  background-color: white;
+  border: 1px solid black;
+  transition: 1s;
 }
 .button_Lettuce:hover {
   opacity: 0.7;
+  border-radius: 20px;
 }
 
+.button_Chz {
+  cursor: pointer;
+  color: blueviolet;
+  background-color: white;
+  border: 1px solid black;
+  transition: 1s;
+}
+.button_Chz:hover {
+  opacity: 0.7;
+  border-radius: 20px;
+}
+
+.button_3Chz {
+  cursor: pointer;
+  color: blueviolet;
+  background-color: white;
+  border: 1px solid black;
+  transition: 1s;
+}
+.button_3Chz:hover {
+  opacity: 0.7;
+  border-radius: 20px;
+}
+
+.button_beef {
+  cursor: pointer;
+  color: blueviolet;
+  background-color: white;
+  border: 1px solid black;
+  transition: 1s;
+}
+.button_beef:hover {
+  opacity: 0.7;
+  border-radius: 20px;
+}
+
+.button_chicken {
+  cursor: pointer;
+  color: blueviolet;
+  background-color: white;
+  border: 1px solid black;
+  transition: 1s;
+}
+.button_chicken:hover {
+  opacity: 0.7;
+  border-radius: 20px;
+}
+
+.button_steak {
+  cursor: pointer;
+  color: blueviolet;
+  background-color: white;
+  border: 1px solid black;
+  transition: 1s;
+}
+.button_steak:hover {
+  opacity: 0.7;
+  border-radius: 20px;
+}
+
+.button_LTO {
+  cursor: pointer;
+  color: blueviolet;
+  background-color: white;
+  border: 1px solid black;
+  transition: 1s;
+}
+.button_LTO:hover {
+  opacity: 0.7;
+  border-radius: 20px;
+}
+
+/* This is where change.html starts */
 .calculate-change {
   cursor: pointer;
   color: blueviolet;
 }
 
-
-/* This is where change.html starts */
 
 .q1 {
   color: black;
@@ -79,3 +190,7 @@ text-align: center;
   width: 300px;
 }
 
+/* this is where change.html starts */
+.change_firstRow {
+  
+}
