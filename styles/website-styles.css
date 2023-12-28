@@ -33,6 +33,12 @@ margin: 0;
   display: inline-block;
   width: 200px;
 }
+.steak {
+  display: inline-block;
+}
+.LTO {
+  display: inline-block;
+}
 
 .input_Lettuce {
   display: inline-block;
@@ -62,7 +68,7 @@ gb starts here
   text-decoration: none;
 }
 
-/* the a in this .menu a (function?) is targeting all <a> elements */
+/* a is targeting all <a> (anchor) elements */
 .menu a {
 position: relative;
 font-size: 18px;
@@ -70,7 +76,10 @@ color: white;
 font-weight: 500;
 text-decoration: none;
 margin-left: 40px;
-border-bottom: 1px solid black;
+
+}
+.menu a:hover {
+  border-bottom: 1px solid black;
 }
 
 
@@ -191,6 +200,3 @@ border-bottom: 1px solid black;
 }
 
 /* this is where change.html starts */
-.change_firstRow {
-  
-}
