@@ -184,19 +184,48 @@ margin-left: 40px;
 }
 
 /* This is where change.html starts */
-.calculate-change {
-  cursor: pointer;
-  color: blueviolet;
+.change_firstRow input {
+  display: flex;
+  background-color: black;
+  color: white;
+  
 }
-
+.change_secondRow input {
+  display: flex;
+  background-color: black;
+  color: white;
+}
+.extra_money {
+  background-color: black;
+  color: white;
+  
+  
+}
+.calculate-change {
+  background-color:rgb(204, 0, 0);
+        color: white;
+        border: none;
+        border-radius: 2px;
+        cursor: pointer;
+        margin-right: 8px;
+        margin-left: 220px;
+        padding-top: 10px;
+        padding-bottom: 10px;
+        padding-left: 16px;
+        padding-right: 16px;
+        transition: opacity 0.15s;
+}
+.calculate-change:hover {
+  opacity: 0.8
+}
 
 .q1 {
   color: black;
 }
-
-.extra_money {
-  display: inline-block;
-  width: 300px;
+.output {
+  width: 177px; 
+  background-color: rgb(136, 136, 136);
+  box-shadow: 5px 5px 10px;
 }
 
-/* this is where change.html starts */
+/* this is where change.html ends */
