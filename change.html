@@ -23,7 +23,9 @@
     <br/>
     <br/>
     <!-- dollars -->
-    <div class="change_firstRow">
+    <div class="change_firstRow" style="display: grid;
+    grid-template-columns: 177px 177px;
+    ">
       <p>Fifties</p>
       <input id="fifty" type="text" placeholder="50's">
       <p>Twenties</p>
@@ -34,9 +36,9 @@
       <input id="five" type="text" placeholder="5's">
       <p>Ones</p>
       <input id="one" type="text" placeholder="1's">
-    </div>
+    
     <!-- change -->
-    <div>
+    
       <p class="q1">Quarters</p>
       <input id="quarter" type="text" placeholder="Quarters">
       <p>Dimes</p>
@@ -46,18 +48,21 @@
       <p>Pennies</p>
       <input id="penny" type="text" placeholder="Pennies">
     </div>
-    <div>
-      <button class="calculate-change" onclick="calculateMoney()">Submit</button>
-    </div>
-    <table>
-      
-    </table>
-    <p class="output" id="output1" style="width: 150px; background-color: rgb(136, 136, 136);">.</p>
+    <br/>
+    <div ></div>
     
-    <p class="extra_money">Enter extra amount here</p>
-    <div>
-      <input id="extra_moneyz" type="text">
+    <div style="display: grid;
+    grid-template-columns: 177px 177px;
+    "><p>Enter extra amount</p>
+      <input id="extra_moneyz" class="extra_money" type="text">
     </div>
+    
+    <p class="output" id="output1" style="margin-left: 177px;">&nbsp;</p>
+
+    <div>
+      <button class="calculate-change" onclick="calculateMoney()">Calculate</button>
+    </div>
+    
 
     <script>
      
