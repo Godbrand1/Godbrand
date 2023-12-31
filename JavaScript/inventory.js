@@ -51,7 +51,7 @@ function getUserInputLettuce() {
   var inputBeef1 = document.getElementById('inputBeef').value;
   var inputBeef2 = document.getElementById('inputBeef2').value;
   // You can perform other operations or use this input as needed
-  inputBeef1 = inputBeef1 * 30;
+  inputBeef1 = inputBeef1 * 40;
   inputBeef2 = inputBeef2 * 5;
   inputBeef3 = inputBeef1 + inputBeef2;
   // Do something with the user input (for example, log it to the console)
@@ -65,8 +65,8 @@ function getUserInputLettuce() {
   var inputChicken1 = document.getElementById('inputChicken').value;
   var inputChicken2 = document.getElementById('inputChicken2').value;
   // You can perform other operations or use this input as needed
-  inputChicken1 = inputChicken1 * 30;
-  inputChicken2 = inputChicken2 * 5;
+  inputChicken1 = inputChicken1 * 40;
+  inputChicken2 = inputChicken2 * 1.25;
   inputChicken3 = inputChicken1 + inputChicken2;
   // Do something with the user input (for example, log it to the console)
   // console.log('User input:', inputBeef3);
@@ -79,8 +79,8 @@ function getUserInputLettuce() {
   var inputSteak1 = document.getElementById('inputSteak').value;
   var inputSteak2 = document.getElementById('inputSteak2').value;
   // You can perform other operations or use this input as needed
-  inputSteak1 = inputSteak1 * 30;
-  inputSteak2 = inputSteak2 * 5;
+  inputSteak1 = inputSteak1 * 40;
+  inputSteak2 = inputSteak2 * 1.25;
   inputSteak3 = inputSteak1 + inputSteak2;
   // Do something with the user input (for example, log it to the console)
   // console.log('User input:', inputBeef3);
@@ -94,12 +94,12 @@ function getUserInputLettuce() {
   var inputLTO1 = document.getElementById('inputLTO').value;
   var inputLTO2 = document.getElementById('inputLTO2').value;
   // You can perform other operations or use this input as needed
-  inputLTO1 = inputLTO1 * 30;
-  inputLTO2 = inputLTO2 * 5;
+  inputLTO1 = inputLTO1 * 6;
+  inputLTO2 = inputLTO2 * 1;
   inputLTO3 = inputLTO1 + inputLTO2;
   // Do something with the user input (for example, log it to the console)
   // console.log('User input:', inputBeef3);
-  document.getElementById('display7').value = inputLTO3 + ' lbs';
+  document.getElementById('display7').value = inputLTO3 + ' cases';
   } 
   
   
