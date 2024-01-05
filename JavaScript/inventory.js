@@ -99,7 +99,7 @@ function getUserInputLettuce() {
   inputLTO3 = inputLTO1 + inputLTO2;
   // Do something with the user input (for example, log it to the console)
   // console.log('User input:', inputBeef3);
-  document.getElementById('display7').value = inputLTO3 + ' cases';
+  document.getElementById('display7').value = inputLTO3 + ' bags';
   } 
   
   
