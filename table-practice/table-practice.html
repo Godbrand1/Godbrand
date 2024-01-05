@@ -6,16 +6,30 @@
   <script src="../JavaScript/inventory.js"></script>
     <title>Tables</title>
 </head>
-<body>
+<body style="color: beige;">
+  <nav id="menu">
+    <ul>
+      <li><a href="../index.html">Home</a></li>
+      <li><a href="../change.html">Change Counter</a></li>
+    </ul>
+  </nav>
   <div class="table">
     <section>
       <h2>Inventory</h2>
       <table class="table1">
         <tr>
-        <th>Food</th>
+          <colgroup>
+            <col class="column-p-1">
+            <col class="column-p-2">
+            <col class="column-p-1">
+            <col class="column-p-2">
+            <col class="column-p-1">
+          </colgroup>
+        <th class="tableh">Food</th>
           <th>Cases</th>
           <th>Bags</th>
-          <th>total</th>
+          <th>Total</th>
+          <th>Calculate</th>
         </tr>
         <tr>
         <td>Lettuce</td>
@@ -71,7 +85,7 @@
     </section>
     
     
-    <img src="/images/gb.jpg" alt="also a flex item" class="gb">
+    
   </div>
 </body>
 </html>
