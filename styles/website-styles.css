@@ -1,6 +1,7 @@
 * {
-  font-size: 20px;
+  font-size: large;
 }
+
 /* this is where index.html starts */ 
 .lettuce {
 padding: 0;
@@ -56,9 +57,10 @@ gb starts here
  }
 
 /* Website style here */
-.body {
+body {
   
   background-color: rgba(0, 24, 23, 0.952);
+  
   /*background: url() no-repeat;
   background-size: cover;
   background-position: center;*/
@@ -190,6 +192,7 @@ margin-left: 40px;
 }
 
 /* This is where change.html starts */
+
 .change_firstRow input {
   display: flex;
   background-color: black;
@@ -235,3 +238,34 @@ margin-left: 40px;
 }
 
 /* this is where change.html ends */
+.menu a {
+  font-size: 18px;
+  color: white;
+  text-decoration: none;
+  margin-left: 40px;
+  
+  }
+  .menu a:hover {
+    border-bottom: 1px solid white;
+  }
+  
+  .menu-paragraph {
+    display: inline-block;
+    padding-left: 500px;
+    line-height: 0px;
+    margin: 0px;
+    color: white;
+  }
+  
+  
+  /* header / nav starts here */
+  .header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 20px 100px;
+    background: seagreen;
+    display: flex;
+    align-items: center;
+  }
