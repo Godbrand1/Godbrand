@@ -1,27 +1,29 @@
 const express = require('express');
 const fs = require('fs');
+const bodyParser = require('body-parser');
+
 const app = express();
-const port = 3000;
+app.use(bodyParser.json());
 
-app.use(express.json());
+app.post('/save', (req, res) => {
+  const { name, message } = req.body;
 
-app.post('/saveFile', (req, res) => {
-  const content = req.body.content;
+  // Format the data to be written in the file
+  const dataToWrite = `Name: ${name}\nMessage: ${message}\n\n`;
 
-  // You can modify the file path and name as per your server's file structure
-  const filePath = 'path/to/your/server/directory/combined_data.txt';
-
-  fs.writeFile(filePath, content, (err) => {
+  // Write data to a file named "userData.txt"
+  fs.appendFile('userData.txt', dataToWrite, (err) => {
     if (err) {
-      console.error('Error occurred while saving file:', err);
-      res.status(500).send('Error occurred while saving file.');
+      console.error(err);
+      res.status(500).send('Error saving data.');
     } else {
-      console.log('File saved successfully!');
-      res.sendStatus(200);
+      console.log('Data saved successfully!');
+      res.status(200).send('Data saved successfully!');
     }
   });
 });
 
-app.listen(port, () => {
-  console.log(`Server is running on port ${port}`);
+const PORT = 3000;
+app.listen(PORT, () => {
+  console.log(`Server is running on http://localhost:${PORT}`);
 });

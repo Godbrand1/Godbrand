@@ -1,18 +1,64 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  
-  <title>Schedule</title>
+  <title>User Input to File</title>
+  <style>
+    /* Basic styling for demonstration purposes */
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+    }
+    label {
+      display: block;
+      margin-bottom: 5px;
+    }
+    input[type="text"],
+    textarea {
+      width: 100%;
+      margin-bottom: 10px;
+    }
+    button {
+      padding: 8px 16px;
+      background-color: #007bff;
+      color: #fff;
+      border: none;
+      cursor: pointer;
+    }
+  </style>
 </head>
 <body>
-  <div>
-    Name: 
-    <input type="text" id="nameInput" placeholder="Enter name"><br/>
-    Date and time: 
-    <input type="text" id="timeInput" placeholder="Dates / Time"><br/>
-    <button onclick="saveTextToFile()">Submit</button>
-  </div>
-  
-  <script src="script.js"></script>
+  <h1>Save User Input to File</h1>
+  <label for="name">Name:</label>
+  <input type="text" id="name">
+  <label for="message">Message:</label>
+  <textarea id="message" rows="4"></textarea>
+  <button onclick="saveToFile()">Save</button>
+
+  <script>
+    function saveToFile() {
+      const name = document.getElementById('name').value;
+      const message = document.getElementById('message').value;
+
+      // Send the data to the server
+      fetch('/save', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ name, message }),
+      })
+      .then(response => {
+        if (response.ok) {
+          alert('Data saved successfully!');
+        } else {
+          alert('Failed to save data.');
+        }
+      })
+      .catch(error => {
+        console.error('Error:', error);
+        alert('An error occurred while saving data.');
+      });
+    }
+  </script>
 </body>
 </html>
