@@ -5,19 +5,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Task Stopwatch with Audio and TTS</title>
     <script src="https://code.responsivevoice.org/responsivevoice.js"></script>
+    <link rel="stylesheet" href="schedule.css">
 </head>
 <body>
-    <h1>Task Stopwatch with Audio and TTS</h1>
+    <div class="align-me">
+        <h1>Task Stopwatch with Audio and TTS</h1>
 
-    <label for="numTasks">Number of Tasks:</label>
-    <button onclick="startTasks()">Start Tasks</button>
+        <label for="numTasks">Number of Tasks:</label>
+        <button onclick="startTasks()">Start Tasks</button>
 
-    <div id="stopwatch"></div>
+        <div id="stopwatch"></div>
 
-    <input type="file" id="audioFile" accept="audio/*">
-    
-    <script src="script.js">
+        <input type="file" id="audioFile" accept="audio/*">
+    </div>
 
-    </script>
+    <script src="script.js"></script>
 </body>
 </html>
