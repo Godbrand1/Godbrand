@@ -1,99 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    
     <link rel="stylesheet" href="style.css">
+    <script src="connect_code"></script>
+    
     <link rel="icon" href="images/gb.jpg">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Slippi Rank Checker</title>
-    <style>
-        /* Global body styles */
-        body {
-            background-color: #2b2b2b;
-            color: #f0f0f0;
-            font-family: Arial, sans-serif;
-            text-align: center;
-            margin: 0;
-            padding: 0;
-        }
-
-        /* Fixed position link at the top */
-        .link-container {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            text-align: center;
-            background-color: #2b2b2b;
-            padding: 10px 0;
-            z-index: 10;
-        }
-
-        .link-container a {
-            color: #ff9800;
-            text-decoration: none;
-            font-size: 1.2em;
-        }
-
-        .link-container a:hover {
-            color: #e68a00;
-        }
-
-        /* Styling for the header */
-        h1 {
-            color: #ff9800;
-            margin-top: 60px;
-        }
-
-        /* Label styling */
-        label {
-            font-size: 1.2em;
-        }
-
-        /* Input styling */
-        input {
-            font-size: 1em;
-            padding: 8px;
-            margin: 10px 0;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-        }
-
-        /* Button styling */
-        button {
-            font-size: 1em;
-            padding: 10px 20px;
-            background-color: #ff9800;
-            color: #2b2b2b;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-
-        button:hover {
-            background-color: #e68a00;
-        }
-
-        /* Result text styling */
-        #result {
-            margin-top: 20px;
-            font-size: 1.2em;
-        }
-
-        /* Corner image styles */
-        .corner-image {
-            position: fixed;
-            bottom: 10px;
-            right: 10px;
-            width: 100px;
-            height: auto;
-            z-index: 1000;
-            border-radius: 10px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
-        }
-    </style>
 </head>
 <body>
+    <div class="link-container">
+        <a href="practice.html">Go to Schedule Page</a>
+    </div>
+
     <h1>Slippi Rank Checker</h1>
     <label for="connectCode">Enter Slippi Connect Code:</label>
     <br />
@@ -102,47 +23,8 @@
     <button id="goButton" onclick="openSlippiPage()">Go to User Page</button>
     <p id="result"></p>
 
-    <script>
-        function formatConnectCode() {
-            const input = document.getElementById("connectCode");
-            let value = input.value.toUpperCase(); // Convert to uppercase
-            value = value.replace(/[^A-Z0-9]/g, ""); // Remove non-alphanumeric characters
-
-            // Split letters and numbers based on their position
-            let letters = value.slice(0, 4).replace(/[^A-Z]/g, ""); // First up to 4 letters
-            let numbers = value.slice(letters.length).replace(/[^0-9]/g, ""); // Remaining up to 4 numbers
-
-            // Construct the formatted value
-            if (letters.length > 0) {
-                input.value = letters + (numbers.length > 0 ? "-" + numbers.slice(0, 4) : "");
-            } else {
-                input.value = numbers.slice(0, 4); // If no letters, show numbers only
-            }
-        }
-
-        function openSlippiPage() {
-            const connectCode = document.getElementById("connectCode").value.trim();
-            if (!connectCode || !/^[A-Z]{1,4}-\d{1,4}$/.test(connectCode)) {
-                alert("Please enter a valid connect code in the format AAAA-1111.");
-                return;
-            }
-
-            // Replace "#" with "%23" for URL encoding
-            const encodedCode = encodeURIComponent(connectCode);
-            const slippiUrl = `https://slippi.gg/user/${encodedCode}`;
-
-            // Open the Slippi user page in a new tab
-            window.open(slippiUrl, "_blank");
-        }
-
-        // Add an event listener to the input field for the Enter key
-        document.getElementById("connectCode").addEventListener("keydown", function (event) {
-            if (event.key === "Enter") {
-                // Trigger the button click
-                document.getElementById("goButton").click();
-            }
-        });
-    </script>
     <img src="images/gb-dair.png" alt="Description" class="corner-image">
+
+    <script src="script.js"></script>
 </body>
 </html>
