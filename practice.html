@@ -14,10 +14,15 @@
 </head>
 <body>
 
-    <div class="link-container">
-        <a href="index.html">Go to Connect Code Page</a>
-    </div>
+    <!-- Top Navigation Bar -->
+    <header class="top-bar">
+        <a href="index.html" class="nav-link">Go to Connect Code Page</a>
+        <button class="theme-toggle-button" onclick="toggleTheme()" aria-label="Toggle Dark/Light Theme">
+            Toggle Theme
+        </button>
+    </header>
 
+    <!-- Main Content Section -->
     <div class="align-me">
         <h1>Practice Stuff</h1>
 
@@ -34,12 +39,11 @@
         <button class="pause-button" onclick="pauseStopwatch(this)" aria-label="Pause/Resume Tasks">Pause</button>
     </div>
 
-    <!-- Theme toggle button -->
-    <button onclick="toggleTheme()" aria-label="Toggle Dark/Light Theme">Toggle Theme</button>
+    <!-- Decorative Corner Image -->
+    <img src="images/gb-dair.png" alt="Description" class="corner-image">
 
     <!-- Link to external JavaScript file -->
     <script src="script.js"></script>
-        <img src="images/gb-dair.png" alt="Description" class="corner-image">
 
 </body>
 </html>
