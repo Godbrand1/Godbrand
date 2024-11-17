@@ -1,57 +1,12 @@
+/* Global body styles */
 body {
+    background-color: #2b2b2b;
+    color: #f0f0f0;
     font-family: Arial, sans-serif;
+    text-align: center;
     margin: 0;
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
+    padding: 0;
 }
-
-.header {
-    display: flex;
-    justify-content: flex-end;
-    padding: 10px 20px;
-    background-color: #f4f4f4; /* Adjust color based on your theme */
-    border-bottom: 1px solid #ddd;
-}
-
-.theme-toggle-button {
-    padding: 10px;
-    background-color: #007BFF;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 16px;
-}
-
-.theme-toggle-button:hover {
-    background-color: #0056b3;
-}
-
-.content {
-    flex: 1;
-    padding: 20px;
-}
-
-.corner-image {
-    display: block;
-    margin: 20px auto;
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 /* Link container styles */
 .link-container {
