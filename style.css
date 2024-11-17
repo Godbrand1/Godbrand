@@ -223,6 +223,57 @@ button:hover {
     transition: transform 0.3s ease;
 }
 
+#clock-container {
+position: relative !important;
+    text-align: center;
+    display: flex;
+    flex-direction: column; /* Stack elements vertically */
+    align-items: center;
+    margin-top: 20px;
+}
+
+
+#volume-control {
+    position: fixed; /* Keeps it fixed on the left */
+    top: 10%; /* Adjusts the position from the top */
+    left: 10px; /* Aligns it near the left edge */
+    display: flex;
+    flex-direction: row; /* Arranges text and slider horizontally */
+    align-items: center; /* Vertically aligns items in the center */
+    gap: 10px; /* Space between text and slider */
+    z-index: 1000; /* Ensures it appears above other elements */
+}
+
+#volumeSlider {
+    transform: rotate(0deg); /* No rotation for horizontal layout */
+    width: 150px; /* Adjust slider length */
+    height: 10px; /* Slider thickness */
+    margin: 0;
+}
+
+/* backup for vertical volume slider ----------
+#volume-control {
+    position: fixed; /* Keeps it fixed on the left */
+    top: 10%; /* Adjusts the position from the top */
+    left: 10px; /* Aligns it near the left edge */
+    display: flex;
+    flex-direction: column; /* Arranges text and slider vertically */
+    align-items: center; /* Centers the slider and text */
+    gap: 5px; /* Space between text and slider */
+    z-index: 1000; /* Ensures it appears above other elements */
+}
+
+#volumeSlider {
+    writing-mode: bt-lr; /* Rotates the slider vertically */
+    transform: rotate(270deg); /* Fixes slider orientation */
+    width: 150px; /* Adjust slider length */
+    height: 10px; /* Slider thickness */
+    margin: 0;
+}
+*/
+
+
+
 #clock {
     position: fixed !important; /* Force fixed positioning */
     top: 150px !important; /* Moves the clock further down */
