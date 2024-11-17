@@ -5,26 +5,40 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Practice</title>
+ <!-- Link to external JavaScript file -->
+    <script src="script.js"></script>
+<script src="aboutme.js"></script>
     
-    <!-- Link to external CSS file -->
+    	<!-- Link to external CSS file -->
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="aboutme.css">
     
-    <!-- ResponsiveVoice API -->
+   	 <!-- ResponsiveVoice API -->
     <script src="https://code.responsivevoice.org/responsivevoice.js?key=mgZn6e4b"></script>
 </head>
 <body>
 
 
-    <!-- Top Navigation Bar -->
+   	 <!-- Top Navigation Bar -->
     <header class="top-bar">
         <a href="index.html" class="nav-link">Go to Connect Code Page</a>
+	<button class="theme-toggle-button" onclick="openAboutMe()" aria-label="About Me">
+    	About Me
+	</button>
         <button class="theme-toggle-button" onclick="toggleTheme()" aria-label="Toggle Dark/Light Theme">
             Toggle Theme
         </button>
     </header>
 
     <!-- Main Content Section -->
-
+<!-- About Me Section -->
+<div class="about-me-overlay" id="aboutMeOverlay">
+    <div class="about-me-content">
+        <button class="about-me-close" onclick="closeAboutMe()">X</button>
+        <h2>About Me</h2>
+        <p>You can use this tool however you like. It was created with the intention of allowing you to input various scenarios (such as tech skills) in a list format to practice in SSBM.</p>
+    </div>
+</div>
 
 <div id="volume-control">
     <label for="volumeSlider">Volume Control</label>
@@ -65,8 +79,7 @@
     <!-- Decorative Corner Image -->
     <img src="images/gb-dair.png" alt="Description" class="corner-image">
 
-    <!-- Link to external JavaScript file -->
-    <script src="script.js"></script>
+   
 
 </body>
 </html>
