@@ -1,0 +1,102 @@
+/* Global body styles */
+body {
+    background-color: #2b2b2b;
+    color: #f0f0f0;
+    font-family: Arial, sans-serif;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+}
+
+/* Link container styles */
+.link-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    text-align: center;
+    background-color: #2b2b2b;
+    padding: 10px 0;
+    z-index: 10;
+}
+
+.link-container a {
+    color: #ff9800;
+    text-decoration: none;
+    font-size: 1.2em;
+}
+
+.link-container a:hover {
+    color: #e68a00;
+}
+
+/* Header styles */
+h1 {
+    color: #ff9800;
+    margin-top: 60px;
+}
+
+/* Label and input styles */
+label {
+    font-size: 1.2em;
+}
+
+input {
+    font-size: 1em;
+    padding: 8px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+/* Button styles */
+button {
+    font-size: 1em;
+    padding: 10px 20px;
+    background-color: #ff9800;
+    color: #2b2b2b;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #e68a00;
+}
+
+/* Stopwatch styles with dynamic background */
+.stopwatch {
+    font-size: 1em;
+    color: #2b2b2b;
+    padding: 10px;
+    border-radius: 4px;
+    margin-bottom: 10px;
+    text-align: left;
+    background: #f0f0f0; /* Default background */
+    background-size: 100% 100%;
+    transition: background 0.3s ease;
+}
+
+
+/* Progress bar styles */
+.progress-bar {
+    background-color: #ff9800;
+    height: 20px;
+    width: 0%;
+    transition: width 0.3s ease;
+    border-radius: 4px;
+}
+
+/* Pause button styles */
+.pause-button {
+    background-color: #f44336;
+    color: #f0f0f0;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.pause-button:hover {
+    background-color: #d32f2f;
+}
