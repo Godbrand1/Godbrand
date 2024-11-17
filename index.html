@@ -3,12 +3,6 @@
 <head>
     <link rel="stylesheet" href="style.css">
     <link rel="icon" href="images/gb.jpg">
-    <!-- Link to Schedule Page positioned fixed at the top -->
-    <div class="link-container">
-        <a href="practice.html">Go to Schedule Page</a>
-    </div>
-    
-
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Slippi Rank Checker</title>
@@ -19,8 +13,8 @@
             color: #f0f0f0;
             font-family: Arial, sans-serif;
             text-align: center;
-            margin: 0; /* Remove any default margin */
-            padding: 0; /* Ensure padding does not add space */
+            margin: 0;
+            padding: 0;
         }
 
         /* Fixed position link at the top */
@@ -30,7 +24,7 @@
             left: 0;
             width: 100%;
             text-align: center;
-            background-color: #2b2b2b; /* Same background as body */
+            background-color: #2b2b2b;
             padding: 10px 0;
             z-index: 10;
         }
@@ -48,7 +42,7 @@
         /* Styling for the header */
         h1 {
             color: #ff9800;
-            margin-top: 60px; /* Add top margin to push content below the fixed link */
+            margin-top: 60px;
         }
 
         /* Label styling */
@@ -85,6 +79,18 @@
             margin-top: 20px;
             font-size: 1.2em;
         }
+
+        /* Corner image styles */
+        .corner-image {
+            position: fixed;
+            bottom: 10px;
+            right: 10px;
+            width: 100px;
+            height: auto;
+            z-index: 1000;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+        }
     </style>
 </head>
 <body>
@@ -93,7 +99,7 @@
     <br />
     <input type="text" id="connectCode" placeholder="e.g., AAAA-1111" oninput="formatConnectCode()" maxlength="9" />
     <br />
-    <button onclick="openSlippiPage()">Go to User Page</button>
+    <button id="goButton" onclick="openSlippiPage()">Go to User Page</button>
     <p id="result"></p>
 
     <script>
@@ -128,8 +134,15 @@
             // Open the Slippi user page in a new tab
             window.open(slippiUrl, "_blank");
         }
+
+        // Add an event listener to the input field for the Enter key
+        document.getElementById("connectCode").addEventListener("keydown", function (event) {
+            if (event.key === "Enter") {
+                // Trigger the button click
+                document.getElementById("goButton").click();
+            }
+        });
     </script>
     <img src="images/gb-dair.png" alt="Description" class="corner-image">
-
 </body>
 </html>
