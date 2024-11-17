@@ -98,7 +98,8 @@ button:hover {
     background-color: #e68a00;
 }
 
-/* Stopwatch styles with dynamic background */
+
+/* Stopwatch container */
 .stopwatch {
     font-size: 1em;
     color: #2b2b2b;
@@ -106,10 +107,41 @@ button:hover {
     border-radius: 4px;
     margin-bottom: 10px;
     text-align: left;
+    position: relative;
+    overflow: hidden;
+    background-color: #f0f0f0; /* Default background */
+    height: 40px;
+}
+
+/* Progress overlay (simulating gradient fill) */
+.progress-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 0%; /* Start with no progress */
+    background-color: #ff9800; /* Progress color */
+    transition: width 0.5s ease; /* Smooth transition */
+}
+
+
+
+
+/* Stopwatch styles with dynamic background */
+.stopwatch {
+    font-size: 1em;
+    color: #2b2b2b;
+    padding: 10px;
+    border-radius: 4px;
+    margin-top: 20px; /* Add space above each stopwatch container */
+    margin-bottom: 10px; /* Space between stopwatches */
+    text-align: left;
     background: #f0f0f0; /* Default background */
     background-size: 100% 100%;
     transition: background 0.3s ease;
+    padding: 5px 10px; /* Optional padding for inner content */
 }
+
 
 /* Progress bar styles */
 .progress-bar {
@@ -151,6 +183,36 @@ button:hover {
     transition: transform 0.3s ease;
 }
 
+#clock {
+    position: fixed !important; /* Force fixed positioning */
+    top: 150px !important; /* Moves the clock further down */
+    right: 150px !important; /* Moves the clock further left */
+    background-color: #388E3C;
+    color: white;
+    padding: 15px 25px;
+    border-radius: 12px;
+    font-size: 1.2em;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    z-index: 1000;
+    text-align: center;
+    max-width: 200px;
+    transition: background-color 0.3s ease;
+}
+
+/* Optional hover effect for a shiny appearance */
+#clock:hover {
+    background-color: #43A047;
+}
+
+
+
+
+
+
+
+
+/* Theme toggle / light theme */
+
 /* Light theme styles */
 body.light-theme {
     background-color: #f0f0f0;
@@ -160,4 +222,43 @@ body.light-theme {
 body.light-theme .top-bar {
     background-color: #f0f0f0;
     color: #2b2b2b;
-    box-shadow: 0 2px 5px rgba(0, 
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Completed shadow */
+}
+
+body.light-theme .top-bar .nav-link {
+    color: #007BFF;
+}
+
+body.light-theme .top-bar .theme-toggle-button {
+    background-color: #007BFF;
+    color: #ffffff;
+}
+
+body.light-theme .top-bar .theme-toggle-button:hover {
+    background-color: #0056b3;
+}
+
+body.light-theme .stopwatch {
+    background-color: #ffffff;
+    color: #2b2b2b;
+}
+
+body.light-theme .progress-overlay {
+    background-color: #007BFF;
+}
+ 
+.reset-button {
+    font-size: 1em;
+    padding: 10px 20px;
+    background-color: #f44336; /* Red for a reset action */
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-left: 10px; /* Spacing between buttons */
+    transition: background-color 0.3s ease;
+}
+
+.reset-button:hover {
+    background-color: #d32f2f; /* Darker red on hover */
+}
