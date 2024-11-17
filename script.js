@@ -1,6 +1,7 @@
 let pauseFlag = false;
 let totalRemainingTime = 0; // Total time for all tasks
 let currentTaskRemainingTime = 0; // Remaining time for the current task
+const volumeSlider = document.getElementById('volumeSlider');
 
 function generateForms() {
     const numTasks = parseInt(document.getElementById('numTasks').value);
@@ -25,6 +26,13 @@ function generateForms() {
         formContainer.appendChild(taskForm);
     }
 }
+
+window.toggleTheme = function () {
+    const body = document.body;
+    body.classList.toggle('light-theme');
+    console.log("Theme toggled. Current classes:", body.className);
+};
+
 
 async function startTasks() {
     const numTasks = parseInt(document.getElementById('numTasks').value);
@@ -103,7 +111,7 @@ function startStopwatch(taskNumber, taskName, duration) {
         currentTaskRemainingTime = totalTime;
 
         responsiveVoice.speak(`Task ${taskNumber} starting: ${taskName}`, 'UK English Male', {
-            volume: 0.2,
+             volume: parseFloat(volumeSlider.value), // Use slider value for volume
             onend: () => {
                 function updateStopwatch() {
                     if (!pauseFlag) {
