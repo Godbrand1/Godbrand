@@ -30,4 +30,16 @@ function formatConnectCode() {
 }
 
 function openSlippiPage() {
-    const connectCode = document.g
+    const connectCode = document.getElementById("connectCode").value.trim();
+    if (!connectCode || !/^[A-Z]{1,4}-\d{1,4}$/.test(connectCode)) {
+        alert("Please enter a valid connect code in the format AAAA-1111.");
+        return;
+    }
+
+    // Replace "#" with "%23" for URL encoding
+    const encodedCode = encodeURIComponent(connectCode);
+    const slippiUrl = `https://slippi.gg/user/${encodedCode}`;
+
+    // Open the Slippi user page in a new tab
+    window.open(slippiUrl, "_blank");
+}
