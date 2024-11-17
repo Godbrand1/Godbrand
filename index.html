@@ -1,4 +1,19 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    
+    <link rel="stylesheet" href="style.css">
+    <script src="connect_code.js"></script>
+    <script src="toggletheme.js"></script>
+    
+    <link rel="icon" href="images/gb.jpg">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Slippi Rank Checker</title>
+</head>
 <body>
+    <!-- Fixed Header Section -->
     <header class="header">
         <!-- Theme toggle button -->
         <button class="theme-toggle-button" onclick="toggleTheme()" aria-label="Toggle Dark/Light Theme">
@@ -6,11 +21,14 @@
         </button>
     </header>
 
+    <!-- Main Content Section -->
     <div class="content">
+        <!-- Link container (positioned at the top-center, below the header) -->
         <div class="link-container">
             <a href="practice.html">Go to Schedule Page</a>
         </div>
 
+        <!-- Main Content -->
         <h1>Slippi Rank Checker</h1>
         <label for="connectCode">Enter Slippi Connect Code:</label>
         <br />
@@ -20,5 +38,8 @@
         <p id="result"></p>
     </div>
 
+    <!-- Decorative Corner Image -->
     <img src="images/gb-dair.png" alt="Description" class="corner-image">
 </body>
+
+</html>
