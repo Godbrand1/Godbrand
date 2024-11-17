@@ -14,6 +14,7 @@
 </head>
 <body>
 
+
     <!-- Top Navigation Bar -->
     <header class="top-bar">
         <a href="index.html" class="nav-link">Go to Connect Code Page</a>
@@ -23,6 +24,12 @@
     </header>
 
     <!-- Main Content Section -->
+
+<div id="clock" style="position: fixed; top: 60px; right: 10px; text-align: right; display: none;">
+    <div id="current-task-time">Current Task: 0m 0s</div>
+    <div id="total-time">Total Remaining: 0m 0s</div>
+</div>
+
 
 <div class="align-me">
     <h1>Practice Stuff</h1>
@@ -37,10 +44,16 @@
     <div class="button-container">
         <button onclick="startTasks()">Start Tasks</button>
         <button class="pause-button" onclick="pauseStopwatch(this)" aria-label="Pause/Resume Tasks">Pause</button>
+	<button class="reset-button" onclick="resetTasks()">Reset</button>
     </div>
 
     <div class="stopwatch-container" id="stopwatchContainer"></div>
 </div>
+
+
+	<!-- reset button -->
+
+
 
 
     <!-- Decorative Corner Image -->
