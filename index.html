@@ -1,36 +1,24 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    
-    <link rel="stylesheet" href="style.css">
-    <script src="connect_code.js"></script>
-    <script src="toggletheme.js"></script>
-    
-    <link rel="icon" href="images/gb.jpg">
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Slippi Rank Checker</title>
-</head>
 <body>
-    hi
-    <div class="link-container">
-        <a href="practice.html">Go to Schedule Page</a>
+    <header class="header">
+        <!-- Theme toggle button -->
+        <button class="theme-toggle-button" onclick="toggleTheme()" aria-label="Toggle Dark/Light Theme">
+            Toggle Theme
+        </button>
+    </header>
+
+    <div class="content">
+        <div class="link-container">
+            <a href="practice.html">Go to Schedule Page</a>
+        </div>
+
+        <h1>Slippi Rank Checker</h1>
+        <label for="connectCode">Enter Slippi Connect Code:</label>
+        <br />
+        <input type="text" id="connectCode" placeholder="e.g., AAAA-1111" oninput="formatConnectCode()" maxlength="9" />
+        <br />
+        <button id="goButton" onclick="openSlippiPage()">Go to User Page</button>
+        <p id="result"></p>
     </div>
 
-    <h1>Slippi Rank Checker</h1>
-    <label for="connectCode">Enter Slippi Connect Code:</label>
-    <br />
-    <input type="text" id="connectCode" placeholder="e.g., AAAA-1111" oninput="formatConnectCode()" maxlength="9" />
-    <br />
-    <button id="goButton" onclick="openSlippiPage()">Go to User Page</button>
-    <p id="result"></p>
-
-    <!-- Theme toggle button -->
-    <button onclick="toggleTheme()" aria-label="Toggle Dark/Light Theme">Toggle Theme</button>
-</div>
-
     <img src="images/gb-dair.png" alt="Description" class="corner-image">
-
-    <!-- <script src="script.js"></script> -->
 </body>
-</html>
