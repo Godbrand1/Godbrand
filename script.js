@@ -4,7 +4,11 @@ function pauseStopwatch(button) {
     pauseFlag = !pauseFlag;
     button.textContent = pauseFlag ? "Resume" : "Pause";
 }
-
+window.toggleTheme = function () {
+    const body = document.body;
+    body.classList.toggle('light-theme');
+    console.log("Theme toggled. Current classes:", body.className);
+};
 function generateForms() {
     const numTasks = parseInt(document.getElementById('numTasks').value);
 
@@ -100,8 +104,3 @@ function startStopwatch(taskNumber, taskName, duration) {
         });
     });
 }
-window.toggleTheme = function () {
-    const body = document.body;
-    body.classList.toggle('light-theme');
-    console.log("Theme toggled. Current classes:", body.className);
-};
