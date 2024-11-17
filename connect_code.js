@@ -1,3 +1,16 @@
+// Attach the keydown listener only after the DOM is fully loaded
+document.addEventListener("DOMContentLoaded", function () {
+    const connectCodeInput = document.getElementById("connectCode");
+    const goButton = document.getElementById("goButton");
+
+    // Add an event listener to the input field for the Enter key
+    connectCodeInput.addEventListener("keydown", function (event) {
+        if (event.key === "Enter") {
+            // Trigger the button click
+            goButton.click();
+        }
+    });
+});
 
 function formatConnectCode() {
     const input = document.getElementById("connectCode");
@@ -17,24 +30,4 @@ function formatConnectCode() {
 }
 
 function openSlippiPage() {
-    const connectCode = document.getElementById("connectCode").value.trim();
-    if (!connectCode || !/^[A-Z]{1,4}-\d{1,4}$/.test(connectCode)) {
-        alert("Please enter a valid connect code in the format AAAA-1111.");
-        return;
-    }
-
-    // Replace "#" with "%23" for URL encoding
-    const encodedCode = encodeURIComponent(connectCode);
-    const slippiUrl = `https://slippi.gg/user/${encodedCode}`;
-
-    // Open the Slippi user page in a new tab
-    window.open(slippiUrl, "_blank");
-}
-
-// Add an event listener to the input field for the Enter key
-document.getElementById("connectCode").addEventListener("keydown", function (event) {
-    if (event.key === "Enter") {
-        // Trigger the button click
-        document.getElementById("goButton").click();
-    }
-});
+    const connectCode = document.g
