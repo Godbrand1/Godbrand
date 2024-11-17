@@ -115,6 +115,12 @@ button:hover {
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); /* Optional: shadow for better visibility */
 }
 
+/* Light theme styles */
+body.light-theme {
+    background-color: #f0f0f0;
+    color: #2b2b2b;
+}
+
 .corner-image:hover {
     transform: scale(1.1);
     transition: transform 0.3s ease;
