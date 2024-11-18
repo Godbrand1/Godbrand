@@ -1,3 +1,23 @@
+/* General Reset */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: #2b2b2b;
+    color: #f0f0f0;
+    font-family: Arial, sans-serif;
+    text-align: center;
+}
+
+h1 {
+    color: #ff9800;
+    margin-top: 80px;
+}
+
+/* Alignment Utility */
 .align-me {
     display: flex;
     flex-direction: column;
@@ -7,183 +27,105 @@
     gap: 20px;
 }
 
-/* Reset box-sizing for consistent layout calculations */
-* {
-    box-sizing: border-box;
-}
-
-/* Global body styles */
-body {
-    background-color: #2b2b2b;
-    color: #f0f0f0;
-    font-family: Arial, sans-serif;
-    text-align: center;
-    margin: 0;
-    padding: 0;
-}
-
-/* Top bar (combines link-container and toggle button) */
+/* Top Bar */
 .top-bar {
-    position: relative;
-    top: 0;
-    left: 0;
-    width: 100%;
     display: flex;
     justify-content: space-between;
     align-items: center;
     background-color: #4CAF50;
-    padding: 10px 20px; /* Increased padding to ensure proper spacing */
-    z-index: 10;
+    padding: 10px 20px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-    min-height: 60px; /* Ensures sufficient height for buttons */
+    min-height: 60px;
+    position: relative;
+    z-index: 10;
 }
 
-/* Link styles inside the top bar */
-.top-bar .nav-link {
+.top-bar .nav-link,
+.top-bar .theme-toggle-button {
     padding: 10px;
     background-color: #ffffff;
     color: #2b2b2b;
     text-decoration: none;
     font-size: 1em;
-    border-radius: 5px;
     border: none;
+    border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.3s ease, transform 0.3s ease;
 }
 
-.top-bar .nav-link:hover {
-    background-color: #c8e6c9;
-    transform: scale(1.1);
-}
-
-/* Theme toggle button */
-.top-bar .theme-toggle-button {
-    padding: 10px 20px; /* Added horizontal padding for better visibility */
-    background-color: #ffffff;
-    color: #2b2b2b;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 1em;
-    transition: background-color 0.3s ease, transform 0.3s ease;
-}
-
+.top-bar .nav-link:hover,
 .top-bar .theme-toggle-button:hover {
     background-color: #c8e6c9;
     transform: scale(1.1);
 }
 
-/* Header styles */
-h1 {
-    color: #ff9800;
-    margin-top: 80px; /* Adjusted for better spacing with top bar */
-}
-
-/* Label and input styles */
+/* Form Styles */
 label {
     font-size: 1.2em;
-margin-bottom: 5px;
+    margin-bottom: 5px;
 }
 
 input {
     font-size: 1em;
     padding: 10px;
-    margin: 10px 0;
     border: 1px solid #ccc;
     border-radius: 5px;
-    width: 300px; /* Adjust input width */
-    max-width: 80%; /* Responsive width */
+    width: 300px;
+    max-width: 80%;
+    margin: 10px 0;
 }
 
-/* Button container for alignment */
-.button-container {
-    display: flex;
-    justify-content: center;
-    gap: 15px; /* Space between buttons */
-    flex-wrap: wrap; /* Allow buttons to wrap on smaller screens */
-}
-
-/* Button styles */
-button {
+/* Buttons */
+button,
+.reset-button,
+.pause-button {
     font-size: 1em;
     padding: 10px 20px;
-    background-color: #ff9800;
-    color: #2b2b2b;
     border: none;
     border-radius: 4px;
     cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+button {
+    background-color: #ff9800;
+    color: #2b2b2b;
 }
 
 button:hover {
     transform: scale(1.1);
 }
 
-/* Text box and button container styling */
-.form-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 10px; /* Space between dynamically generated elements */
+.reset-button {
+    background-color: #f44336;
+    color: white;
+    margin-left: 10px;
 }
 
-/* Responsive adjustments */
-@media (max-width: 768px) {
-    input {
-        width: 80%; /* Adjust input width for smaller screens */
-    }
-
-    .button-container {
-        flex-direction: column; /* Stack buttons vertically */
-        align-items: center;
-    }
+.reset-button:hover {
+    background-color: #d32f2f;
 }
 
+.pause-button {
+    background-color: #f44336;
+    color: white;
+}
 
-/* Stopwatch container */
+.pause-button:hover {
+    background-color: #d32f2f;
+}
+
+/* Stopwatch */
 .stopwatch {
     font-size: 1em;
     color: #2b2b2b;
     padding: 10px;
     border-radius: 4px;
-    margin-bottom: 10px;
+    margin: 20px 0 10px;
     text-align: left;
-    position: relative;
-    overflow: hidden;
-    background-color: #f0f0f0; /* Default background */
-    height: 40px;
+    background-color: #f0f0f0;
 }
 
-/* Progress overlay (simulating gradient fill) */
-.progress-overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    height: 100%;
-    width: 0%; /* Start with no progress */
-    background-color: #ff9800; /* Progress color */
-    transition: width 0.5s ease; /* Smooth transition */
-}
-
-
-
-
-/* Stopwatch styles with dynamic background */
-.stopwatch {
-    font-size: 1em;
-    color: #2b2b2b;
-    padding: 10px;
-    border-radius: 4px;
-    margin-top: 20px; /* Add space above each stopwatch container */
-    margin-bottom: 10px; /* Space between stopwatches */
-    text-align: left;
-    background: #f0f0f0; /* Default background */
-    background-size: 100% 100%;
-    transition: background 0.3s ease;
-    padding: 5px 10px; /* Optional padding for inner content */
-}
-
-
-/* Progress bar styles */
 .progress-bar {
     background-color: #ff9800;
     height: 20px;
@@ -192,119 +134,55 @@ button:hover {
     border-radius: 4px;
 }
 
-/* Pause button styles */
-.pause-button {
-    background-color: #f44336;
-    color: #f0f0f0;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
+/* Responsive Layout */
+@media (max-width: 768px) {
+    input {
+        width: 80%;
+    }
+
+    .button-container {
+        flex-direction: column;
+        align-items: center;
+        gap: 15px;
+    }
 }
 
-.pause-button:hover {
-    background-color: #d32f2f;
-}
-
-/* For godbrand image */
+/* Corner Image */
 .corner-image {
     position: fixed;
     bottom: 10px;
     right: 10px;
-    width: 10vw; /* 10% of the viewport width */
-    height: auto; /* Maintain the aspect ratio */
-    z-index: 1000; /* Ensure it stays on top of other elements */
-    border-radius: 10px; /* Optional: rounded corners */
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); /* Optional: shadow for better visibility */
+    width: 10vw;
+    z-index: 1000;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease;
 }
 
 .corner-image:hover {
     transform: scale(1.1);
-    transition: transform 0.3s ease;
 }
 
-#clock-container {
-position: relative !important;
-    text-align: center;
-    display: flex;
-    flex-direction: column; /* Stack elements vertically */
-    align-items: center;
-    margin-top: 20px;
-}
-
-
-#volume-control {
-    position: fixed; /* Keeps it fixed on the left */
-    top: 10%; /* Adjusts the position from the top */
-    left: 10px; /* Aligns it near the left edge */
-    display: flex;
-    flex-direction: row; /* Arranges text and slider horizontally */
-    align-items: center; /* Vertically aligns items in the center */
-    gap: 10px; /* Space between text and slider */
-    z-index: 1000; /* Ensures it appears above other elements */
-}
-
-#volumeSlider {
-    transform: rotate(0deg); /* No rotation for horizontal layout */
-    width: 150px; /* Adjust slider length */
-    height: 10px; /* Slider thickness */
-    margin: 0;
-}
-
-/* backup for vertical volume slider ----------
-#volume-control {
-    position: fixed; /* Keeps it fixed on the left */
-    top: 10%; /* Adjusts the position from the top */
-    left: 10px; /* Aligns it near the left edge */
-    display: flex;
-    flex-direction: column; /* Arranges text and slider vertically */
-    align-items: center; /* Centers the slider and text */
-    gap: 5px; /* Space between text and slider */
-    z-index: 1000; /* Ensures it appears above other elements */
-}
-
-#volumeSlider {
-    writing-mode: bt-lr; /* Rotates the slider vertically */
-    transform: rotate(270deg); /* Fixes slider orientation */
-    width: 150px; /* Adjust slider length */
-    height: 10px; /* Slider thickness */
-    margin: 0;
-}
-*/
-
-
-
+/* Clock */
 #clock {
-    position: fixed !important; /* Force fixed positioning */
-    top: 150px !important; /* Moves the clock further down */
-    right: 150px !important; /* Moves the clock further left */
+    position: fixed;
+    top: 150px;
+    right: 150px;
     background-color: #388E3C;
     color: white;
     padding: 15px 25px;
     border-radius: 12px;
     font-size: 1.2em;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-    z-index: 1000;
-    text-align: center;
     max-width: 200px;
     transition: background-color 0.3s ease;
 }
 
-/* Optional hover effect for a shiny appearance */
 #clock:hover {
     background-color: #43A047;
 }
 
-
-
-
-
-
-
-
-/* Theme toggle / light theme */
-
-/* Light theme styles */
+/* Light Theme */
 body.light-theme {
     background-color: #f0f0f0;
     color: #2b2b2b;
@@ -313,19 +191,19 @@ body.light-theme {
 body.light-theme .top-bar {
     background-color: #f0f0f0;
     color: #2b2b2b;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Completed shadow */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
-body.light-theme .top-bar .nav-link {
+body.light-theme .nav-link {
     color: #007BFF;
 }
 
-body.light-theme .top-bar .theme-toggle-button {
+body.light-theme .theme-toggle-button {
     background-color: #007BFF;
     color: #ffffff;
 }
 
-body.light-theme .top-bar .theme-toggle-button:hover {
+body.light-theme .theme-toggle-button:hover {
     background-color: #0056b3;
 }
 
@@ -334,22 +212,6 @@ body.light-theme .stopwatch {
     color: #2b2b2b;
 }
 
-body.light-theme .progress-overlay {
+body.light-theme .progress-bar {
     background-color: #007BFF;
-}
- 
-.reset-button {
-    font-size: 1em;
-    padding: 10px 20px;
-    background-color: #f44336; /* Red for a reset action */
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    margin-left: 10px; /* Spacing between buttons */
-    transition: background-color 0.3s ease;
-}
-
-.reset-button:hover {
-    background-color: #d32f2f; /* Darker red on hover */
 }
