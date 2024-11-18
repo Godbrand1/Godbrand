@@ -1,16 +1,19 @@
-// Attach the keydown listener when the DOM is loaded
+// Wait until the DOM is fully loaded
 document.addEventListener("DOMContentLoaded", () => {
     const connectCodeInput = document.getElementById("connectCode");
     const goButton = document.getElementById("goButton");
 
+    // Trigger Go button click on Enter key press
     connectCodeInput.addEventListener("keydown", (event) => {
-        if (event.key === "Enter") goButton.click();
+        if (event.key === "Enter") {
+            goButton.click();
+        }
     });
 });
 
 function formatConnectCode() {
     const input = document.getElementById("connectCode");
-    const value = input.value.toUpperCase().replace(/[^A-Z0-9]/g, ""); // Clean input
+    let value = input.value.toUpperCase().replace(/[^A-Z0-9]/g, ""); // Clean input
 
     // Extract letters (up to 5) and numbers (up to 4)
     const letters = value.match(/[A-Z]{0,5}/)?.[0] || ""; 
@@ -29,6 +32,6 @@ function openSlippiPage() {
         return;
     }
 
-    // Open Slippi user page
+    // Open Slippi user page in a new tab
     window.open(`https://slippi.gg/user/${encodeURIComponent(connectCode)}`, "_blank");
 }
