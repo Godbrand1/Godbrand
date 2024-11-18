@@ -102,7 +102,7 @@ function startStopwatch(taskNumber, taskName, duration) {
             return;
         }
 
-        if (!responsiveVoice) {
+        if (typeof responsiveVoice === 'undefined') {
             alert("Text-to-speech functionality is unavailable.");
             resolve();
             return;
@@ -110,51 +110,42 @@ function startStopwatch(taskNumber, taskName, duration) {
 
         currentTaskRemainingTime = totalTime;
 
+        // Retrieve the current volume value from the slider
+        const volumeValue = parseFloat(volumeSlider.value) / 100;
+
+        // Start the speech concurrently
         responsiveVoice.speak(`Task ${taskNumber} starting: ${taskName}`, 'UK English Male', {
-             volume: parseFloat(volumeSlider.value), // Use slider value for volume
+            volume: volumeValue,
             onend: () => {
-                function updateStopwatch() {
+                intervalId = setInterval(() => {
                     if (!pauseFlag) {
                         remainingTime--;
                         currentTaskRemainingTime = Math.max(remainingTime, 0);
-
-                        // Decrease total remaining time every second
                         totalRemainingTime = Math.max(totalRemainingTime - 1, 0);
 
                         if (remainingTime >= 0) {
                             const minutes = Math.floor(remainingTime / 60);
                             const seconds = remainingTime % 60;
 
-                            // Update the timer text
                             stopwatchText.textContent = `Task ${taskNumber} Time Remaining: ${minutes}m ${seconds}s`;
+                            progressOverlay.style.width = `${((totalTime - remainingTime) / totalTime) * 100}%`;
 
-                            // Update progress overlay width smoothly
-                            const progress = ((totalTime - remainingTime) / totalTime) * 100;
-                            progressOverlay.style.width = `${progress}%`;
-
-                            // Update the clock
                             currentTaskClock.textContent = `Current Task: ${minutes}m ${seconds}s`;
                             const totalMinutes = Math.floor(totalRemainingTime / 60);
                             const totalSeconds = totalRemainingTime % 60;
                             totalClock.textContent = `Total Remaining: ${totalMinutes}m ${totalSeconds}s`;
                         } else {
                             clearInterval(intervalId);
-
-                            // Mark task as completed
                             stopwatchText.textContent = `Task ${taskNumber} Completed!`;
-
-                            // Move to the next task by resolving the current promise
                             resolve();
                         }
                     }
-                }
-
-                updateStopwatch();
-                intervalId = setInterval(updateStopwatch, 1000);
+                }, 1000);
             }
         });
     });
 }
+
 
 function pauseStopwatch(button) {
     pauseFlag = !pauseFlag;
