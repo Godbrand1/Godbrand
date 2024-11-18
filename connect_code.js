@@ -1,45 +1,34 @@
-// Attach the keydown listener only after the DOM is fully loaded
-document.addEventListener("DOMContentLoaded", function () {
+// Attach the keydown listener when the DOM is loaded
+document.addEventListener("DOMContentLoaded", () => {
     const connectCodeInput = document.getElementById("connectCode");
     const goButton = document.getElementById("goButton");
 
-    // Add an event listener to the input field for the Enter key
-    connectCodeInput.addEventListener("keydown", function (event) {
-        if (event.key === "Enter") {
-            // Trigger the button click
-            goButton.click();
-        }
+    connectCodeInput.addEventListener("keydown", (event) => {
+        if (event.key === "Enter") goButton.click();
     });
 });
 
 function formatConnectCode() {
     const input = document.getElementById("connectCode");
-    let value = input.value.toUpperCase(); // Convert to uppercase
-    value = value.replace(/[^A-Z0-9]/g, ""); // Remove non-alphanumeric characters
+    const value = input.value.toUpperCase().replace(/[^A-Z0-9]/g, ""); // Clean input
 
-    // Split letters and numbers based on their position
-    let letters = value.slice(0, 4).replace(/[^A-Z]/g, ""); // First up to 4 letters
-    let numbers = value.slice(letters.length).replace(/[^0-9]/g, ""); // Remaining up to 4 numbers
+    // Extract letters (up to 5) and numbers (up to 4)
+    const letters = value.match(/[A-Z]{0,5}/)?.[0] || ""; 
+    const numbers = value.slice(letters.length).match(/\d{0,4}/)?.[0] || "";
 
-    // Construct the formatted value
-    if (letters.length > 0) {
-        input.value = letters + (numbers.length > 0 ? "-" + numbers.slice(0, 4) : "");
-    } else {
-        input.value = numbers.slice(0, 4); // If no letters, show numbers only
-    }
+    // Update input value in the format "LETTERS-NUMBERS"
+    input.value = letters + (numbers ? `-${numbers}` : "");
 }
 
 function openSlippiPage() {
     const connectCode = document.getElementById("connectCode").value.trim();
-    if (!connectCode || !/^[A-Z]{1,4}-\d{1,4}$/.test(connectCode)) {
-        alert("Please enter a valid connect code in the format AAAA-1111.");
+    const validFormat = /^[A-Z]{1,5}-\d{1,4}$/;
+
+    if (!validFormat.test(connectCode)) {
+        alert("Please enter a valid connect code in the format AAAAA-1111.");
         return;
     }
 
-    // Replace "#" with "%23" for URL encoding
-    const encodedCode = encodeURIComponent(connectCode);
-    const slippiUrl = `https://slippi.gg/user/${encodedCode}`;
-
-    // Open the Slippi user page in a new tab
-    window.open(slippiUrl, "_blank");
+    // Open Slippi user page
+    window.open(`https://slippi.gg/user/${encodeURIComponent(connectCode)}`, "_blank");
 }
