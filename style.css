@@ -1,3 +1,24 @@
+#volume-control {
+    position: fixed;
+    top: 80px; /* Adjust vertical positioning */
+    left: 10px; /* Position on the left */
+    background-color: #388E3C; /* Matches clock styling */
+    color: white; /* Text color for better contrast */
+    padding: 15px 20px; /* Spacing inside the element */
+    border-radius: 12px; /* Rounded corners */
+    font-size: 1em; /* Consistent font size */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Subtle shadow */
+    max-width: 200px; /* Prevent overly wide layout */
+    text-align: left; /* Align text inside */
+    transition: background-color 0.3s ease; /* Smooth hover effect */
+}
+
+#volume-control:hover {
+    background-color: #43A047; /* Darker green on hover */
+}
+
+
+
 /* General Reset */
 * {
     box-sizing: border-box;
