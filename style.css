@@ -56,15 +56,17 @@
     margin-top: 10px;
 }
 
+/* Adjust styles for delete button in saved files */
 .delete-save-file {
     position: absolute;
-    top: 5px;
-    right: 10px;
-    color: red;
+    top: 0; /* Adjusted to make sure it's at the top */
+    right: 0; /* Adjusted to make sure it's at the right */
+    color: red; /* Red color for better visibility */
     cursor: pointer;
     font-weight: bold;
     display: none;
     transition: transform 0.3s ease;
+    padding: 5px;
 }
 
 .save-file-div:hover .delete-save-file {
@@ -74,6 +76,7 @@
 .delete-save-file:hover {
     transform: scale(1.2);
 }
+
 
 
 
