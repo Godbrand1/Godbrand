@@ -17,6 +17,64 @@
     background-color: #43A047; /* Darker green on hover */
 }
 
+/* save file */
+  
+.save-files-list {
+	position: fixed;
+    top: 60px;
+    right: 10px;
+    background-color: #388E3C;
+    color: white;
+    padding: 15px;
+    border-radius: 8px;
+    max-width: 200px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.save-files-list button {
+    background-color: #ffffff;
+    color: #2b2b2b;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 100%;
+    text-align: center;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    margin-bottom: 10px;
+}
+
+.save-files-list button:hover {
+    background-color: #c8e6c9;
+    transform: scale(1.05);
+}
+
+.save-file-div {
+    position: relative;
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+}
+
+.delete-save-file {
+    position: absolute;
+    top: 5px;
+    right: 10px;
+    color: red;
+    cursor: pointer;
+    font-weight: bold;
+    display: none;
+    transition: transform 0.3s ease;
+}
+
+.save-file-div:hover .delete-save-file {
+    display: block;
+}
+
+.delete-save-file:hover {
+    transform: scale(1.2);
+}
+
 
 
 /* General Reset */
@@ -147,12 +205,20 @@ button:hover {
     background-color: #f0f0f0;
 }
 
+/* CSS for the progress bar */
+.progress-bar-container {
+    width: 100%;
+    background-color: #e0e0e0; /* Light grey background */
+    border-radius: 8px; /* Rounded corners for the progress bar container */
+    overflow: hidden; /* Prevents progress bar from exceeding the container */
+    margin-top: 10px; /* Space between progress bar and other elements */
+}
+
 .progress-bar {
-    background-color: #ff9800;
+    background-color: #ff9800; /* Orange progress color */
     height: 20px;
-    width: 0%;
-    transition: width 0.3s ease;
-    border-radius: 4px;
+    width: 0%; /* Default to 0%, will be updated dynamically */
+    transition: width 0.5s ease; /* Smooth transition */
 }
 
 /* Responsive Layout */
@@ -187,8 +253,8 @@ button:hover {
 /* Clock */
 #clock {
     position: fixed;
-    top: 150px;
-    right: 150px;
+    bottom: 10px;
+    left: 10px;
     background-color: #388E3C;
     color: white;
     padding: 15px 25px;
