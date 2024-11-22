@@ -3,12 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Organized Movie & Show List</title>
+  <title>Collaborative Movie & Show Watchlist</title>
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
   <div class="container">
-    <h1>Organized Movie & Show List</h1>
+    <h1>Movie & Show Watchlist</h1>
     <div class="form-section">
       <input type="text" id="titleInput" placeholder="Enter title">
       <select id="categorySelect">
@@ -27,17 +27,17 @@
     </div>
     <div id="listSection">
       <h2>Movies</h2>
-      <div id="movieGenres" class="genre-sections"></div>
+      <ul id="movieList"></ul>
       <h2>Shows</h2>
-      <div id="showGenres" class="genre-sections"></div>
+      <ul id="showList"></ul>
     </div>
   </div>
 
-  <!-- Firebase SDK (UMD Version) -->
+  <!-- Firebase SDK -->
   <script src="https://www.gstatic.com/firebasejs/9.17.1/firebase-app.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.17.1/firebase-firestore.js"></script>
 
-  <!-- Your Script -->
+  <!-- Custom Script -->
   <script src="script.js"></script>
 </body>
 </html>
