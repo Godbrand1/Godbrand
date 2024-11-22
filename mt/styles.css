@@ -2,7 +2,7 @@ body {
   font-family: Arial, sans-serif;
   margin: 0;
   padding: 0;
-  background-color: #f4f4f4;
+  background-color: lightblue;
 }
 
 .container {
@@ -73,22 +73,19 @@ ul li {
 }
 
 .toggle-watched-button {
-  font-size: 14px;
+  background-color: #28a745;
+  color: white;
+  border: none;
   padding: 5px 10px;
   border-radius: 5px;
   cursor: pointer;
-  border: none;
-}
-
-.toggle-watched-button {
-  background-color: #28a745; /* Green for marking as watched */
-  color: white;
 }
 
 .toggle-watched-button.watched {
-  background-color: #007BFF; /* Blue for already watched */
+  background-color: #007BFF;
 }
 
-.toggle-watched-button:hover {
-  opacity: 0.9;
+.watched {
+  text-decoration: line-through;
+  color: gray;
 }
