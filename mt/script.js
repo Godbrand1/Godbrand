@@ -1,33 +1,69 @@
-// Add genres dynamically for movies and shows
-const genres = ["Action", "Comedy", "Drama", "Horror", "Romance", "Sci-Fi"];
-const movieGenres = document.getElementById("movieGenres");
-const showGenres = document.getElementById("showGenres");
+// Import Firebase and Firestore
+import { initializeApp } from "https://www.gstatic.com/firebasejs/9.17.1/firebase-app.js";
+import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc } from "https://www.gstatic.com/firebasejs/9.17.1/firebase-firestore.js";
 
-// Create genre sections
-genres.forEach((genre) => {
-  createGenreSection(movieGenres, genre);
-  createGenreSection(showGenres, genre);
-});
+// Firebase configuration
+const firebaseConfig = {
+  apiKey: "YOUR_API_KEY",
+  authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
+  projectId: "YOUR_PROJECT_ID",
+  storageBucket: "YOUR_PROJECT_ID.appspot.com",
+  messagingSenderId: "YOUR_SENDER_ID",
+  appId: "YOUR_APP_ID",
+};
 
-function createGenreSection(container, genre) {
-  const section = document.createElement("div");
-  section.classList.add("genre-section");
-  section.innerHTML = `
-    <div class="genre-header">${genre}</div>
-    <div class="genre-content">
-      <ul id="${container.id}-${genre}"></ul>
-    </div>
-  `;
-  container.appendChild(section);
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
 
-  // Add toggle functionality
-  section.querySelector(".genre-header").addEventListener("click", () => {
-    const content = section.querySelector(".genre-content");
-    content.style.display = content.style.display === "none" ? "block" : "none";
-  });
+// Collections for Movies and Shows
+const moviesCollection = collection(db, "movies");
+const showsCollection = collection(db, "shows");
+
+// Load data from Firestore
+async function loadData() {
+  const movieSnap = await getDocs(moviesCollection);
+  const showSnap = await getDocs(showsCollection);
+
+  movieSnap.forEach((doc) => displayItem("Movie", doc.id, doc.data()));
+  showSnap.forEach((doc) => displayItem("Show", doc.id, doc.data()));
 }
 
-document.getElementById("addButton").addEventListener("click", function () {
+// Display item on the page
+function displayItem(category, id, data) {
+  const listId = `${category.toLowerCase()}Genres-${data.genre}`;
+  const list = document.getElementById(listId);
+
+  if (list) {
+    const li = document.createElement("li");
+    li.setAttribute("data-id", id);
+    li.innerHTML = `
+      <span>${data.title}</span>
+      <button class="delete-button">Delete</button>
+    `;
+    li.querySelector(".delete-button").addEventListener("click", async function () {
+      await deleteItem(category, id);
+      li.remove();
+    });
+    list.appendChild(li);
+  }
+}
+
+// Add item to Firestore
+async function addItem(category, genre, title) {
+  const collectionRef = category === "Movie" ? moviesCollection : showsCollection;
+  const docRef = await addDoc(collectionRef, { genre, title });
+  displayItem(category, docRef.id, { genre, title });
+}
+
+// Delete item from Firestore
+async function deleteItem(category, id) {
+  const collectionRef = category === "Movie" ? moviesCollection : showsCollection;
+  await deleteDoc(doc(collectionRef, id));
+}
+
+// Add button functionality
+document.getElementById("addButton").addEventListener("click", async function () {
   const title = document.getElementById("titleInput").value.trim();
   const category = document.getElementById("categorySelect").value;
   const genre = document.getElementById("genreSelect").value;
@@ -37,28 +73,10 @@ document.getElementById("addButton").addEventListener("click", function () {
     return;
   }
 
-  const listId =
-    category === "Movie"
-      ? `movieGenres-${genre}`
-      : `showGenres-${genre}`;
-  const list = document.getElementById(listId);
+  await addItem(category, genre, title);
 
-  if (list) {
-    // Create new list item
-    const li = document.createElement("li");
-    li.innerHTML = `
-      <span>${title}</span>
-      <button class="delete-button">Delete</button>
-    `;
-
-    // Add delete functionality
-    li.querySelector(".delete-button").addEventListener("click", function () {
-      li.remove();
-    });
-
-    list.appendChild(li);
-  }
-
-  // Clear the input field
   document.getElementById("titleInput").value = "";
 });
+
+// Load saved data on page load
+loadData();
