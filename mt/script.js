@@ -128,3 +128,12 @@ document.getElementById("addButton").addEventListener("click", async () => {
     console.error("Error adding document:", error);
   }
 });
+document.getElementById("logoutButton").addEventListener("click", () => {
+  auth.signOut()
+    .then(() => {
+      console.log("User logged out");
+    })
+    .catch((error) => {
+      console.error("Logout error:", error.message);
+    });
+});
