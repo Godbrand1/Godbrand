@@ -71,6 +71,7 @@ ul li {
 .delete-button:hover {
   background-color: #c82333;
 }
+
 .toggle-watched-button {
   background-color: #28a745;
   color: white;
@@ -82,4 +83,9 @@ ul li {
 
 .toggle-watched-button:hover {
   background-color: #218838;
+}
+
+.watched {
+  text-decoration: line-through;
+  color: gray;
 }
