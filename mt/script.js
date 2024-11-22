@@ -91,7 +91,9 @@ function renderList(listId, doc, type) {
   li.setAttribute("data-id", doc.id);
   li.innerHTML = `
     <span class="${data.watched ? 'watched' : ''}">${data.title} (${data.genre})</span>
-    <button class="toggle-watched-button">${data.watched ? 'Unmark Watched' : 'Mark Watched'}</button>
+    <button class="toggle-watched-button">
+      ${data.watched ? '✅ Watched' : '🟢 Mark as Watched'}
+    </button>
     <button class="delete-button">Delete</button>
   `;
 
