@@ -50,16 +50,18 @@ ul {
 }
 
 ul li {
+  display: flex;
+  flex-direction: column; /* Stack children vertically */
+  align-items: flex-start; /* Align content to the left */
   padding: 10px;
   margin: 5px 0;
   background: #e9ecef;
   border-radius: 5px;
-  display: flex;
   justify-content: space-between;
-  align-items: center;
 }
 
 .delete-button {
+  margin-top: 5px; /* Add spacing below watched button */
   background-color: #dc3545;
   color: white;
   border: none;
@@ -73,6 +75,7 @@ ul li {
 }
 
 .toggle-watched-button {
+  margin-top: 5px; /* Add some spacing between title and button */
   background-color: #28a745;
   color: white;
   border: none;
