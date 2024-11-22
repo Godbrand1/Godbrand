@@ -73,19 +73,22 @@ ul li {
 }
 
 .toggle-watched-button {
-  background-color: #28a745;
-  color: white;
-  border: none;
+  font-size: 14px;
   padding: 5px 10px;
   border-radius: 5px;
   cursor: pointer;
+  border: none;
+}
+
+.toggle-watched-button {
+  background-color: #28a745; /* Green for marking as watched */
+  color: white;
+}
+
+.toggle-watched-button.watched {
+  background-color: #007BFF; /* Blue for already watched */
 }
 
 .toggle-watched-button:hover {
-  background-color: #218838;
-}
-
-.watched {
-  text-decoration: line-through;
-  color: gray;
+  opacity: 0.9;
 }
