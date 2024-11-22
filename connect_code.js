@@ -77,9 +77,17 @@ function closeIframe() {
 }
 
 function minimizeIframe() {
-    const iframe = document.getElementById("slippiFrame");
-    iframe.style.height = iframe.style.height === "50px" ? "500px" : "50px"; // Toggle height
+    console.log("Minimize button clicked");
+    const container = document.getElementById("iframe-container");
+    if (!container) {
+        console.error("Iframe container not found");
+        return;
+    }
+    // Toggle the height of the entire container
+    container.style.height = container.style.height === "50px" ? "500px" : "50px";
+    console.log("Iframe container height is now:", container.style.height);
 }
+
 
 
 
