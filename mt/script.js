@@ -12,6 +12,54 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
 
+// Firebase Authentication
+firebase.initializeApp(firebaseConfig);
+const auth = firebase.auth();
+
+document.getElementById("loginButton").addEventListener("click", () => {
+  const email = document.getElementById("emailInput").value;
+  const password = document.getElementById("passwordInput").value;
+
+  auth.signInWithEmailAndPassword(email, password)
+    .then(() => {
+      console.log("User logged in");
+      document.getElementById("authSection").style.display = "none";
+      document.getElementById("mainContent").style.display = "block";
+    })
+    .catch((error) => {
+      console.error("Login error:", error.message);
+    });
+});
+
+document.getElementById("signupButton").addEventListener("click", () => {
+  const email = document.getElementById("emailInput").value;
+  const password = document.getElementById("passwordInput").value;
+
+  auth.createUserWithEmailAndPassword(email, password)
+    .then(() => {
+      console.log("User signed up");
+      document.getElementById("authSection").style.display = "none";
+      document.getElementById("mainContent").style.display = "block";
+    })
+    .catch((error) => {
+      console.error("Signup error:", error.message);
+    });
+});
+
+// Logout (Optional)
+auth.onAuthStateChanged((user) => {
+  if (user) {
+    console.log("User is logged in:", user.email);
+    document.getElementById("authSection").style.display = "none";
+    document.getElementById("mainContent").style.display = "block";
+  } else {
+    console.log("No user logged in");
+    document.getElementById("authSection").style.display = "block";
+    document.getElementById("mainContent").style.display = "none";
+  }
+});
+
+
 // Reference collections
 const moviesCollection = db.collection("movies");
 const showsCollection = db.collection("shows");
