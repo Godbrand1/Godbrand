@@ -8,7 +8,7 @@ const firebaseConfig = {
   appId: "1:169114410299:web:66174a6bfea0346d06eb1e"
 };
 
-// Initialize Firebase (only once)
+// Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
 const auth = firebase.auth();
@@ -58,66 +58,7 @@ auth.onAuthStateChanged((user) => {
   }
 });
 
-
-// Reference collections
-const moviesCollection = db.collection("movies");
-const showsCollection = db.collection("shows");
-
-function renderList(listId, doc, type) {
-  const list = document.getElementById(listId);
-  const li = document.createElement("li");
-  const data = doc.data();
-  li.setAttribute("data-id", doc.id);
-  li.innerHTML = `
-    <span>${data.title} (${data.genre})</span>
-    <button class="toggle-watched-button">${data.watched ? "Unmark Watched" : "Mark Watched"}</button>
-    <button class="delete-button">Delete</button>
-  `;
-
-  // Watched toggle functionality
-  li.querySelector(".toggle-watched-button").addEventListener("click", async () => {
-    try {
-      const collection = type === "movie" ? moviesCollection : showsCollection;
-      await collection.doc(doc.id).update({ watched: !data.watched });
-      console.log(`${data.title} marked as ${!data.watched ? "watched" : "unwatched"}`);
-    } catch (error) {
-      console.error("Error updating watched status:", error);
-    }
-  });
-
-  // Delete functionality
-  li.querySelector(".delete-button").addEventListener("click", async () => {
-    try {
-      const collection = type === "movie" ? moviesCollection : showsCollection;
-      await collection.doc(doc.id).delete();
-      list.removeChild(li); // Remove from UI
-    } catch (error) {
-      console.error("Error deleting document:", error);
-    }
-  });
-
-  list.appendChild(li);
-}
-
-
-moviesCollection.onSnapshot((snapshot) => {
-  const movieList = document.getElementById("movieList");
-  movieList.innerHTML = ""; // Clear list
-  snapshot.forEach((doc) => {
-    renderList("movieList", doc, "movie");
-  });
-});
-
-showsCollection.onSnapshot((snapshot) => {
-  const showList = document.getElementById("showList");
-  showList.innerHTML = ""; // Clear list
-  snapshot.forEach((doc) => {
-    renderList("showList", doc, "show");
-  });
-});
-
-
-// Add button functionality
+// Add Button Functionality
 document.getElementById("addButton").addEventListener("click", async () => {
   const title = document.getElementById("titleInput").value.trim();
   const category = document.getElementById("categorySelect").value;
@@ -128,25 +69,69 @@ document.getElementById("addButton").addEventListener("click", async () => {
     return;
   }
 
-  const data = { title, genre };
+  const data = { title, genre, watched: false };
 
   try {
     if (category === "Movie") {
-      await moviesCollection.add(data);
+      await db.collection("movies").add(data);
     } else {
-      await showsCollection.add(data);
+      await db.collection("shows").add(data);
     }
     document.getElementById("titleInput").value = ""; // Clear input
   } catch (error) {
     console.error("Error adding document:", error);
   }
 });
-document.getElementById("logoutButton").addEventListener("click", () => {
-  auth.signOut()
-    .then(() => {
-      console.log("User logged out");
-    })
-    .catch((error) => {
-      console.error("Logout error:", error.message);
-    });
+
+// Render List
+function renderList(listId, doc, type) {
+  const list = document.getElementById(listId);
+  const data = doc.data();
+  const li = document.createElement("li");
+  li.setAttribute("data-id", doc.id);
+  li.innerHTML = `
+    <span class="${data.watched ? 'watched' : ''}">${data.title} (${data.genre})</span>
+    <button class="toggle-watched-button">${data.watched ? 'Unmark Watched' : 'Mark Watched'}</button>
+    <button class="delete-button">Delete</button>
+  `;
+
+  // Watched toggle functionality
+  li.querySelector(".toggle-watched-button").addEventListener("click", async () => {
+    try {
+      const collection = type === "movie" ? db.collection("movies") : db.collection("shows");
+      await collection.doc(doc.id).update({ watched: !data.watched });
+    } catch (error) {
+      console.error("Error updating watched status:", error);
+    }
+  });
+
+  // Delete functionality
+  li.querySelector(".delete-button").addEventListener("click", async () => {
+    try {
+      const collection = type === "movie" ? db.collection("movies") : db.collection("shows");
+      await collection.doc(doc.id).delete();
+      list.removeChild(li); // Remove from UI
+    } catch (error) {
+      console.error("Error deleting document:", error);
+    }
+  });
+
+  list.appendChild(li);
+}
+
+// Real-time Snapshot Listeners
+db.collection("movies").onSnapshot((snapshot) => {
+  const movieList = document.getElementById("movieList");
+  movieList.innerHTML = ""; // Clear the list
+  snapshot.forEach((doc) => {
+    renderList("movieList", doc, "movie");
+  });
+});
+
+db.collection("shows").onSnapshot((snapshot) => {
+  const showList = document.getElementById("showList");
+  showList.innerHTML = ""; // Clear the list
+  snapshot.forEach((doc) => {
+    renderList("showList", doc, "show");
+  });
 });
