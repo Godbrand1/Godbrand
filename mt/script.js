@@ -12,64 +12,53 @@ const firebaseConfig = {
 const app = firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
 
-// Collections for Movies and Shows
+// Reference collections
 const moviesCollection = db.collection("movies");
 const showsCollection = db.collection("shows");
 
-// Load data from Firestore
-async function loadData() {
-  try {
-    const movieSnap = await moviesCollection.get();
-    const showSnap = await showsCollection.get();
-
-    console.log("Movies fetched:", movieSnap.docs.map(doc => doc.data()));
-    console.log("Shows fetched:", showSnap.docs.map(doc => doc.data()));
-
-    movieSnap.forEach((doc) => displayItem("Movie", doc.id, doc.data()));
-    showSnap.forEach((doc) => displayItem("Show", doc.id, doc.data()));
-  } catch (error) {
-    console.error("Error loading data:", error);
-  }
-}
-
-// Display item on the page
-function displayItem(category, id, data) {
-  const listId = `${category.toLowerCase()}Genres-${data.genre}`;
+// Function to render items
+function renderList(listId, doc, type) {
   const list = document.getElementById(listId);
-
-  if (!list) {
-    console.error(`No list found for ID: ${listId}. Ensure genre containers are correctly set up.`);
-    return;
-  }
-
   const li = document.createElement("li");
-  li.setAttribute("data-id", id);
+  li.setAttribute("data-id", doc.id);
   li.innerHTML = `
-    <span>${data.title}</span>
+    <span>${doc.data().title} (${doc.data().genre})</span>
     <button class="delete-button">Delete</button>
   `;
-  li.querySelector(".delete-button").addEventListener("click", async function () {
-    await deleteItem(category, id);
-    li.remove();
+
+  // Delete functionality
+  li.querySelector(".delete-button").addEventListener("click", async () => {
+    if (type === "movie") {
+      await moviesCollection.doc(doc.id).delete();
+    } else {
+      await showsCollection.doc(doc.id).delete();
+    }
+    list.removeChild(li);
   });
+
   list.appendChild(li);
 }
 
-// Add item to Firestore
-async function addItem(category, genre, title) {
-  const collectionRef = category === "Movie" ? moviesCollection : showsCollection;
-  const docRef = await collectionRef.add({ genre, title });
-  displayItem(category, docRef.id, { genre, title });
-}
+// Real-time updates for Movies
+moviesCollection.onSnapshot((snapshot) => {
+  const movieList = document.getElementById("movieList");
+  movieList.innerHTML = ""; // Clear the list
+  snapshot.forEach((doc) => {
+    renderList("movieList", doc, "movie");
+  });
+});
 
-// Delete item from Firestore
-async function deleteItem(category, id) {
-  const collectionRef = category === "Movie" ? moviesCollection : showsCollection;
-  await collectionRef.doc(id).delete();
-}
+// Real-time updates for Shows
+showsCollection.onSnapshot((snapshot) => {
+  const showList = document.getElementById("showList");
+  showList.innerHTML = ""; // Clear the list
+  snapshot.forEach((doc) => {
+    renderList("showList", doc, "show");
+  });
+});
 
-// Add button functionality
-document.getElementById("addButton").addEventListener("click", async function () {
+// Add item
+document.getElementById("addButton").addEventListener("click", async () => {
   const title = document.getElementById("titleInput").value.trim();
   const category = document.getElementById("categorySelect").value;
   const genre = document.getElementById("genreSelect").value;
@@ -79,10 +68,13 @@ document.getElementById("addButton").addEventListener("click", async function ()
     return;
   }
 
-  await addItem(category, genre, title);
+  const data = { title, genre };
 
-  document.getElementById("titleInput").value = "";
+  if (category === "Movie") {
+    await moviesCollection.add(data);
+  } else {
+    await showsCollection.add(data);
+  }
+
+  document.getElementById("titleInput").value = ""; // Clear the input
 });
-
-// Load saved data on page load
-loadData();
