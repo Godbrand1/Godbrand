@@ -1,30 +1,25 @@
-// Import Firebase and Firestore
-import { initializeApp } from "https://www.gstatic.com/firebasejs/9.17.1/firebase-app.js";
-import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc } from "https://www.gstatic.com/firebasejs/9.17.1/firebase-firestore.js";
-
 // Firebase configuration
-// Your web app's Firebase configuration
 const firebaseConfig = {
   apiKey: "AIzaSyBp99FAJNWFZFUqwm2eeu9MtbpnMdtgMwE",
   authDomain: "movies-and-show-watch-list.firebaseapp.com",
   projectId: "movies-and-show-watch-list",
-  storageBucket: "movies-and-show-watch-list.firebasestorage.app",
+  storageBucket: "movies-and-show-watch-list.firebaseapp.com",
   messagingSenderId: "169114410299",
   appId: "1:169114410299:web:66174a6bfea0346d06eb1e"
 };
 
 // Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
+const app = firebase.initializeApp(firebaseConfig);
+const db = firebase.firestore();
 
 // Collections for Movies and Shows
-const moviesCollection = collection(db, "movies");
-const showsCollection = collection(db, "shows");
+const moviesCollection = db.collection("movies");
+const showsCollection = db.collection("shows");
 
 // Load data from Firestore
 async function loadData() {
-  const movieSnap = await getDocs(moviesCollection);
-  const showSnap = await getDocs(showsCollection);
+  const movieSnap = await moviesCollection.get();
+  const showSnap = await showsCollection.get();
 
   movieSnap.forEach((doc) => displayItem("Movie", doc.id, doc.data()));
   showSnap.forEach((doc) => displayItem("Show", doc.id, doc.data()));
@@ -53,14 +48,14 @@ function displayItem(category, id, data) {
 // Add item to Firestore
 async function addItem(category, genre, title) {
   const collectionRef = category === "Movie" ? moviesCollection : showsCollection;
-  const docRef = await addDoc(collectionRef, { genre, title });
+  const docRef = await collectionRef.add({ genre, title });
   displayItem(category, docRef.id, { genre, title });
 }
 
 // Delete item from Firestore
 async function deleteItem(category, id) {
   const collectionRef = category === "Movie" ? moviesCollection : showsCollection;
-  await deleteDoc(doc(collectionRef, id));
+  await collectionRef.doc(id).delete();
 }
 
 // Add button functionality
