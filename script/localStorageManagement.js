@@ -7,6 +7,15 @@ function saveTasksWithName() {
         return;
     }
 
+    // Reserved names that cannot be used
+    const reservedNames = ['wakeUpTime', 'customLists', 'connectCodes', 'bedTime', 'scheduleTasks', 'scheduleGenerated', 'Huel', 'dailyCalories'];
+
+    // Check if the entered name is a reserved name
+    if (reservedNames.includes(saveFileName)) {
+        alert(`"${saveFileName}" is a reserved name and cannot be used.`);
+        return;
+    }
+
     const numTasks = parseInt(document.getElementById('numTasks').value);
     if (isNaN(numTasks) || numTasks <= 0) {
         alert("Please enter a valid number of tasks.");
@@ -34,6 +43,7 @@ function saveTasksWithName() {
     const savedFilesContent = document.getElementById('savedFilesContent');
     savedFilesContent.style.display = 'block';
 }
+
 
 function listSaveFiles() {
     const saveFilesContainer = document.getElementById('saveFilesContainer');
