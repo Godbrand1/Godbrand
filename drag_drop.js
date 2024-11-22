@@ -123,10 +123,10 @@ function updateCustomListsDropdown() {
     });
 }
 
-// Ensure the dropdown updates on page load
 document.addEventListener("DOMContentLoaded", () => {
-    updateCustomListsDropdown();
-    displaySavedCodes();
+    updateCustomListsDropdown(); // Load the dropdown options
+    displaySavedCodes();         // Display saved connect codes after the dropdown is populated
+    enableDragAndDrop();         // Enable drag-and-drop functionality
 });
 
 
