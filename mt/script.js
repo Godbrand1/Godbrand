@@ -1,3 +1,8 @@
+
+// Import Firebase and Firestore
+import { initializeApp } from "https://www.gstatic.com/firebasejs/9.17.1/firebase-app.js";
+import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc } from "https://www.gstatic.com/firebasejs/9.17.1/firebase-firestore.js";
+
 // Firebase configuration
 const firebaseConfig = {
   apiKey: "AIzaSyBp99FAJNWFZFUqwm2eeu9MtbpnMdtgMwE",
@@ -9,17 +14,17 @@ const firebaseConfig = {
 };
 
 // Initialize Firebase
-const app = firebase.initializeApp(firebaseConfig);
-const db = firebase.firestore();
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
 
 // Collections for Movies and Shows
-const moviesCollection = db.collection("movies");
-const showsCollection = db.collection("shows");
+const moviesCollection = collection(db, "movies");
+const showsCollection = collection(db, "shows");
 
 // Load data from Firestore
 async function loadData() {
-  const movieSnap = await moviesCollection.get();
-  const showSnap = await showsCollection.get();
+  const movieSnap = await getDocs(moviesCollection);
+  const showSnap = await getDocs(showsCollection);
 
   movieSnap.forEach((doc) => displayItem("Movie", doc.id, doc.data()));
   showSnap.forEach((doc) => displayItem("Show", doc.id, doc.data()));
@@ -48,14 +53,14 @@ function displayItem(category, id, data) {
 // Add item to Firestore
 async function addItem(category, genre, title) {
   const collectionRef = category === "Movie" ? moviesCollection : showsCollection;
-  const docRef = await collectionRef.add({ genre, title });
+  const docRef = await addDoc(collectionRef, { genre, title });
   displayItem(category, docRef.id, { genre, title });
 }
 
 // Delete item from Firestore
 async function deleteItem(category, id) {
   const collectionRef = category === "Movie" ? moviesCollection : showsCollection;
-  await collectionRef.doc(id).delete();
+  await deleteDoc(doc(collectionRef, id));
 }
 
 // Add button functionality
