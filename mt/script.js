@@ -63,46 +63,59 @@ auth.onAuthStateChanged((user) => {
 const moviesCollection = db.collection("movies");
 const showsCollection = db.collection("shows");
 
-// Function to render items
 function renderList(listId, doc, type) {
   const list = document.getElementById(listId);
   const li = document.createElement("li");
+  const data = doc.data();
   li.setAttribute("data-id", doc.id);
   li.innerHTML = `
-    <span>${doc.data().title} (${doc.data().genre})</span>
+    <span>${data.title} (${data.genre})</span>
+    <button class="toggle-watched-button">${data.watched ? "Unmark Watched" : "Mark Watched"}</button>
     <button class="delete-button">Delete</button>
   `;
 
+  // Watched toggle functionality
+  li.querySelector(".toggle-watched-button").addEventListener("click", async () => {
+    try {
+      const collection = type === "movie" ? moviesCollection : showsCollection;
+      await collection.doc(doc.id).update({ watched: !data.watched });
+      console.log(`${data.title} marked as ${!data.watched ? "watched" : "unwatched"}`);
+    } catch (error) {
+      console.error("Error updating watched status:", error);
+    }
+  });
+
   // Delete functionality
   li.querySelector(".delete-button").addEventListener("click", async () => {
-    if (type === "movie") {
-      await moviesCollection.doc(doc.id).delete();
-    } else {
-      await showsCollection.doc(doc.id).delete();
+    try {
+      const collection = type === "movie" ? moviesCollection : showsCollection;
+      await collection.doc(doc.id).delete();
+      list.removeChild(li); // Remove from UI
+    } catch (error) {
+      console.error("Error deleting document:", error);
     }
-    list.removeChild(li);
   });
 
   list.appendChild(li);
 }
 
-// Real-time updates for Movies
+
 moviesCollection.onSnapshot((snapshot) => {
   const movieList = document.getElementById("movieList");
-  movieList.innerHTML = ""; // Clear the list
+  movieList.innerHTML = ""; // Clear list
   snapshot.forEach((doc) => {
     renderList("movieList", doc, "movie");
   });
 });
 
-// Real-time updates for Shows
 showsCollection.onSnapshot((snapshot) => {
   const showList = document.getElementById("showList");
-  showList.innerHTML = ""; // Clear the list
+  showList.innerHTML = ""; // Clear list
   snapshot.forEach((doc) => {
     renderList("showList", doc, "show");
   });
 });
+
 
 // Add button functionality
 document.getElementById("addButton").addEventListener("click", async () => {
