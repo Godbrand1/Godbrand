@@ -1,10 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <link rel="stylesheet" href="style.css">
-    <script src="connect_code.js"></script>
-    <script src="toggletheme.js"></script>
-    
+    <link rel="stylesheet" href="toggle_cc.css">
+  
     <link rel="icon" href="images/gb.jpg">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,26 +11,52 @@
 <body class="dark-theme">
     <!-- Top Bar for Theme Toggle and Navigation -->
     <header class="top-bar">
+    <nav class="navbar">
         <a href="practice.html" class="nav-link">Practice</a>
         <a href="huel/Schedule.html" class="nav-link">Schedule</a>
         <button class="theme-toggle-button" onclick="toggleTheme()" aria-label="Toggle Dark/Light Theme">
             Toggle Theme
         </button>
-    </header>
+    </nav>
+</header>
 
-    <!-- Main Content Section -->
-    <div class="content">
-        <!-- Main Content -->
-        <h1>Check Slippi Rank</h1>
-        <label for="connectCode">Enter Slippi Connect Code:</label>
-        <br />
-        <input type="text" id="connectCode" placeholder="ex., ABCD-1234" oninput="formatConnectCode()" maxlength="9" />
-        <br />
-        <button id="goButton" onclick="openSlippiPage()">Go to User Page</button>
-        <p id="result"></p>
+
+    <!-- Main Container -->
+    <div class="main-container">
+        <!-- Input Section -->
+        <div class="input-section">
+            <h1 >Check Slippi Rank</h1>
+            <label for="connectCode">Enter Slippi Connect Code:</label>
+            <input type="text" id="connectCode" placeholder="e.g., ABCD-1234" oninput="formatConnectCode()" maxlength="9" />
+           <div class="toggle-container">
+    <label class="slider-toggle">
+    <input type="checkbox" id="saveToggle">
+    <span class="slider"></span>
+</label>
+    <span>Save Connect Codes</span>
+</div>
+
+            <button id="goButton" onclick="openSlippiPage()">Go to User Page</button>
+        </div>
+
+        <!-- Saved Connect Codes Section -->
+        <div class="saved-users-container">
+            <h3>Saved Connect Codes</h3>
+            <ul id="savedUsersList" class="draggable-list"></ul>
+
+        </div>
     </div>
+<div class="list-management">
+    <select id="customListsDropdown" onchange="displaySavedCodes()">
+        <option value="">Select a List</option>
+    </select>
+    <button onclick="createCustomList()">Create New List</button>
+    <button onclick="deleteCustomList()">Delete Selected List</button>
+</div>
 
-    <!-- Decorative Corner Image -->
-    <img src="images/gb-dair.png" alt="Description" class="corner-image">
+
+  <script src="connect_code.js"></script>
+    <script src="toggletheme.js"></script>
+    <script src="drag_drop.js"></script>
 </body>
 </html>
