@@ -16,6 +16,28 @@ const db = firebase.firestore();
 const moviesCollection = db.collection("movies");
 const showsCollection = db.collection("shows");
 
+// Ensure genres exist in the DOM
+const genres = ["Action", "Comedy", "Drama", "Horror", "Romance", "Sci-Fi"];
+
+function createGenreContainers(category) {
+  const containerId = category === "Movie" ? "movieGenres" : "showGenres";
+  const container = document.getElementById(containerId);
+
+  genres.forEach((genre) => {
+    const genreSection = document.createElement("div");
+    genreSection.classList.add("genre-section");
+    genreSection.innerHTML = `
+      <h3>${genre}</h3>
+      <ul id="${containerId}-${genre}"></ul>
+    `;
+    container.appendChild(genreSection);
+  });
+}
+
+// Initialize genre containers
+createGenreContainers("Movie");
+createGenreContainers("Show");
+
 // Load data from Firestore
 async function loadData() {
   const movieSnap = await moviesCollection.get();
