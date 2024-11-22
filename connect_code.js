@@ -38,13 +38,30 @@ function openSlippiPage() {
     const saveToggle = document.getElementById("saveToggle").checked;
 
     if (saveToggle) {
-        // Save the connect code
         saveConnectCode(connectCode);
-    } else {
-        // Open the Slippi user page if not saving
-        window.open(`https://slippi.gg/user/${encodeURIComponent(connectCode)}`, "_blank");
     }
+
+    // Update the iframe's src and show it
+    const iframe = document.getElementById("slippiFrame");
+    iframe.src = `https://slippi.gg/user/${encodeURIComponent(connectCode)}`;
+
+    const iframeContainer = document.getElementById("iframe-container");
+    iframeContainer.style.display = "block"; // Show iframe
+    iframe.style.height = "500px"; // Restore full height if minimized
 }
+
+function closeIframe() {
+    const iframe = document.getElementById("slippiFrame");
+    iframe.src = ""; // Clear iframe content
+    const iframeContainer = document.getElementById("iframe-container");
+    iframeContainer.style.display = "none"; // Hide iframe
+}
+
+function minimizeIframe() {
+    const iframe = document.getElementById("slippiFrame");
+    iframe.style.height = iframe.style.height === "50px" ? "500px" : "50px"; // Toggle height
+}
+
 
 
 
@@ -168,10 +185,13 @@ function createListItem(code) {
     // Add the link to open the user page
     const link = document.createElement("a");
     link.textContent = code;
-    link.href = `https://slippi.gg/user/${encodeURIComponent(code)}`;
-    link.target = "_blank"; // Opens the link in a new tab
+    link.href = "#"; // Prevent default link behavior
     link.style.color = 'inherit'; // Inherit text color for consistent design
     link.style.textDecoration = 'none'; // Remove underline by default
+    link.addEventListener("click", (e) => {
+        e.preventDefault(); // Prevent navigation
+        openIframeWithCode(code); // Open the link in the iframe
+    });
 
     // Append the link to the list item
     listItem.appendChild(link);
@@ -198,6 +218,16 @@ function createListItem(code) {
 
     return listItem;
 }
+
+function openIframeWithCode(connectCode) {
+    const iframe = document.getElementById("slippiFrame");
+    iframe.src = `https://slippi.gg/user/${encodeURIComponent(connectCode)}`;
+
+    const iframeContainer = document.getElementById("iframe-container");
+    iframeContainer.style.display = "block"; // Show iframe
+    iframe.style.height = "500px"; // Restore full height if minimized
+}
+
 
 
 
