@@ -38,15 +38,14 @@ function openSlippiPage() {
     const saveToggle = document.getElementById("saveToggle").checked;
 
     if (saveToggle) {
-        // Save the connect code and flash it blue
+        // Save the connect code
         saveConnectCode(connectCode);
-        flashSavedCode(connectCode); // Flash the code
-        return;
+    } else {
+        // Open the Slippi user page if not saving
+        window.open(`https://slippi.gg/user/${encodeURIComponent(connectCode)}`, "_blank");
     }
-
-    // Open the Slippi user page if not saving
-    window.open(`https://slippi.gg/user/${encodeURIComponent(connectCode)}`, "_blank");
 }
+
 
 
 
@@ -66,7 +65,6 @@ function saveConnectCode(code) {
         if (!customLists[customListName].includes(code)) {
             customLists[customListName].push(code);
             localStorage.setItem("customLists", JSON.stringify(customLists));
-            flashSavedCode(code); // Provide feedback by flashing the saved code
         }
     } else {
         // Save to the default list if no custom list is selected
@@ -75,7 +73,6 @@ function saveConnectCode(code) {
         if (!savedCodes.includes(code)) {
             savedCodes.push(code);
             localStorage.setItem("connectCodes", JSON.stringify(savedCodes));
-            flashSavedCode(code); // Provide feedback by flashing the saved code
         }
     }
 
@@ -139,6 +136,7 @@ function displaySavedCodes() {
     // Enable drag-and-drop after rendering the new list
     enableDragAndDrop();
 }
+
 
 
 function deleteSavedCode(code) {

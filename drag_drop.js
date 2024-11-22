@@ -44,16 +44,25 @@ function getClosestDraggable(container, y) {
 }
 
 function saveReorderedCodes() {
+    const customListName = document.getElementById("customListsDropdown").value;
     const list = document.getElementById("savedUsersList");
-    const codes = [...list.querySelectorAll("li")].map((item) =>
-        item.textContent.replace("Delete", "").trim()
+    const codes = [...list.querySelectorAll("li a")].map((link) =>
+        link.textContent.trim()
     );
 
-    localStorage.setItem("connectCodes", JSON.stringify(codes));
+    if (customListName) {
+        const customLists = JSON.parse(localStorage.getItem("customLists")) || {};
+        if (customLists[customListName]) {
+            customLists[customListName] = codes;
+            localStorage.setItem("customLists", JSON.stringify(customLists));
+        }
+    } else {
+        localStorage.setItem("connectCodes", JSON.stringify(codes));
+    }
+
     displaySavedCodes();
 }
 
-document.addEventListener("DOMContentLoaded", enableDragAndDrop);
 
 
 
