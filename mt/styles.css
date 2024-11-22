@@ -60,8 +60,14 @@ ul li {
   justify-content: space-between;
 }
 
+ul li span {
+  flex: 1; /* Allow the text to take up available space */
+  word-wrap: break-word; /* Wrap long text onto the next line */
+}
+
 .delete-button {
   margin-top: 5px; /* Add spacing below watched button */
+  margin-left: 10px; /* Add space between the buttons */
   background-color: #dc3545;
   color: white;
   border: none;
@@ -76,6 +82,7 @@ ul li {
 
 .toggle-watched-button {
   margin-top: 5px; /* Add some spacing between title and button */
+  margin-left: 10px; /* Add space between the button and the text */
   background-color: #28a745;
   color: white;
   border: none;
