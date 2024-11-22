@@ -14,7 +14,7 @@ body {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-h1, h2 {
+h1, h2, h3 {
   text-align: center;
   color: #333;
 }
@@ -50,26 +50,6 @@ button:hover {
 
 .genre-section {
   margin-bottom: 20px;
-}
-
-.genre-header {
-  padding: 10px;
-  background-color: #007BFF;
-  color: white;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-.genre-header:hover {
-  background-color: #0056b3;
-}
-
-.genre-content {
-  padding: 10px;
-  background-color: #f8f9fa;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  display: none;
 }
 
 ul {
