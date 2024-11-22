@@ -1,17 +1,36 @@
 document.addEventListener("DOMContentLoaded", () => {
-    const connectCodeInput = document.getElementById("connectCode");
-    const goButton = document.getElementById("goButton");
+    // Function to toggle iframe height
+    function minimizeIframe() {
+        console.log("minimizeIframe called"); // Debug log
+        const iframe = document.getElementById("slippiFrame");
+        iframe.style.height = iframe.style.height === "50px" ? "500px" : "50px"; // Toggle height
+    }
 
-    // Load saved connect codes on page load
-    displaySavedCodes();
+    // Function to close the iframe
+    function closeIframe() {
+        const iframe = document.getElementById("slippiFrame");
+        iframe.src = ""; // Clear iframe content
+        const iframeContainer = document.getElementById("iframe-container");
+        iframeContainer.style.display = "none"; // Hide iframe
+    }
 
-    // Trigger Go button click on Enter key press
-    connectCodeInput.addEventListener("keydown", (event) => {
-        if (event.key === "Enter") {
-            goButton.click();
-        }
-    });
+    // Function to open the Slippi page in the iframe
+    function openIframeWithCode(connectCode) {
+        console.log(`Opening iframe for code: ${connectCode}`); // Debug log
+        const iframe = document.getElementById("slippiFrame");
+        iframe.src = `https://slippi.gg/user/${encodeURIComponent(connectCode)}`;
+        const iframeContainer = document.getElementById("iframe-container");
+        iframeContainer.style.display = "block"; // Show iframe
+        iframe.style.height = "500px"; // Reset height if minimized
+    }
+
+    // Bind buttons to functions (if needed dynamically)
+    document.getElementById("minimizeButton").addEventListener("click", minimizeIframe);
+    document.getElementById("closeButton").addEventListener("click", closeIframe);
+
+    // Other function definitions or event bindings go here...
 });
+
 
 function formatConnectCode() {
     const input = document.getElementById("connectCode");
