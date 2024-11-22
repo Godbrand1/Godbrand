@@ -16,6 +16,55 @@ const db = firebase.firestore();
 const moviesCollection = db.collection("movies");
 const showsCollection = db.collection("shows");
 
+// Add button functionality
+document.getElementById("addButton").addEventListener("click", async () => {
+  console.log("Add button clicked");
+  const title = document.getElementById("titleInput").value.trim();
+  const category = document.getElementById("categorySelect").value;
+  const genre = document.getElementById("genreSelect").value;
+
+  console.log({ title, category, genre });
+
+  if (!title) {
+    alert("Please enter a title!");
+    return;
+  }
+
+  const data = { title, genre };
+  console.log("Data to add:", data);
+
+  try {
+    if (category === "Movie") {
+      await moviesCollection.add(data);
+    } else {
+      await showsCollection.add(data);
+    }
+    console.log("Document added successfully");
+
+    document.getElementById("titleInput").value = ""; // Clear input
+  } catch (error) {
+    console.error("Error adding document:", error);
+  }
+});
+
+// Real-time updates for Movies
+moviesCollection.onSnapshot((snapshot) => {
+  const movieList = document.getElementById("movieList");
+  movieList.innerHTML = ""; // Clear list
+  snapshot.forEach((doc) => {
+    renderList("movieList", doc, "movie");
+  });
+});
+
+// Real-time updates for Shows
+showsCollection.onSnapshot((snapshot) => {
+  const showList = document.getElementById("showList");
+  showList.innerHTML = ""; // Clear list
+  snapshot.forEach((doc) => {
+    renderList("showList", doc, "show");
+  });
+});
+
 // Function to render items
 function renderList(listId, doc, type) {
   const list = document.getElementById(listId);
@@ -38,43 +87,3 @@ function renderList(listId, doc, type) {
 
   list.appendChild(li);
 }
-
-// Real-time updates for Movies
-moviesCollection.onSnapshot((snapshot) => {
-  const movieList = document.getElementById("movieList");
-  movieList.innerHTML = ""; // Clear the list
-  snapshot.forEach((doc) => {
-    renderList("movieList", doc, "movie");
-  });
-});
-
-// Real-time updates for Shows
-showsCollection.onSnapshot((snapshot) => {
-  const showList = document.getElementById("showList");
-  showList.innerHTML = ""; // Clear the list
-  snapshot.forEach((doc) => {
-    renderList("showList", doc, "show");
-  });
-});
-
-// Add item
-document.getElementById("addButton").addEventListener("click", async () => {
-  const title = document.getElementById("titleInput").value.trim();
-  const category = document.getElementById("categorySelect").value;
-  const genre = document.getElementById("genreSelect").value;
-
-  if (!title) {
-    alert("Please enter a title!");
-    return;
-  }
-
-  const data = { title, genre };
-
-  if (category === "Movie") {
-    await moviesCollection.add(data);
-  } else {
-    await showsCollection.add(data);
-  }
-
-  document.getElementById("titleInput").value = ""; // Clear the input
-});
