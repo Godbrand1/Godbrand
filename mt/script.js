@@ -87,3 +87,4 @@ function renderList(listId, doc, type) {
 
   list.appendChild(li);
 }
+console.log(firebase); // Should log the Firebase object if loaded correctly
