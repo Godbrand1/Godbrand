@@ -14,6 +14,7 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
+
 // Reference collections
 const moviesCollection = db.collection("movies");
 const showsCollection = db.collection("shows");
