@@ -8,14 +8,12 @@ const firebaseConfig = {
   appId: "1:169114410299:web:66174a6bfea0346d06eb1e"
 };
 
-// Initialize Firebase
+// Initialize Firebase (only once)
 firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
-
-// Firebase Authentication
-firebase.initializeApp(firebaseConfig);
 const auth = firebase.auth();
 
+// Login Functionality
 document.getElementById("loginButton").addEventListener("click", () => {
   const email = document.getElementById("emailInput").value;
   const password = document.getElementById("passwordInput").value;
@@ -31,6 +29,7 @@ document.getElementById("loginButton").addEventListener("click", () => {
     });
 });
 
+// Signup Functionality
 document.getElementById("signupButton").addEventListener("click", () => {
   const email = document.getElementById("emailInput").value;
   const password = document.getElementById("passwordInput").value;
@@ -46,7 +45,7 @@ document.getElementById("signupButton").addEventListener("click", () => {
     });
 });
 
-// Logout (Optional)
+// Monitor Authentication State
 auth.onAuthStateChanged((user) => {
   if (user) {
     console.log("User is logged in:", user.email);
