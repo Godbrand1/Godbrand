@@ -1,8 +1,3 @@
-
-// Import Firebase and Firestore
-import { initializeApp } from "https://www.gstatic.com/firebasejs/9.17.1/firebase-app.js";
-import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc } from "https://www.gstatic.com/firebasejs/9.17.1/firebase-firestore.js";
-
 // Firebase configuration
 const firebaseConfig = {
   apiKey: "AIzaSyBp99FAJNWFZFUqwm2eeu9MtbpnMdtgMwE",
@@ -12,72 +7,28 @@ const firebaseConfig = {
   messagingSenderId: "169114410299",
   appId: "1:169114410299:web:66174a6bfea0346d06eb1e"
 };
-
 // Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
+const app = firebase.initializeApp(firebaseConfig);
+const db = firebase.firestore();
 
-// Collections for Movies and Shows
-const moviesCollection = collection(db, "movies");
-const showsCollection = collection(db, "shows");
+// Collections
+const moviesCollection = db.collection("movies");
+const showsCollection = db.collection("shows");
 
-// Load data from Firestore
-async function loadData() {
-  const movieSnap = await getDocs(moviesCollection);
-  const showSnap = await getDocs(showsCollection);
+// Genre Containers
+const genres = ["Action", "Comedy", "Drama", "Horror", "Romance", "Sci-Fi"];
+function createGenreContainers(category) {
+  const containerId = category === "Movie" ? "movieGenres" : "showGenres";
+  const container = document.getElementById(containerId);
 
-  movieSnap.forEach((doc) => displayItem("Movie", doc.id, doc.data()));
-  showSnap.forEach((doc) => displayItem("Show", doc.id, doc.data()));
+  genres.forEach((genre) => {
+    const genreSection = document.createElement("div");
+    genreSection.innerHTML = `<h3>${genre}</h3><ul id="${containerId}-${genre}"></ul>`;
+    container.appendChild(genreSection);
+  });
 }
+createGenreContainers("Movie");
+createGenreContainers("Show");
 
-// Display item on the page
-function displayItem(category, id, data) {
-  const listId = `${category.toLowerCase()}Genres-${data.genre}`;
-  const list = document.getElementById(listId);
-
-  if (list) {
-    const li = document.createElement("li");
-    li.setAttribute("data-id", id);
-    li.innerHTML = `
-      <span>${data.title}</span>
-      <button class="delete-button">Delete</button>
-    `;
-    li.querySelector(".delete-button").addEventListener("click", async function () {
-      await deleteItem(category, id);
-      li.remove();
-    });
-    list.appendChild(li);
-  }
-}
-
-// Add item to Firestore
-async function addItem(category, genre, title) {
-  const collectionRef = category === "Movie" ? moviesCollection : showsCollection;
-  const docRef = await addDoc(collectionRef, { genre, title });
-  displayItem(category, docRef.id, { genre, title });
-}
-
-// Delete item from Firestore
-async function deleteItem(category, id) {
-  const collectionRef = category === "Movie" ? moviesCollection : showsCollection;
-  await deleteDoc(doc(collectionRef, id));
-}
-
-// Add button functionality
-document.getElementById("addButton").addEventListener("click", async function () {
-  const title = document.getElementById("titleInput").value.trim();
-  const category = document.getElementById("categorySelect").value;
-  const genre = document.getElementById("genreSelect").value;
-
-  if (!title) {
-    alert("Please enter a title!");
-    return;
-  }
-
-  await addItem(category, genre, title);
-
-  document.getElementById("titleInput").value = "";
-});
-
-// Load saved data on page load
+// Fetch and Display Data
 loadData();
