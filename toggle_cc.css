@@ -1,0 +1,279 @@
+
+
+/* Navbar Styling */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #4CAF50; /* Green background */
+    padding: 15px 20px; /* Adjust padding */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Subtle shadow */
+    min-height: 60px; /* Ensure consistent height */
+    position: relative;
+    z-index: 10;
+    margin-bottom: 20px; /* Add space below the navbar */
+}
+
+
+.navbar .nav-link,
+.navbar .theme-toggle-button {
+    padding: 10px;
+    background-color: #ffffff; /* White buttons */
+    color: #2b2b2b; /* Dark gray text */
+    text-decoration: none;
+    font-size: 1em;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.navbar .nav-link:hover,
+.navbar .theme-toggle-button:hover {
+    background-color: #c8e6c9; /* Light green hover effect */
+    transform: scale(1.1); /* Slight zoom on hover */
+}
+/* General Reset */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+h1 {
+    color: orange; /* Change text color to orange */
+    font-size: 34px; /* Optional: Adjust font size if needed */
+    text-align: center; /* Optional: Center align the heading */
+    margin-bottom: 20px; /* Add spacing below the heading */
+}
+
+
+body {
+    background-color: #2b2b2b; /* Dark gray background */
+    color: #f0f0f0; /* Light gray text */
+    font-family: Arial, sans-serif;
+    text-align: center;
+}
+
+/* connectCode */
+label {
+    display: block; /* Ensures the label is on its own line */
+    font-size: 16px; /* Adjust font size for readability */
+    margin-bottom: 5px; /* Add spacing between the label and the textbox */
+    color: #f0f0f0; /* Light gray text to match your theme */
+}
+
+#connectCode {
+    width: 100%; /* Full width within the container */
+    max-width: 300px; /* Adjust the width of the input box */
+    height: 45px; /* Fixed height for uniformity */
+    padding: 10px 15px; /* Comfortable padding for typing */
+    margin: 10px 0; /* Add spacing above and below the input */
+    border: 2px solid #ccc; /* Slightly thicker border */
+    border-radius: 8px; /* Rounded corners */
+    font-size: 16px; /* Font size for input text */
+    background-color: #ffffff; /* White background for input */
+    color: #333333; /* Dark gray text for input */
+}
+
+
+
+/* Content Layout */
+.content {
+    margin: 100px auto 40px; /* Add more spacing above and below the content */
+    max-width: 800px; /* Restrict content width */
+    padding: 30px; /* Add more padding inside the content */
+    background-color: #3a3a3a; /* Slightly lighter dark gray for content box */
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Subtle shadow */
+}
+
+/* Input Field */
+.content input[type="text"] {
+    width: 100%; /* Full width within the container */
+    max-width: 500px; /* Limit maximum width */
+    padding: 15px; /* Increase padding for better usability */
+    margin: 20px 0; /* Add spacing above and below the input */
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 18px; /* Larger font size */
+    background-color: #ffffff; /* White background for input */
+    color: #333333; /* Dark gray text */
+}
+
+/* Buttons */
+#goButton {
+    display: inline-block; /* Ensure proper alignment */
+    padding: 15px 30px; /* Larger padding for a modern look */
+    margin-top: 20px; /* Add spacing above the button */
+    border: none; /* Remove default border */
+    border-radius: 8px; /* Rounded corners */
+    background-color: #4CAF50; /* Green background */
+    color: #ffffff; /* White text */
+    font-size: 20px; /* Slightly larger font */
+    font-weight: bold; /* Emphasize text */
+    cursor: pointer; /* Pointer cursor for interactivity */
+    text-transform: uppercase; /* All caps for emphasis */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); /* Subtle shadow */
+    transition: background-color 0.3s, transform 0.2s ease, box-shadow 0.3s ease;
+}
+
+#goButton:hover {
+    background-color: #43A047; /* Darker green on hover */
+    transform: scale(1.05); /* Slight zoom effect */
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.3); /* Enhance shadow on hover */
+}
+
+#goButton:active {
+    background-color: #388E3C; /* Even darker green on click */
+    transform: scale(0.98); /* Slight shrink effect */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Reduced shadow on click */
+}
+
+/* Slider Toggle */
+.slider-toggle {
+    position: relative;
+    display: inline-block;
+    width: 50px;
+    height: 25px;
+    margin: 20px 10px 0 0; /* Add spacing around the toggle */
+}
+
+.slider-toggle input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.slider:before {
+    content: "";
+    position: absolute;
+    height: 19px;
+    width: 19px;
+    left: 3px;
+    bottom: 3px;
+    background-color: white;
+    border-radius: 50%;
+    transition: transform 0.3s ease;
+}
+
+input:checked + .slider {
+    background-color: #4CAF50;
+}
+
+input:checked + .slider:before {
+    transform: translateX(25px);
+}
+
+/* Saved Codes */
+.saved-users-container {
+    margin-top: 40px; /* Add spacing above the saved codes */
+    padding: 20px;
+    background-color: #424242; /* Darker background for saved codes */
+    border-radius: 5px;
+    color: #ffffff; /* White text */
+}
+
+.saved-users-container h3 {
+    margin-top: 0;
+    font-size: 20px;
+    color: #4CAF50; /* Green title for contrast */
+    margin-bottom: 20px; /* Add spacing below the header */
+}
+
+.saved-users-container ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.saved-users-container li {
+    display: flex;
+    justify-content: center; /* Center the text horizontally */
+    align-items: center; /* Center items vertically */
+    position: relative; /* Allows positioning of the delete button */
+    padding: 10px 15px;
+    margin-bottom: 10px;
+    background-color: #3a3a3a; /* Dark gray background */
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    color: #ffffff; /* Default white text */
+}
+
+.saved-users-container li .delete-button {
+    position: absolute; /* Position the button relative to the <li> */
+    right: 10px; /* Align to the far right */
+    top: 50%; /* Vertically center the button */
+    transform: translateY(-50%); /* Adjust for exact vertical centering */
+    padding: 5px 15px;
+    background-color: #ff4c4c;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 12px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.saved-users-container li:hover {
+    background-color: #3a82f6; /* Soft blue hover */
+    color: #ffffff;
+}
+
+.saved-users-container li .delete-button:hover {
+    background-color: #d43c3c; /* Darker red hover effect */
+    transform: scale(1.1);
+}
+
+
+
+.draggable-list li {
+    user-select: none;
+    cursor: grab;
+    border: 1px solid #ccc;
+    margin-bottom: 10px;
+}
+
+.draggable-list li.dragging {
+    opacity: 0.5;
+    background-color: #2b2b2b; /* Slightly darker gray */
+    cursor: grabbing;
+}
+
+.draggable-list li a:hover {
+    text-decoration: underline; /* Add underline on hover for better user experience */
+}
+
+
+
+
+/* Flash Blue Effect */
+.flash-blue {
+    background-color: #3a82f6 !important; /* Ensure bright blue is applied */
+    color: #ffffff !important; /* White text for visibility */
+    transition: background-color 0.5s ease, color 0.5s ease; /* Smooth transition with a longer duration */
+}
+
+
+
+
+
+/* Responsive Layout */
+@media (max-width: 600px) {
+    .content {
+        width: 90%;
+        padding: 20px;
+    }
+}
