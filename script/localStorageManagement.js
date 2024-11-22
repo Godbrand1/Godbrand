@@ -39,15 +39,20 @@ function listSaveFiles() {
     const saveFilesContainer = document.getElementById('saveFilesContainer');
     saveFilesContainer.innerHTML = '';
 
+    // Define the list of keys to exclude
+    const excludedKeys = ['wakeUpTime', 'customLists', 'connectCodes', 'bedTime', 'scheduleTasks', 'scheduleGenerated', 'Huel', 'dailyCalories'];
+
+
     let hasSavedFiles = false;
 
     for (let i = 0; i < localStorage.length; i++) {
         const key = localStorage.key(i);
 
-        // Ignore keys not related to task save files, including Huel and dailyCalories
-        if (['wakeUpTime', 'bedTime', 'scheduleTasks', 'scheduleGenerated', 'Huel', 'dailyCalories'].includes(key)) {
+        // Check if the key is in the excludedKeys array
+        if (excludedKeys.includes(key)) {
             continue;
         }
+
 
         hasSavedFiles = true;
 
