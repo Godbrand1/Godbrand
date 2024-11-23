@@ -38,13 +38,16 @@ window.addEventListener('load', () => {
     }
 });
 
-// Adjust the clock position to avoid overlap with the save files list
+// save file list
 window.addEventListener('load', () => {
     const saveFilesList = document.getElementById('saveFilesList');
+    
     if (saveFilesList) {
-        saveFilesList.style.top = '60px';
+        // Ensure the save files list is positioned correctly
+        saveFilesList.style.top = '60px'; // Adjust to avoid overlap
         saveFilesList.style.right = '10px';
         saveFilesList.style.position = 'fixed';
     }
 });
+
 
