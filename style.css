@@ -255,18 +255,16 @@ button:hover {
 
 /* Clock */
 #clock {
-    position: fixed;
-    bottom: 10px;
-    left: 10px;
-    background-color: #388E3C;
-    color: white;
-    padding: 15px 25px;
-    border-radius: 12px;
-    font-size: 1.2em;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-    max-width: 200px;
-    transition: background-color 0.3s ease;
+    position: fixed !important;
+    bottom: 20px !important;
+    left: 100px !important;
+    background-color: rgba(0, 0, 0, 0.7) !important;
+    color: white !important;
+    padding: 10px !important;
+    border-radius: 5px !important;
+    z-index: 1000 !important;
 }
+
 
 #clock:hover {
     background-color: #43A047;
