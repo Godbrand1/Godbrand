@@ -1,68 +1,78 @@
-// localStorageManagement.js
+const RESERVED_NAMES = [
+    'wakeUpTime',
+    'connectCodes',
+    'bedTime',
+    'scheduleTasks',
+    'scheduleGenerated',
+    'Huel',
+    'customLists',
+    'dailyCalories'
+];
 
 function saveTasksWithName() {
-    const saveFileName = document.getElementById('saveFileName').value.trim();
+    const saveFileNameInput = document.getElementById('saveFileName');
+    const saveFileName = saveFileNameInput.value.trim();
+
     if (!saveFileName) {
         alert("Please enter a name for the save file.");
         return;
     }
 
-    // Reserved names that cannot be used
-    const reservedNames = ['wakeUpTime', 'customLists', 'connectCodes', 'bedTime', 'scheduleTasks', 'scheduleGenerated', 'Huel', 'dailyCalories'];
-
-    // Check if the entered name is a reserved name
-    if (reservedNames.includes(saveFileName)) {
+    if (RESERVED_NAMES.includes(saveFileName)) {
         alert(`"${saveFileName}" is a reserved name and cannot be used.`);
         return;
     }
 
-    const numTasks = parseInt(document.getElementById('numTasks').value);
-    if (isNaN(numTasks) || numTasks <= 0) {
-        alert("Please enter a valid number of tasks.");
-        return;
-    }
-
-    let tasks = [];
-    for (let i = 1; i <= numTasks; i++) {
-        const taskName = document.getElementById('taskName' + i)?.value;
-        const duration = document.getElementById('duration' + i)?.value;
-
-        if (taskName && duration) {
-            tasks.push({
-                name: taskName,
-                duration: parseInt(duration),
-            });
+    try {
+        const numTasks = parseInt(document.getElementById('numTasks').value);
+        if (isNaN(numTasks) || numTasks <= 0) {
+            throw new Error("Invalid number of tasks.");
         }
+
+        const tasks = [];
+        for (let i = 1; i <= numTasks; i++) {
+            const taskName = document.getElementById(`taskName${i}`)?.value;
+            const duration = parseInt(document.getElementById(`duration${i}`)?.value || 0);
+            if (!taskName || isNaN(duration) || duration <= 0) {
+                throw new Error("Invalid task data.");
+            }
+            tasks.push({ name: taskName, duration });
+        }
+
+        // Save tasks to localStorage
+        localStorage.setItem(saveFileName, JSON.stringify(tasks));
+        console.log(`Tasks saved as "${saveFileName}".`);
+
+        // Refresh the list of saved files
+        listSaveFiles();
+
+        // Clear the save file name input
+        saveFileNameInput.value = '';
+    } catch (error) {
+        console.error("Error saving tasks:", error);
+        alert("Error saving tasks. Please check the input data.");
     }
-
-    localStorage.setItem(saveFileName, JSON.stringify(tasks));
-    console.log(`Tasks saved to localStorage under name: ${saveFileName}`);
-    listSaveFiles(); // Refresh the list of saved files
-
-    // Show saved files section if not empty
-    const savedFilesContent = document.getElementById('savedFilesContent');
-    savedFilesContent.style.display = 'block';
 }
-
 
 function listSaveFiles() {
     const saveFilesContainer = document.getElementById('saveFilesContainer');
-    saveFilesContainer.innerHTML = '';
+    if (!saveFilesContainer) {
+        console.error("Save files container not found.");
+        return;
+    }
 
-    // Define the list of keys to exclude
-    const excludedKeys = ['wakeUpTime', 'customLists', 'connectCodes', 'bedTime', 'scheduleTasks', 'scheduleGenerated', 'Huel', 'dailyCalories'];
+    saveFilesContainer.innerHTML = ''; // Clear existing entries
 
+    const EXCLUDED_KEYS = RESERVED_NAMES;
 
     let hasSavedFiles = false;
 
     for (let i = 0; i < localStorage.length; i++) {
         const key = localStorage.key(i);
 
-        // Check if the key is in the excludedKeys array
-        if (excludedKeys.includes(key)) {
-            continue;
+        if (EXCLUDED_KEYS.includes(key)) {
+            continue; // Skip excluded keys
         }
-
 
         hasSavedFiles = true;
 
@@ -77,9 +87,9 @@ function listSaveFiles() {
         const deleteButton = document.createElement('span');
         deleteButton.className = 'delete-save-file';
         deleteButton.textContent = 'X';
-        deleteButton.setAttribute('aria-label', 'Delete ' + key);
+        deleteButton.setAttribute('aria-label', `Delete ${key}`);
         deleteButton.onclick = (e) => {
-            e.stopPropagation(); // Prevent triggering the load function
+            e.stopPropagation();
             deleteSaveFile(key);
         };
 
@@ -88,13 +98,8 @@ function listSaveFiles() {
         saveFilesContainer.appendChild(saveFileDiv);
     }
 
-    // If there are no saved files, keep the content hidden
     const savedFilesContent = document.getElementById('savedFilesContent');
-    if (hasSavedFiles) {
-        savedFilesContent.style.display = 'block';
-    } else {
-        savedFilesContent.style.display = 'none'; // Keep hidden, user can show it with the button
-    }
+    savedFilesContent.style.display = hasSavedFiles ? 'block' : 'none'; // Toggle visibility
 }
 
 function deleteSaveFile(saveFileName) {
@@ -102,21 +107,6 @@ function deleteSaveFile(saveFileName) {
         localStorage.removeItem(saveFileName);
         console.log(`Save file "${saveFileName}" deleted.`);
         listSaveFiles(); // Refresh the list of saved files
-
-        // Hide saved files section if no save files remain
-        const savedFilesContent = document.getElementById('savedFilesContent');
-        let hasSavedFiles = false;
-        for (let i = 0; i < localStorage.length; i++) {
-            const key = localStorage.key(i);
-            if (!['wakeUpTime', 'bedTime', 'scheduleTasks', 'scheduleGenerated', 'Huel', 'dailyCalories'].includes(key)) {
-                hasSavedFiles = true;
-                break;
-            }
-        }
-
-        if (!hasSavedFiles) {
-            savedFilesContent.style.display = 'none';
-        }
     }
 }
 
@@ -139,13 +129,13 @@ function loadTasksFromLocalStorageByName(saveFileName) {
             formContainer.appendChild(taskForm);
         });
 
-        console.log(`Loaded tasks from save file: ${saveFileName}`);
+        console.log(`Loaded tasks from save file: "${saveFileName}"`);
     }
 }
 
-
 function clearLocalStorage() {
-    localStorage.removeItem('tasks');
-    alert("Saved tasks have been cleared.");
-    console.log("LocalStorage cleared for tasks.");
+    localStorage.clear();
+    alert("All saved tasks have been cleared.");
+    console.log("LocalStorage cleared.");
+    listSaveFiles();
 }
