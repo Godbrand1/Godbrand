@@ -1,3 +1,12 @@
+.task-buttons {
+    margin-top: 10px;
+}
+
+.task-buttons button {
+    margin-right: 5px;
+}
+
+
 #volume-control {
     position: fixed;
     top: 80px; /* Adjust vertical positioning */
@@ -264,6 +273,7 @@ button:hover {
     border-radius: 5px !important;
     z-index: 1000 !important;
 }
+
 
 
 #clock:hover {
