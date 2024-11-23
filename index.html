@@ -20,63 +20,58 @@
 </header>
 
 
-    <!-- Main Container -->
-    <div class="main-container">
-        <!-- Input Section -->
-        <div class="input-section">
-            <h1 >Check Slippi Rank</h1>
-            <label for="connectCode">Enter Slippi Connect Code:</label>
-            <input type="text" id="connectCode" placeholder="e.g., ABCD-1234" oninput="formatConnectCode()" maxlength="9" />
-           <div class="toggle-container">
-    <label class="slider-toggle">
-    <input type="checkbox" id="saveToggle">
-    <span class="slider"></span>
-</label>
-    <span>Save Connect Codes</span>
-</div>
-
-            <button id="goButton" onclick="openSlippiPage()">Go to User Page</button>
+<!-- Main Container -->
+<div class="main-container" style="display: flex; flex-direction: column; height: 100vh;">
+    <!-- Connect Code Input Section -->
+    <div class="connect-code-section">
+        <h1>Check Slippi Rank</h1>
+        <label for="connectCode">Enter Slippi Connect Code:</label>
+        <input type="text" id="connectCode" placeholder="e.g., ABCD-1234" oninput="formatConnectCode()" maxlength="9" />
+        <div class="toggle-container">
+            <label class="slider-toggle">
+                <input type="checkbox" id="saveToggle" />
+                <span class="slider"></span>
+            </label>
+            <span>Save Connect Codes</span>
         </div>
+        <button id="goButton" onclick="openSlippiPage()">Go to User Page</button>
+    </div>
 
+    <!-- Content Section -->
+    <div class="content-container" style="display: flex; flex: 1; overflow: hidden;">
         <!-- Saved Connect Codes Section -->
         <div class="saved-users-container">
             <h3>Saved Connect Codes</h3>
-
-
-<div class="search-container">
-    <input type="text" id="searchConnectCode" placeholder="Search connect codes..." oninput="filterSavedCodes()" />
-</div>
-
+            <div class="search-container">
+                <input type="text" id="searchConnectCode" placeholder="Search connect codes..." oninput="filterSavedCodes()" />
+            </div>
             <ul id="savedUsersList" class="draggable-list"></ul>
+            <div class="list-management">
+                <select id="customListsDropdown" onchange="displaySavedCodes()">
+                    <option value="">Default List</option>
+                </select>
+                <button onclick="createCustomList()">Create New List</button>
+                <button onclick="deleteCustomList()">Delete Selected List</button>
+            </div>
+        </div>
 
+        <!-- Iframe Section -->
+        <div id="iframe-container">
+            <div id="iframe-controls">
+                <button id="minimizeButton" onclick="minimizeIframe()">Minimize</button>
+                <button id="closeButton" onclick="closeIframe()">Close</button>
+            </div>
+            <iframe id="slippiFrame" src="" title="Slippi Page"></iframe>
         </div>
     </div>
-<div class="list-management">
-    <select id="customListsDropdown" onchange="displaySavedCodes()">
-        <option value="">Select a List</option>
-    </select>
-    <button onclick="createCustomList()">Create New List</button>
-    <button onclick="deleteCustomList()">Delete Selected List</button>
 </div>
-
-
-<!-- Iframe for displaying Slippi pages -->
-<div id="iframe-container">
-    <div id="iframe-controls">
-        <button id="minimizeButton" onclick="minimizeIframe()">Minimize</button>
-        <button id="closeButton" onclick="closeIframe()">Close</button>
-    </div>
-    <iframe id="slippiFrame" src="" title="Slippi Page"></iframe>
-</div>
-
-
-
 
 
 
   <script src="connect_code.js"></script>
     
     <script src="drag_drop.js"></script>
+<script src="script/iframe.js"></script>
 
 <script src="toggletheme.js"></script>
 

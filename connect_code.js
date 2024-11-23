@@ -1,49 +1,82 @@
-document.addEventListener("DOMContentLoaded", () => {
-    // Function to toggle iframe height
-    function minimizeIframe() {
-        console.log("minimizeIframe called"); // Debug log
-        const iframe = document.getElementById("slippiFrame");
-        iframe.style.height = iframe.style.height === "50px" ? "500px" : "50px"; // Toggle height
+// Function to open the iframe with the specified connect code
+function openIframeWithCode(connectCode) {
+    const iframe = document.getElementById("slippiFrame");
+    const iframeContainer = document.getElementById("iframe-container");
+    const iframeControls = document.getElementById("iframe-controls");
+
+    // Set the iframe source
+    iframe.src = `https://slippi.gg/user/${encodeURIComponent(connectCode)}`;
+
+    // Configure the iframe container
+    iframeContainer.style.display = "flex"; // Use Flexbox layout
+    iframeContainer.style.position = "relative"; // Allow absolute positioning inside
+    iframeContainer.style.height = "100%"; // Ensure full height
+    iframeContainer.style.width = "100%"; // Ensure full width
+
+    // Position the controls at the top-right corner
+    iframeControls.style.position = "absolute";
+    iframeControls.style.top = "10px"; // Offset from the top
+    iframeControls.style.right = "10px"; // Offset from the right
+    iframeControls.style.display = "flex"; // Arrange buttons horizontally
+    iframeControls.style.gap = "5px"; // Space between buttons
+    iframeControls.style.zIndex = "10"; // Ensure controls are above the iframe
+
+    // Ensure the iframe fills the container
+    iframe.style.height = "100%";
+    iframe.style.width = "100%";
+
+    console.log(`Iframe opened for code: ${connectCode}`);
+}
+
+// Function to minimize the iframe
+function minimizeIframe() {
+    const iframeContainer = document.getElementById("iframe-container");
+    const iframe = document.getElementById("slippiFrame");
+
+    if (!iframeContainer || !iframe) {
+        console.error("Iframe or container not found");
+        return;
     }
 
-    // Function to close the iframe
-    function closeIframe() {
-        const iframe = document.getElementById("slippiFrame");
-        iframe.src = ""; // Clear iframe content
-        const iframeContainer = document.getElementById("iframe-container");
-        iframeContainer.style.display = "none"; // Hide iframe
+    // Toggle between minimized and full height
+    if (iframeContainer.style.height === "50px") {
+        iframeContainer.style.height = "100%"; // Restore full height
+        iframe.style.height = "100%"; // Ensure iframe fills container
+    } else {
+        iframeContainer.style.height = "50px"; // Minimize container height
+        iframe.style.height = "50px"; // Match iframe height to container
+    }
+}
+
+// Function to close the iframe
+function closeIframe() {
+    const iframe = document.getElementById("slippiFrame");
+    const iframeContainer = document.getElementById("iframe-container");
+
+    if (!iframe || !iframeContainer) {
+        console.error("Iframe or container not found");
+        return;
     }
 
-    // Function to open the Slippi page in the iframe
-    function openIframeWithCode(connectCode) {
-        console.log(`Opening iframe for code: ${connectCode}`); // Debug log
-        const iframe = document.getElementById("slippiFrame");
-        iframe.src = `https://slippi.gg/user/${encodeURIComponent(connectCode)}`;
-        const iframeContainer = document.getElementById("iframe-container");
-        iframeContainer.style.display = "block"; // Show iframe
-        iframe.style.height = "500px"; // Reset height if minimized
-    }
+    iframe.src = ""; // Clear iframe content
+    iframeContainer.style.display = "none"; // Hide iframe container
+    iframeContainer.style.height = "100%"; // Reset height for reopening
+}
 
-    // Bind buttons to functions (if needed dynamically)
-    document.getElementById("minimizeButton").addEventListener("click", minimizeIframe);
-    document.getElementById("closeButton").addEventListener("click", closeIframe);
-
-    // Other function definitions or event bindings go here...
-});
-
-
+// Function to format the connect code input
 function formatConnectCode() {
     const input = document.getElementById("connectCode");
     let value = input.value.toUpperCase().replace(/[^A-Z0-9]/g, ""); // Clean input
 
     // Extract letters (up to 5) and numbers (up to 4)
-    const letters = value.match(/[A-Z]{0,5}/)?.[0] || ""; 
+    const letters = value.match(/[A-Z]{0,5}/)?.[0] || "";
     const numbers = value.slice(letters.length).match(/\d{0,4}/)?.[0] || "";
 
     // Update input value in the format "LETTERS-NUMBERS"
     input.value = letters + (numbers ? `-${numbers}` : "");
 }
 
+// Function to open the Slippi page in the iframe
 function openSlippiPage() {
     const connectCode = document.getElementById("connectCode").value.trim();
     const validFormat = /^[A-Z]{1,5}-\d{1,4}$/;
@@ -61,38 +94,10 @@ function openSlippiPage() {
     }
 
     // Update the iframe's src and show it
-    const iframe = document.getElementById("slippiFrame");
-    iframe.src = `https://slippi.gg/user/${encodeURIComponent(connectCode)}`;
-
-    const iframeContainer = document.getElementById("iframe-container");
-    iframeContainer.style.display = "block"; // Show iframe
-    iframe.style.height = "500px"; // Restore full height if minimized
+    openIframeWithCode(connectCode);
 }
 
-function closeIframe() {
-    const iframe = document.getElementById("slippiFrame");
-    iframe.src = ""; // Clear iframe content
-    const iframeContainer = document.getElementById("iframe-container");
-    iframeContainer.style.display = "none"; // Hide iframe
-}
-
-function minimizeIframe() {
-    console.log("Minimize button clicked");
-    const container = document.getElementById("iframe-container");
-    if (!container) {
-        console.error("Iframe container not found");
-        return;
-    }
-    // Toggle the height of the entire container
-    container.style.height = container.style.height === "50px" ? "500px" : "50px";
-    console.log("Iframe container height is now:", container.style.height);
-}
-
-
-
-
-
-
+// Function to save a connect code
 function saveConnectCode(code) {
     const customListName = document.getElementById("customListsDropdown").value;
 
@@ -113,7 +118,7 @@ function saveConnectCode(code) {
     } else {
         // Save to the default list if no custom list is selected
         let savedCodes = JSON.parse(localStorage.getItem("connectCodes")) || [];
-        
+
         if (!savedCodes.includes(code)) {
             savedCodes.push(code);
             localStorage.setItem("connectCodes", JSON.stringify(savedCodes));
@@ -124,180 +129,62 @@ function saveConnectCode(code) {
     displaySavedCodes();
 }
 
-
-
-
-
-
-function flashSavedCode(connectCode) {
-    const savedUsersList = document.getElementById("savedUsersList");
-    const items = savedUsersList.querySelectorAll("li");
-
-    items.forEach((item) => {
-        const itemText = item.childNodes[0].nodeValue?.trim() || item.textContent.trim();
-
-        if (itemText.startsWith(connectCode)) {
-            item.classList.add("flash-blue");
-            setTimeout(() => item.classList.remove("flash-blue"), 1000); // Keep flash effect for 1 second
-        }
-    });
-}
-
-
-
-
-
-function displaySavedCodes() {
-    const savedUsersList = document.getElementById("savedUsersList");
-    const customListName = document.getElementById("customListsDropdown").value;
-
-    savedUsersList.innerHTML = "";
-
-    if (customListName) {
-        // Show codes from the selected custom list
-        const customLists = JSON.parse(localStorage.getItem("customLists")) || {};
-        const savedCodes = customLists[customListName] || [];
-
-        if (savedCodes.length === 0) {
-            savedUsersList.innerHTML = "<li>No saved connect codes in this list.</li>";
-        } else {
-            savedCodes.forEach((code) => {
-                const listItem = createListItem(code);
-                savedUsersList.appendChild(listItem);
-            });
-        }
-    } else {
-        // Show codes from the default list
-        const savedCodes = JSON.parse(localStorage.getItem("connectCodes")) || [];
-
-        if (savedCodes.length === 0) {
-            savedUsersList.innerHTML = "<li>No saved connect codes.</li>";
-        } else {
-            savedCodes.forEach((code) => {
-                const listItem = createListItem(code);
-                savedUsersList.appendChild(listItem);
-            });
-        }
-    }
-
-    // Enable drag-and-drop after rendering the new list
-    enableDragAndDrop();
-}
-
-
-
-
-
-function filterSavedCodes() {
-    const searchTerm = document.getElementById("searchConnectCode").value.toLowerCase();
-    const listItems = document.querySelectorAll("#savedUsersList li");
-
-    listItems.forEach((item) => {
-        const code = item.querySelector("a").textContent.toLowerCase();
-        item.style.display = code.includes(searchTerm) ? "flex" : "none";
-    });
-}
-
-
-function deleteSavedCode(code) {
-    const customListName = document.getElementById("customListsDropdown").value;
-
-    if (customListName) {
-        // Delete from the selected custom list
-        const customLists = JSON.parse(localStorage.getItem("customLists")) || {};
-        customLists[customListName] = customLists[customListName].filter((savedCode) => savedCode !== code);
-        localStorage.setItem("customLists", JSON.stringify(customLists));
-    } else {
-        // Delete from the default list
-        let savedCodes = JSON.parse(localStorage.getItem("connectCodes")) || [];
-        savedCodes = savedCodes.filter((savedCode) => savedCode !== code);
-        localStorage.setItem("connectCodes", JSON.stringify(savedCodes));
-    }
-
-    displaySavedCodes();
-}
-
-
-
-
-
+// Function to create a list item for a saved connect code
 function createListItem(code) {
-    // Create the list item
     const listItem = document.createElement("li");
 
-    // Add the link to open the user page
     const link = document.createElement("a");
     link.textContent = code;
-    link.href = "#"; // Prevent default link behavior
-    link.style.color = 'inherit'; // Inherit text color for consistent design
-    link.style.textDecoration = 'none'; // Remove underline by default
+    link.href = "#";
+    link.style.color = "inherit";
+    link.style.textDecoration = "none";
+
+    // Add event listener to open iframe with the correct connect code
     link.addEventListener("click", (e) => {
-        e.preventDefault(); // Prevent navigation
-        openIframeWithCode(code); // Open the link in the iframe
+        e.preventDefault(); // Prevent default anchor behavior
+        openIframeWithCode(code); // Open iframe with the connect code
     });
 
-    // Append the link to the list item
     listItem.appendChild(link);
 
-    // Add delete button
     const deleteButton = document.createElement("button");
     deleteButton.textContent = "Delete";
     deleteButton.className = "delete-button";
     deleteButton.addEventListener("click", (e) => {
-        e.stopPropagation(); // Prevent the link click when clicking delete
-        deleteSavedCode(code);
+        e.stopPropagation(); // Prevent triggering link click
+        deleteSavedCode(code); // Delete the connect code
     });
 
     listItem.appendChild(deleteButton);
-    listItem.draggable = true; // Enable drag-and-drop functionality
-    listItem.addEventListener("dragstart", (event) => {
-        event.dataTransfer.setData("text/plain", code);
-        listItem.classList.add("dragging");
-    });
-
-    listItem.addEventListener("dragend", () => {
-        listItem.classList.remove("dragging");
-    });
-
+    listItem.draggable = true;
     return listItem;
 }
 
-function openIframeWithCode(connectCode) {
-    const iframe = document.getElementById("slippiFrame");
-    iframe.src = `https://slippi.gg/user/${encodeURIComponent(connectCode)}`;
-
-    const iframeContainer = document.getElementById("iframe-container");
-    iframeContainer.style.display = "block"; // Show iframe
-    iframe.style.height = "500px"; // Restore full height if minimized
-}
-
-
-
-
-function deleteCustomList() {
+// Function to display saved connect codes
+function displaySavedCodes() {
+    const savedUsersList = document.getElementById("savedUsersList");
     const customListName = document.getElementById("customListsDropdown").value;
 
-    // Prevent deleting the default list
-    if (!customListName) {
-        alert("You cannot delete the default list.");
-        return;
+    savedUsersList.innerHTML = ""; // Clear list
+
+    if (customListName) {
+        const customLists = JSON.parse(localStorage.getItem("customLists")) || {};
+        const savedCodes = customLists[customListName] || [];
+
+        savedCodes.forEach((code) => {
+            const listItem = createListItem(code);
+            savedUsersList.appendChild(listItem);
+        });
+    } else {
+        const savedCodes = JSON.parse(localStorage.getItem("connectCodes")) || [];
+
+        savedCodes.forEach((code) => {
+            const listItem = createListItem(code);
+            savedUsersList.appendChild(listItem);
+        });
     }
 
-    // Confirm if the user really wants to delete the list
-    const confirmation = confirm(`Are you sure you want to delete the list "${customListName}" and all its codes?`);
-    if (!confirmation) return;
-
-    // Retrieve all custom lists
-    const customLists = JSON.parse(localStorage.getItem("customLists")) || {};
-
-    // Delete the selected list
-    if (customLists[customListName]) {
-        delete customLists[customListName];
-        localStorage.setItem("customLists", JSON.stringify(customLists));
-    }
-
-    // Update the dropdown and display default list
-    updateCustomListsDropdown();
-    displaySavedCodes();
+    // Ensure scrollability
+    const savedUsersContainer = document.querySelector(".saved-users-container");
+    savedUsersContainer.style.overflowY = "auto";
 }
-
