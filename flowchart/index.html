@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Interactive Flowchart</title>
+  <style>
+    /* Toolbar styles */
+    #toolbar {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background-color: #0078d7;
+      padding: 10px;
+      color: white;
+    }
+
+    #toolbar button, #toolbar input, #toolbar select {
+      padding: 5px 10px;
+      font-size: 14px;
+    }
+
+    #section-name-input {
+      flex-grow: 1;
+    }
+
+    /* Flowchart sections container */
+    #flowchart-sections {
+      position: relative;
+      width: 100%;
+      height: calc(100vh - 60px);
+      background-color: #f4f4f4;
+      overflow: hidden;
+    }
+
+    .workspace {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      display: none;
+    }
+
+    .workspace.active {
+      display: block;
+    }
+
+    .connections {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+    }
+
+    /* Box styles */
+    .box {
+      position: absolute;
+      background-color: white;
+      border: 1px solid #ddd;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+      border-radius: 4px;
+      padding: 10px;
+      cursor: move;
+      min-width: 150px;
+    }
+
+    .label {
+      font-weight: bold;
+      margin-bottom: 5px;
+      text-align: center;
+      background-color: #e7e7e7;
+      padding: 5px;
+      border-radius: 3px;
+    }
+
+    .content {
+      padding: 5px;
+      border: 1px solid #ddd;
+      border-radius: 3px;
+      margin-bottom: 5px;
+      background-color: #fff;
+    }
+
+    button {
+      padding: 5px 10px;
+      background-color: #0078d7;
+      color: white;
+      border: none;
+      border-radius: 3px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #005ea3;
+    }
+
+    /* Draggable text styles */
+    .draggable-text {
+      position: absolute;
+      cursor: move;
+      font-size: 16px;
+      color: black;
+      border: none;
+      outline: none;
+      background: transparent;
+    }
+  </style>
+</head>
+<body>
+  <div id="toolbar">
+    <button id="create-box">Create Box</button>
+    <button id="add-text">Add Draggable Text</button>
+    <button id="create-section">Create New Section</button>
+    <button id="delete-section">Delete Current Section</button>
+    <input type="text" id="section-name-input" placeholder="Section Name" />
+    <select id="section-selector">
+      <option value="default">Default Section</option>
+    </select>
+  </div>
+  <div id="flowchart-sections">
+    <div class="workspace active" id="workspace-default">
+      <svg class="connections" id="connections-default"></svg>
+    </div>
+  </div>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const toolbar = document.getElementById("toolbar");
+      const flowchartSections = document.getElementById("flowchart-sections");
+      const sectionSelector = document.getElementById("section-selector");
+      const sectionNameInput = document.getElementById("section-name-input");
+
+      let sections = {
+        default: {
+          workspace: document.getElementById("workspace-default"),
+          connections: document.getElementById("connections-default"),
+          boxes: [],
+          connectionsArray: [],
+          name: "Default Section",
+        },
+      };
+      let currentSection = "default";
+
+      sectionSelector.addEventListener("change", (e) => {
+        currentSection = e.target.value;
+        updateActiveSection();
+      });
+
+      document.getElementById("create-section").addEventListener("click", () => {
+        const sectionName = sectionNameInput.value.trim() || `Section ${Date.now()}`;
+        sectionNameInput.value = "";
+
+        const sectionId = `section-${Date.now()}`;
+        const workspace = document.createElement("div");
+        const connections = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+
+        workspace.classList.add("workspace");
+        workspace.id = `workspace-${sectionId}`;
+        connections.classList.add("connections");
+        connections.id = `connections-${sectionId}`;
+        workspace.appendChild(connections);
+
+        flowchartSections.appendChild(workspace);
+
+        sections[sectionId] = {
+          workspace,
+          connections,
+          boxes: [],
+          connectionsArray: [],
+          name: sectionName,
+        };
+
+        const option = document.createElement("option");
+        option.value = sectionId;
+        option.textContent = sectionName;
+        sectionSelector.appendChild(option);
+
+        sectionSelector.value = sectionId;
+        currentSection = sectionId;
+        updateActiveSection();
+      });
+
+      function updateActiveSection() {
+        Object.values(sections).forEach((section) => {
+          section.workspace.classList.remove("active");
+        });
+        sections[currentSection].workspace.classList.add("active");
+      }
+
+      document.getElementById("add-text").addEventListener("click", () => {
+        const section = sections[currentSection];
+        const textElement = document.createElement("div");
+        textElement.classList.add("draggable-text");
+        textElement.contentEditable = true;
+        textElement.innerText = "Drag Me";
+        textElement.style.left = "50px";
+        textElement.style.top = "50px";
+
+        section.workspace.appendChild(textElement);
+        makeDraggableText(textElement);
+      });
+
+      document.getElementById("create-box").addEventListener("click", () => {
+        const section = sections[currentSection];
+        const box = document.createElement("div");
+        box.classList.add("box");
+        box.style.left = "50px";
+        box.style.top = "50px";
+
+        const label = document.createElement("div");
+        label.classList.add("label");
+        label.contentEditable = true;
+        label.innerText = "Label";
+
+        const content = document.createElement("div");
+        content.classList.add("content");
+        content.contentEditable = true;
+        content.innerText = "Editable Text";
+
+        const connectButton = document.createElement("button");
+        connectButton.innerText = "Connect";
+        connectButton.addEventListener("click", () => {
+          selectForConnection(box, section);
+        });
+
+        box.appendChild(label);
+        box.appendChild(content);
+        box.appendChild(connectButton);
+        section.workspace.appendChild(box);
+
+        section.boxes.push(box);
+        makeDraggable(box, section);
+      });
+
+      let selectedBox = null;
+
+      function selectForConnection(box, section) {
+        if (selectedBox) {
+          createConnection(selectedBox, box, section);
+          selectedBox = null;
+        } else {
+          selectedBox = box;
+        }
+      }
+
+      function createConnection(box1, box2, section) {
+        if (box1 === box2) return;
+
+        const line = document.createElementNS("http://www.w3.org/2000/svg", "line");
+        line.setAttribute("stroke", "black");
+        line.setAttribute("stroke-width", "2");
+        section.connections.appendChild(line);
+
+        section.connectionsArray.push({ box1, box2, line });
+        updateConnections(section);
+      }
+
+      function updateConnections(section) {
+        section.connectionsArray.forEach(({ box1, box2, line }) => {
+          const box1Rect = box1.getBoundingClientRect();
+          const box2Rect = box2.getBoundingClientRect();
+
+          const x1 = box1Rect.left + box1Rect.width / 2;
+          const y1 = box1Rect.top + box1Rect.height / 2;
+          const x2 = box2Rect.left + box2Rect.width / 2;
+          const y2 = box2Rect.top + box2Rect.height / 2;
+
+          line.setAttribute("x1", x1);
+          line.setAttribute("y1", y1);
+          line.setAttribute("x2", x2);
+          line.setAttribute("y2", y2);
+        });
+      }
+
+      function makeDraggable(element, section) {
+        let offsetX, offsetY;
+
+        element.addEventListener("mousedown", (e) => {
+          offsetX = e.clientX - element.getBoundingClientRect().left;
+          offsetY = e.clientY - element.getBoundingClientRect().top;
+
+          const onMouseMove = (moveEvent) => {
+            element.style.left = `${moveEvent.clientX - offsetX}px`;
+            element.style.top = `${moveEvent.clientY - offsetY}px`;
+            updateConnections(section);
+          };
+
+          document.addEventListener("mousemove", onMouseMove);
+
+          document.addEventListener(
+            "mouseup",
+            () => {
+              document.removeEventListener("mousemove", onMouseMove);
+            },
+            { once: true }
+          );
+        });
+      }
+
+      function makeDraggableText(textElement) {
+        makeDraggable(textElement, sections[currentSection]);
+      }
+
+      document.getElementById("delete-section").addEventListener("click", () => {
+        if (currentSection === "default") {
+          alert("Cannot delete the default section.");
+          return;
+        }
+
+        const section = sections[currentSection];
+        section.workspace.remove();
+        sectionSelector.querySelector(`option[value="${currentSection}"]`).remove();
+        delete sections[currentSection];
+        currentSection = "default";
+        sectionSelector.value = "default";
+        updateActiveSection();
+      });
+    });
+  </script>
+</body>
+</html>
