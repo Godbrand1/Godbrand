@@ -1,3 +1,65 @@
+
+document.addEventListener("DOMContentLoaded", () => {
+    // Function to adjust the saved-users-container to stay on top
+    function adjustSavedUsersContainer() {
+        const savedUsersContainer = document.querySelector(".saved-users-container");
+        const navbar = document.querySelector(".navbar");
+
+        if (savedUsersContainer && navbar) {
+            const navbarHeight = navbar.offsetHeight; // Dynamically get navbar height
+            savedUsersContainer.style.position = "absolute"; // Allow it to float above other elements
+            savedUsersContainer.style.top = `${navbarHeight}px`; // Start just below the navbar
+            savedUsersContainer.style.left = "0"; // Align to the left of the viewport
+            savedUsersContainer.style.bottom = "0"; // Stretch to the bottom
+            savedUsersContainer.style.width = "20%"; // Sidebar width
+            savedUsersContainer.style.height = `calc(100% - ${navbarHeight}px)`; // Adjust height dynamically
+            savedUsersContainer.style.zIndex = "100"; // Ensure it stacks above other elements
+            savedUsersContainer.style.overflowY = "auto"; // Enable vertical scrolling
+            savedUsersContainer.style.backgroundColor = "#2b2b2b"; // Maintain styling
+        }
+    }
+
+    // Run the adjustment when the DOM is fully loaded
+    adjustSavedUsersContainer();
+
+    // Re-adjust if the window is resized (optional)
+    window.addEventListener("resize", adjustSavedUsersContainer);
+});
+
+// Existing functions like displaySavedCodes remain functional
+function displaySavedCodes() {
+    const savedUsersList = document.getElementById("savedUsersList");
+    const customListName = document.getElementById("customListsDropdown").value;
+
+
+    savedUsersList.innerHTML = ""; // Clear list
+
+
+    if (customListName) {
+        const customLists = JSON.parse(localStorage.getItem("customLists")) || {};
+        const savedCodes = customLists[customListName] || [];
+
+        savedCodes.forEach((code) => {
+            const listItem = createListItem(code);
+            savedUsersList.appendChild(listItem);
+        });
+    } else {
+        const savedCodes = JSON.parse(localStorage.getItem("connectCodes")) || [];
+
+        savedCodes.forEach((code) => {
+            const listItem = createListItem(code);
+            savedUsersList.appendChild(listItem);
+        });
+    }
+
+    // Ensure scrollability
+    const savedUsersContainer = document.querySelector(".saved-users-container");
+    if (savedUsersContainer) {
+        savedUsersContainer.style.overflowY = "auto";
+    }
+}
+
+
 // Function to open the iframe with the specified connect code
 function openIframeWithCode(connectCode) {
     const iframe = document.getElementById("slippiFrame");
@@ -187,4 +249,18 @@ function displaySavedCodes() {
     // Ensure scrollability
     const savedUsersContainer = document.querySelector(".saved-users-container");
     savedUsersContainer.style.overflowY = "auto";
+
+        // Adjust the top position of the saved-users-container
+        savedUsersContainer.style.top = `${navbarHeight}px`; // Push down by navbar's height
+        savedUsersContainer.style.height = `calc(100% - ${navbarHeight}px)`; // Adjust height to fill remaining space
+   
+ savedUsersContainer.style.position = "absolute"; // Allow it to stretch freely
+        savedUsersContainer.style.top = "0"; // Align to the top of the viewport
+        savedUsersContainer.style.left = "0"; // Align to the left
+        savedUsersContainer.style.bottom = "0"; // Extend to the bottom
+        savedUsersContainer.style.width = "20%"; // Adjust width if needed
+        savedUsersContainer.style.height = "100%"; // Occupy full vertical space
+        savedUsersContainer.style.overflowY = "auto"; // Allow vertical scrolling if content exceeds height
+    
+
 }

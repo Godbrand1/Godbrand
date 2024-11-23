@@ -19,6 +19,18 @@ color: white; /* Ensure parent sets white color */
     background-color: #43A047;
 }
 
+.connect-code-section {
+    position: absolute; /* Allows precise positioning */
+    left: 20%; /* Offset from the left to leave space for the Saved Connect Codes */
+    top: 10px; /* Adjust this to fit under the navbar if needed */
+    width: auto; /* Shrinks to fit the content */
+    max-width: 50%; /* Optional: Limit the maximum width */
+    background-color: #f0f0f0; /* Maintain its current background */
+    padding: 20px;
+    border: 1px solid #ccc; /* Optional: Add a border for visibility */
+    z-index: 5; /* Ensure it doesn't overlap the navbar */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Add a subtle shadow */
+}
 
 .connect-code-section h1 {
     color: #ff9800;
@@ -51,46 +63,94 @@ color: white; /* Ensure parent sets white color */
 
 /* Saved Users Section */
 .saved-users-container {
-    width: 20%; /* Fixed width for the left panel */
-    overflow-y: auto; /* Make the list scrollable */
-    padding: 10px;
-    background-color: #2b2b2b;
-    color: #f0f0f0;
-    border-right: 1px solid #ccc;
-    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+    position: absolute; /* Pin it to the viewport */
+    left: 0; /* Align to the left */
+    width: 20%; /* Sidebar width */
+    overflow-y: auto; /* Enable scrolling */
+    z-index: 100; /* Ensure it stays above other elements */
+    background-color: #2b2b2b; /* Dark background */
+    color: #f0f0f0; /* Text color */
+    border-right: 1px solid #ccc; /* Optional: Separator line */
+    padding: 10px; /* Add inner spacing */
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2); /* Optional: Depth effect */
 }
 
+/* Header inside the saved-users-container */
 .saved-users-container h3 {
-    margin-bottom: 10px;
+    margin-bottom: 10px; /* Add space below the header */
+    font-size: 1.2em; /* Slightly larger font for emphasis */
+    color: #ff9800; /* Highlighted color for the header */
+    text-align: center; /* Center-align the header */
 }
 
+/* Search input */
+.saved-users-container input[type="text"] {
+    width: 90%; /* Stretch input width while leaving space for padding */
+    padding: 8px;
+    margin-bottom: 15px; /* Space below the input field */
+    border: 1px solid #ccc; /* Subtle border */
+    border-radius: 4px; /* Rounded corners */
+    background-color: #444; /* Slightly darker background for input */
+    color: #fff; /* Light text for readability */
+    font-size: 1em;
+}
+
+/* List items */
 .saved-users-container ul {
-    list-style: none;
+    list-style: none; /* Remove default bullet points */
     padding: 0;
     margin: 0;
-    max-height: calc(100% - 100px); /* Allow space for buttons and inputs */
-    overflow-y: auto;
 }
 
 .saved-users-container li {
     padding: 10px;
     margin-bottom: 5px;
-    background-color: #388E3C;
-    color: white;
-    border-radius: 4px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+    background-color: #388E3C; /* Green background for items */
+    color: white; /* Text color */
+    border-radius: 4px; /* Rounded corners */
+    display: flex; /* Flexbox for alignment */
+    justify-content: space-between; /* Space between text and delete button */
+    align-items: center; /* Center-align content */
+    cursor: pointer; /* Indicate interactivity */
 }
 
 .saved-users-container li:hover {
-    background-color: #43A047;
+    background-color: #43A047; /* Darker green on hover */
 }
 
-.saved-users-container button {
-    margin-top: 10px;
-    width: 100%;
+/* Delete button for list items */
+.saved-users-container .delete-button {
+    background: #f44336; /* Red background for delete button */
+    color: white; /* Light text */
+    border: none;
+    border-radius: 4px;
+    padding: 5px 10px;
+    cursor: pointer; /* Pointer cursor */
+    font-size: 0.9em; /* Slightly smaller font */
 }
+
+.saved-users-container .delete-button:hover {
+    background: #d32f2f; /* Darker red on hover */
+}
+
+/* Dropdown and Buttons */
+.saved-users-container select,
+.saved-users-container button {
+    width: 90%; /* Stretch to fit container width */
+    margin: 5px 0; /* Add spacing between elements */
+    padding: 8px;
+    border: 1px solid #ccc; /* Subtle border */
+    border-radius: 4px; /* Rounded corners */
+    background-color: #444; /* Match input field background */
+    color: #fff; /* Light text for consistency */
+    font-size: 1em;
+    cursor: pointer; /* Indicate interactivity */
+}
+
+.saved-users-container button:hover {
+    background-color: #555; /* Slightly lighter background on hover */
+}
+
 
 /* Iframe Section */
 #iframe-container {

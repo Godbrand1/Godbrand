@@ -42,17 +42,18 @@
         <!-- Saved Connect Codes Section -->
         <div class="saved-users-container">
             <h3>Saved Connect Codes</h3>
-            <div class="search-container">
-                <input type="text" id="searchConnectCode" placeholder="Search connect codes..." oninput="filterSavedCodes()" />
-            </div>
-            <ul id="savedUsersList" class="draggable-list"></ul>
-            <div class="list-management">
+<div class="list-management">
                 <select id="customListsDropdown" onchange="displaySavedCodes()">
                     <option value="">Default List</option>
                 </select>
                 <button onclick="createCustomList()">Create New List</button>
                 <button onclick="deleteCustomList()">Delete Selected List</button>
             </div>
+            <div class="search-container">
+                <input type="text" id="searchConnectCode" placeholder="Search connect codes..." oninput="filterSavedCodes()" />
+            </div>
+            <ul id="savedUsersList" class="draggable-list"></ul>
+            
         </div>
 
         <!-- Iframe Section -->
@@ -65,6 +66,7 @@
         </div>
     </div>
 </div>
+
 
 
 
