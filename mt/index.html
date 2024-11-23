@@ -7,52 +7,58 @@
   <link rel="stylesheet" href="styles.css">
 </head>
 <body style="background-color: lightblue;">
-  <div id="authSection">
+<div id="authSection">
+  <div class="container">
     <h2>Login or Signup</h2>
-    <input type="email" id="emailInput" placeholder="Enter email">
-    <input type="password" id="passwordInput" placeholder="Enter password">
-    <button id="loginButton">Login</button>
-    <!-- Signup button hidden to prevent unauthorized signups -->
-    <button id="signupButton" style="display: none;">Sign Up</button>
-  </div>
-
-  <div id="mainContent" style="display: none;">
-    <h2>Welcome to Your Watchlist</h2>
-    <button id="logoutButton">Logout</button>
-    <div class="container">
-      <h1>Movie & Show Watchlist</h1>
-      <div class="form-section">
-        <input type="text" id="titleInput" placeholder="Enter title">
-        <select id="categorySelect">
-          <option value="Movie">Movie</option>
-          <option value="Show">Show</option>
-        </select>
-        <select id="genreSelect">
-          <option value="Action">Action</option>
-          <option value="Anime">Anime</option>
-          <option value="Comedy">Comedy</option>
-          <option value="Drama">Drama</option>
-          <option value="Horror">Horror</option>
-          <option value="Romance">Romance</option>
-          <option value="Sci-Fi">Sci-Fi</option>
-        </select>
-        <button id="addButton">Add</button>
-      </div>
-      <div id="listSection">
-        <h2>Movies</h2>
-        <ul id="movieList"></ul>
-        <h2>Shows</h2>
-        <ul id="showList"></ul>
-      </div>
+    <div class="form-section">
+      <input type="email" id="emailInput" placeholder="Enter email">
+      <input type="password" id="passwordInput" placeholder="Enter password">
+    </div>
+    <div class="form-section">
+      <button id="loginButton">Login</button>
+      <button id="signupButton" style="display: none;">Sign Up</button>
     </div>
   </div>
+</div>
+
+<div id="mainContent" style="display: none;">
+  <div class="container">
+    <h2>Your Watchlist</h2>
+    <button id="logoutButton">Logout</button>
+
+    <div class="form-section">
+      <input type="text" id="titleInput" placeholder="Enter title">
+      <select id="categorySelect">
+        <option value="Movie">Movie</option>
+        <option value="Show">Show</option>
+      </select>
+      <select id="genreSelect">
+        <option value="Action">Action</option>
+<option value="Action">Anime</option>
+        <option value="Comedy">Comedy</option>
+        <option value="Drama">Drama</option>
+        <option value="Horror">Horror</option>
+        <option value="Romance">Romance</option>
+        <option value="Sci-Fi">Sci-Fi</option>
+      </select>
+      <input type="number" id="seasonCount" placeholder="Number of Seasons" style="display: none;">
+      <input type="number" id="episodeCount" placeholder="Episodes per Season" style="display: none;">
+      <button id="addButton">Add</button>
+    </div>
+
+    <div id="listSection">
+      <h2>Movies</h2>
+      <ul id="movieList"></ul>
+      <h2>Shows</h2>
+      <ul id="showList"></ul>
+    </div>
+  </div>
+</div>
 
   <!-- Firebase SDK -->
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
-
-  <!-- Your Custom Script -->
   <script src="script.js"></script>
 </body>
 </html>
