@@ -40,18 +40,11 @@ window.addEventListener('load', () => {
 
 // Adjust the clock position to avoid overlap with the save files list
 window.addEventListener('load', () => {
-    //const clock = document.getElementById('clock');
     const saveFilesList = document.getElementById('saveFilesList');
-    //if (clock && saveFilesList) {
-        //clock.style.top = 'unset';
-        //clock.style.right = 'unset';
-        //clock.style.bottom = '10px';
-        //clock.style.left = '50%';
-        //clock.style.transform = 'translateX(-50%)';
-        //clock.style.position = 'fixed';
-
-        saveFilesList.style.top = '60px'; // Adjust to avoid overlap
+    if (saveFilesList) {
+        saveFilesList.style.top = '60px';
         saveFilesList.style.right = '10px';
         saveFilesList.style.position = 'fixed';
     }
 });
+
