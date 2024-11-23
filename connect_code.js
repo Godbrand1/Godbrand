@@ -126,6 +126,9 @@ function saveConnectCode(code) {
 
 
 
+
+
+
 function flashSavedCode(connectCode) {
     const savedUsersList = document.getElementById("savedUsersList");
     const items = savedUsersList.querySelectorAll("li");
@@ -181,6 +184,19 @@ function displaySavedCodes() {
     enableDragAndDrop();
 }
 
+
+
+
+
+function filterSavedCodes() {
+    const searchTerm = document.getElementById("searchConnectCode").value.toLowerCase();
+    const listItems = document.querySelectorAll("#savedUsersList li");
+
+    listItems.forEach((item) => {
+        const code = item.querySelector("a").textContent.toLowerCase();
+        item.style.display = code.includes(searchTerm) ? "flex" : "none";
+    });
+}
 
 
 function deleteSavedCode(code) {
