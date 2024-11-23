@@ -26,6 +26,21 @@ function toggleSaveFilesVisibility() {
     }
 }
 
+
+function listSaveFiles() {
+    console.log("Initializing saved files list...");
+    const saveFilesContainer = document.getElementById('saveFilesContainer');
+    if (!saveFilesContainer) {
+        console.error("Save files container not found.");
+        return;
+    }
+
+    // Dummy example for debugging
+    saveFilesContainer.innerHTML = '<p>Example Saved File 1</p>';
+    console.log("Saved files list populated.");
+}
+
+
 // Ensure the saved files list is properly initialized on page load
 window.addEventListener('load', () => {
     const savedFilesContent = document.getElementById('savedFilesContent');
@@ -34,20 +49,10 @@ window.addEventListener('load', () => {
         toggleButton.style.display = 'block';
         savedFilesContent.style.display = 'none';
         toggleButton.textContent = 'Show Saved Files';
-        listSaveFiles(); // Initialize the saved files list on page load
+        listSaveFiles(); // Populate saved files list
     }
 });
 
-// save file list
-window.addEventListener('load', () => {
-    const saveFilesList = document.getElementById('saveFilesList');
-    
-    if (saveFilesList) {
-        // Ensure the save files list is positioned correctly
-        saveFilesList.style.top = '60px'; // Adjust to avoid overlap
-        saveFilesList.style.right = '10px';
-        saveFilesList.style.position = 'fixed';
-    }
-});
+
 
 
