@@ -1,210 +1,134 @@
-
+// Initialize the page when DOM is fully loaded
 document.addEventListener("DOMContentLoaded", () => {
-    // Function to adjust the saved-users-container to stay on top
-    function adjustSavedUsersContainer() {
-        const savedUsersContainer = document.querySelector(".saved-users-container");
-        const navbar = document.querySelector(".navbar");
+    populateDropdown();
+    displaySavedCodes();
+    setupKeyListeners();
+    bindIframeButtons();
+});
+// Function to create a new custom list
+function createCustomList() {
+    const customLists = JSON.parse(localStorage.getItem("customLists")) || {};
+    const newListName = prompt("Enter a name for the new custom list:");
 
-        if (savedUsersContainer && navbar) {
-            const navbarHeight = navbar.offsetHeight; // Dynamically get navbar height
-            savedUsersContainer.style.position = "absolute"; // Allow it to float above other elements
-            savedUsersContainer.style.top = `${navbarHeight}px`; // Start just below the navbar
-            savedUsersContainer.style.left = "0"; // Align to the left of the viewport
-            savedUsersContainer.style.bottom = "0"; // Stretch to the bottom
-            savedUsersContainer.style.width = "20%"; // Sidebar width
-            savedUsersContainer.style.height = `calc(100% - ${navbarHeight}px)`; // Adjust height dynamically
-            savedUsersContainer.style.zIndex = "100"; // Ensure it stacks above other elements
-            savedUsersContainer.style.overflowY = "auto"; // Enable vertical scrolling
-            savedUsersContainer.style.backgroundColor = "#2b2b2b"; // Maintain styling
-        }
+    if (!newListName || newListName.trim() === "") {
+        alert("List name cannot be empty.");
+        return;
     }
 
-    // Run the adjustment when the DOM is fully loaded
-    adjustSavedUsersContainer();
+    if (customLists[newListName]) {
+        alert(`The list "${newListName}" already exists.`);
+        return;
+    }
 
-    // Re-adjust if the window is resized (optional)
-    window.addEventListener("resize", adjustSavedUsersContainer);
-});
+    customLists[newListName] = []; // Initialize the new list as empty
+    localStorage.setItem("customLists", JSON.stringify(customLists));
 
-// Existing functions like displaySavedCodes remain functional
+    // Update the dropdown with the new list
+    populateDropdown();
+    alert(`Custom list "${newListName}" has been created.`);
+}
+
+
+// **Dropdown and List Management**
+function populateDropdown() {
+    const dropdown = document.getElementById("customListsDropdown");
+    dropdown.innerHTML = '<option value="">Default List</option>'; // Reset with default option
+
+    const customLists = JSON.parse(localStorage.getItem("customLists")) || {};
+    for (const listName in customLists) {
+        const option = document.createElement("option");
+        option.value = listName;
+        option.textContent = listName;
+        dropdown.appendChild(option);
+    }
+}
+
+function deleteCustomList() {
+    const customListName = document.getElementById("customListsDropdown").value;
+
+    if (!customListName) {
+        alert("You cannot delete the default list.");
+        return;
+    }
+
+    const confirmation = confirm(`Are you sure you want to delete the list "${customListName}"?`);
+    if (!confirmation) return;
+
+    const customLists = JSON.parse(localStorage.getItem("customLists")) || {};
+    delete customLists[customListName];
+    localStorage.setItem("customLists", JSON.stringify(customLists));
+
+    populateDropdown();
+    displaySavedCodes();
+}
+
+// **Saved Codes Management**
 function displaySavedCodes() {
     const savedUsersList = document.getElementById("savedUsersList");
     const customListName = document.getElementById("customListsDropdown").value;
 
-
     savedUsersList.innerHTML = ""; // Clear list
 
+    const savedCodes = customListName
+        ? (JSON.parse(localStorage.getItem("customLists")) || {})[customListName] || []
+        : JSON.parse(localStorage.getItem("connectCodes")) || [];
 
-    if (customListName) {
-        const customLists = JSON.parse(localStorage.getItem("customLists")) || {};
-        const savedCodes = customLists[customListName] || [];
+    savedCodes.forEach((code) => {
+        const listItem = createListItem(code);
+        savedUsersList.appendChild(listItem);
+    });
 
-        savedCodes.forEach((code) => {
-            const listItem = createListItem(code);
-            savedUsersList.appendChild(listItem);
-        });
-    } else {
-        const savedCodes = JSON.parse(localStorage.getItem("connectCodes")) || [];
-
-        savedCodes.forEach((code) => {
-            const listItem = createListItem(code);
-            savedUsersList.appendChild(listItem);
-        });
-    }
-
-    // Ensure scrollability
-    const savedUsersContainer = document.querySelector(".saved-users-container");
-    if (savedUsersContainer) {
-        savedUsersContainer.style.overflowY = "auto";
-    }
+    enableDragAndDrop();
 }
 
-
-// Function to open the iframe with the specified connect code
-function openIframeWithCode(connectCode) {
-    const iframe = document.getElementById("slippiFrame");
-    const iframeContainer = document.getElementById("iframe-container");
-    const iframeControls = document.getElementById("iframe-controls");
-
-    // Set the iframe source
-    iframe.src = `https://slippi.gg/user/${encodeURIComponent(connectCode)}`;
-
-    // Configure the iframe container
-    iframeContainer.style.display = "flex"; // Use Flexbox layout
-    iframeContainer.style.position = "relative"; // Allow absolute positioning inside
-    iframeContainer.style.height = "100%"; // Ensure full height
-    iframeContainer.style.width = "100%"; // Ensure full width
-
-    // Position the controls at the top-right corner
-    iframeControls.style.position = "absolute";
-    iframeControls.style.top = "10px"; // Offset from the top
-    iframeControls.style.right = "10px"; // Offset from the right
-    iframeControls.style.display = "flex"; // Arrange buttons horizontally
-    iframeControls.style.gap = "5px"; // Space between buttons
-    iframeControls.style.zIndex = "10"; // Ensure controls are above the iframe
-
-    // Ensure the iframe fills the container
-    iframe.style.height = "100%";
-    iframe.style.width = "100%";
-
-    console.log(`Iframe opened for code: ${connectCode}`);
-}
-
-// Function to minimize the iframe
-function minimizeIframe() {
-    const iframeContainer = document.getElementById("iframe-container");
-    const iframe = document.getElementById("slippiFrame");
-
-    if (!iframeContainer || !iframe) {
-        console.error("Iframe or container not found");
-        return;
-    }
-
-    // Toggle between minimized and full height
-    if (iframeContainer.style.height === "50px") {
-        iframeContainer.style.height = "100%"; // Restore full height
-        iframe.style.height = "100%"; // Ensure iframe fills container
-    } else {
-        iframeContainer.style.height = "50px"; // Minimize container height
-        iframe.style.height = "50px"; // Match iframe height to container
-    }
-}
-
-// Function to close the iframe
-function closeIframe() {
-    const iframe = document.getElementById("slippiFrame");
-    const iframeContainer = document.getElementById("iframe-container");
-
-    if (!iframe || !iframeContainer) {
-        console.error("Iframe or container not found");
-        return;
-    }
-
-    iframe.src = ""; // Clear iframe content
-    iframeContainer.style.display = "none"; // Hide iframe container
-    iframeContainer.style.height = "100%"; // Reset height for reopening
-}
-
-// Function to format the connect code input
-function formatConnectCode() {
-    const input = document.getElementById("connectCode");
-    let value = input.value.toUpperCase().replace(/[^A-Z0-9]/g, ""); // Clean input
-
-    // Extract letters (up to 5) and numbers (up to 4)
-    const letters = value.match(/[A-Z]{0,5}/)?.[0] || "";
-    const numbers = value.slice(letters.length).match(/\d{0,4}/)?.[0] || "";
-
-    // Update input value in the format "LETTERS-NUMBERS"
-    input.value = letters + (numbers ? `-${numbers}` : "");
-}
-
-// Function to open the Slippi page in the iframe
-function openSlippiPage() {
-    const connectCode = document.getElementById("connectCode").value.trim();
-    const validFormat = /^[A-Z]{1,5}-\d{1,4}$/;
-
-    if (!validFormat.test(connectCode)) {
-        alert("Please enter a valid connect code in the format AAAAA-1111.");
-        return;
-    }
-
-    // Check if the save toggle is enabled
-    const saveToggle = document.getElementById("saveToggle").checked;
-
-    if (saveToggle) {
-        saveConnectCode(connectCode);
-    }
-
-    // Update the iframe's src and show it
-    openIframeWithCode(connectCode);
-}
-
-// Function to save a connect code
 function saveConnectCode(code) {
     const customListName = document.getElementById("customListsDropdown").value;
-
-    // Retrieve all custom lists or create an empty object if none exist
     const customLists = JSON.parse(localStorage.getItem("customLists")) || {};
 
     if (customListName) {
-        // Save to the selected custom list
-        if (!customLists[customListName]) {
-            customLists[customListName] = [];
-        }
-
-        // Avoid duplicate codes
+        customLists[customListName] = customLists[customListName] || [];
         if (!customLists[customListName].includes(code)) {
             customLists[customListName].push(code);
             localStorage.setItem("customLists", JSON.stringify(customLists));
         }
     } else {
-        // Save to the default list if no custom list is selected
-        let savedCodes = JSON.parse(localStorage.getItem("connectCodes")) || [];
-
+        const savedCodes = JSON.parse(localStorage.getItem("connectCodes")) || [];
         if (!savedCodes.includes(code)) {
             savedCodes.push(code);
             localStorage.setItem("connectCodes", JSON.stringify(savedCodes));
         }
     }
 
-    // Update the displayed list after saving
     displaySavedCodes();
 }
 
-// Function to create a list item for a saved connect code
+function deleteSavedCode(code) {
+    const customListName = document.getElementById("customListsDropdown").value;
+    const customLists = JSON.parse(localStorage.getItem("customLists")) || {};
+
+    if (customListName) {
+        customLists[customListName] = customLists[customListName].filter((savedCode) => savedCode !== code);
+        localStorage.setItem("customLists", JSON.stringify(customLists));
+    } else {
+        let savedCodes = JSON.parse(localStorage.getItem("connectCodes")) || [];
+        savedCodes = savedCodes.filter((savedCode) => savedCode !== code);
+        localStorage.setItem("connectCodes", JSON.stringify(savedCodes));
+    }
+
+    displaySavedCodes();
+}
+
+// **List Item Creation**
 function createListItem(code) {
     const listItem = document.createElement("li");
 
     const link = document.createElement("a");
     link.textContent = code;
     link.href = "#";
-    link.style.color = "inherit";
-    link.style.textDecoration = "none";
-
-    // Add event listener to open iframe with the correct connect code
+    link.classList.add("connect-code-link");
     link.addEventListener("click", (e) => {
-        e.preventDefault(); // Prevent default anchor behavior
-        openIframeWithCode(code); // Open iframe with the connect code
+        e.preventDefault();
+        openIframeWithCode(code);
     });
 
     listItem.appendChild(link);
@@ -213,54 +137,94 @@ function createListItem(code) {
     deleteButton.textContent = "Delete";
     deleteButton.className = "delete-button";
     deleteButton.addEventListener("click", (e) => {
-        e.stopPropagation(); // Prevent triggering link click
-        deleteSavedCode(code); // Delete the connect code
+        e.stopPropagation();
+        deleteSavedCode(code);
     });
 
     listItem.appendChild(deleteButton);
     listItem.draggable = true;
+
     return listItem;
 }
 
-// Function to display saved connect codes
-function displaySavedCodes() {
-    const savedUsersList = document.getElementById("savedUsersList");
-    const customListName = document.getElementById("customListsDropdown").value;
+// **Iframe Controls**
+function openIframeWithCode(connectCode) {
+    const iframe = document.getElementById("slippiFrame");
+    const iframeContainer = document.getElementById("iframe-container");
 
-    savedUsersList.innerHTML = ""; // Clear list
+    iframe.src = `https://slippi.gg/user/${encodeURIComponent(connectCode)}`;
+    iframeContainer.style.display = "flex";
+}
 
-    if (customListName) {
-        const customLists = JSON.parse(localStorage.getItem("customLists")) || {};
-        const savedCodes = customLists[customListName] || [];
+function closeIframe() {
+    const iframe = document.getElementById("slippiFrame");
+    iframe.src = "";
+    document.getElementById("iframe-container").style.display = "none";
+}
 
-        savedCodes.forEach((code) => {
-            const listItem = createListItem(code);
-            savedUsersList.appendChild(listItem);
-        });
-    } else {
-        const savedCodes = JSON.parse(localStorage.getItem("connectCodes")) || [];
+function minimizeIframe() {
+    const iframeContainer = document.getElementById("iframe-container");
+    iframeContainer.style.height =
+        iframeContainer.style.height === "50px" ? "100%" : "50px";
+}
 
-        savedCodes.forEach((code) => {
-            const listItem = createListItem(code);
-            savedUsersList.appendChild(listItem);
-        });
+// Function to enforce formatting with a maximum of 3 numbers
+function formatConnectCode() {
+    const input = document.getElementById("connectCode");
+    let value = input.value.toUpperCase(); // Convert to uppercase
+    value = value.replace(/[^A-Z0-9]/g, ""); // Remove non-alphanumeric characters
+
+    // Separate letters and numbers
+    const letters = value.match(/[A-Z]/g) || [];
+    const numbers = value.match(/[0-9]/g) || [];
+
+    // Enforce limits: max 5 letters, max 3 numbers
+    const formattedLetters = letters.slice(0, 5).join("");
+    const formattedNumbers = numbers.slice(0, 3).join("");
+
+    // Combine with a hyphen
+    input.value = formattedLetters + (formattedNumbers ? `-${formattedNumbers}` : "");
+}
+
+
+function openSlippiPage() {
+    const connectCode = document.getElementById("connectCode").value.trim();
+    const validFormat = /^[A-Z]{1,5}-\d{1,3}$/;
+
+    if (!validFormat.test(connectCode)) {
+        alert("Invalid format. Use ABCDE-123.");
+        return;
     }
 
-    // Ensure scrollability
-    const savedUsersContainer = document.querySelector(".saved-users-container");
-    savedUsersContainer.style.overflowY = "auto";
+    if (document.getElementById("saveToggle").checked) {
+        saveConnectCode(connectCode);
+    }
 
-        // Adjust the top position of the saved-users-container
-        savedUsersContainer.style.top = `${navbarHeight}px`; // Push down by navbar's height
-        savedUsersContainer.style.height = `calc(100% - ${navbarHeight}px)`; // Adjust height to fill remaining space
-   
- savedUsersContainer.style.position = "absolute"; // Allow it to stretch freely
-        savedUsersContainer.style.top = "0"; // Align to the top of the viewport
-        savedUsersContainer.style.left = "0"; // Align to the left
-        savedUsersContainer.style.bottom = "0"; // Extend to the bottom
-        savedUsersContainer.style.width = "20%"; // Adjust width if needed
-        savedUsersContainer.style.height = "100%"; // Occupy full vertical space
-        savedUsersContainer.style.overflowY = "auto"; // Allow vertical scrolling if content exceeds height
-    
+    openIframeWithCode(connectCode);
+}
 
+function filterSavedCodes() {
+    const searchTerm = document.getElementById("searchConnectCode").value.toLowerCase();
+    document.querySelectorAll("#savedUsersList li").forEach((item) => {
+        const code = item.textContent.toLowerCase();
+        item.style.display = code.includes(searchTerm) ? "flex" : "none";
+    });
+}
+
+function enableDragAndDrop() {
+    // Add drag-and-drop functionality
+}
+
+function setupKeyListeners() {
+    const connectCodeInput = document.getElementById("connectCode");
+    connectCodeInput.addEventListener("keydown", (event) => {
+        if (event.key === "Enter") {
+            openSlippiPage();
+        }
+    });
+}
+
+function bindIframeButtons() {
+    document.getElementById("minimizeButton").addEventListener("click", minimizeIframe);
+    document.getElementById("closeButton").addEventListener("click", closeIframe);
 }
