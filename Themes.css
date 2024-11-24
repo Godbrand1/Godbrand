@@ -1,0 +1,175 @@
+/* Default Theme (Base) */
+body.default-theme {
+    background: #2b2b2b; /* Dark gray */
+    color: #f0f0f0; /* Light text */
+}
+
+.default-theme .navbar {
+    background: #4CAF50; /* Green */
+}
+
+.default-theme .nav-link {
+    background: #333333; /* Darker gray */
+    color: #f0f0f0; /* Light text */
+}
+
+.default-theme .saved-users-container {
+    background: #424242; /* Dark gray */
+    color: #f0f0f0;
+}
+
+.default-theme .saved-users-container li:hover {
+    background: #2f4f4f; /* Dark slate gray */
+}
+
+.default-theme input, .default-theme select, .default-theme textarea, .default-theme button {
+    background: #333333; /* Darker gray */
+    color: #ffffff;
+}
+
+/* Light Theme */
+body.light-theme {
+    background: #f7f7f7; /* Off-white */
+    color: #333333; /* Dark text */
+}
+
+.light-theme .navbar {
+    background: #ffffff; /* White */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.light-theme .nav-link {
+    background: #eeeeee; /* Light gray */
+    color: #333333;
+}
+
+.light-theme .saved-users-container {
+    background: #ffffff; /* White */
+    color: #333333;
+}
+
+.light-theme .saved-users-container li:hover {
+    background: #d3d3d3; /* Light gray */
+}
+
+.light-theme input, .light-theme select, .light-theme textarea, .light-theme button {
+    background: #ffffff;
+    color: #333333;
+    border: 1px solid #cccccc;
+}
+
+/* Blue Theme */
+body.blue-theme {
+    background: linear-gradient(135deg, #001f3f, #00509e); /* Blue gradient */
+    color: #ffffff;
+}
+
+.blue-theme .navbar {
+    background: #0074d9;
+}
+
+.blue-theme .nav-link {
+    background: #00509e;
+    color: #ffffff;
+}
+
+.blue-theme .saved-users-container {
+    background: #003f7f; /* Deep blue */
+    color: #ffffff;
+}
+
+.blue-theme .saved-users-container li:hover {
+    background: #007fff; /* Bright blue */
+}
+
+.blue-theme input, .blue-theme select, .blue-theme textarea, .blue-theme button {
+    background: #00509e;
+    color: #ffffff;
+}
+
+/* Purple Theme */
+body.purple-theme {
+    background: radial-gradient(circle, #3f0071, #6a0dad); /* Purple gradient */
+    color: #ffffff;
+}
+
+.purple-theme .navbar {
+    background: #6a0dad;
+}
+
+.purple-theme .nav-link {
+    background: #4b0082; /* Indigo */
+    color: #ffffff;
+}
+
+.purple-theme .saved-users-container {
+    background: #4b0082; /* Indigo */
+    color: #ffffff;
+}
+
+.purple-theme .saved-users-container li:hover {
+    background: #8a2be2; /* Bright purple */
+}
+
+.purple-theme input, .purple-theme select, .purple-theme textarea, .purple-theme button {
+    background: #4b0082;
+    color: #ffffff;
+}
+
+/* Green Theme */
+body.green-theme {
+    background: linear-gradient(135deg, #003f00, #00c000); /* Green gradient */
+    color: #ffffff;
+}
+
+.green-theme .navbar {
+    background: #008000;
+}
+
+.green-theme .nav-link {
+    background: #005000; /* Dark green */
+    color: #ffffff;
+}
+
+.green-theme .saved-users-container {
+    background: #003f00; /* Deep green */
+    color: #ffffff;
+}
+
+.green-theme .saved-users-container li:hover {
+    background: #00ff00; /* Bright green */
+}
+
+.green-theme input, .green-theme select, .green-theme textarea, .green-theme button {
+    background: #005000;
+    color: #ffffff;
+}
+
+/* Orange Theme */
+body.orange-theme {
+    background: radial-gradient(circle, #3f2d00, #ff8c42); /* Orange gradient */
+    color: #ffffff;
+}
+
+.orange-theme .navbar {
+    background: #ff851b;
+}
+
+.orange-theme .nav-link {
+    background: #ff8c42; /* Deep orange */
+    color: #ffffff;
+}
+
+.orange-theme .saved-users-container {
+    background: #3f2d00; /* Deep orange-brown */
+    color: #ffffff;
+}
+
+.orange-theme .saved-users-container li:hover {
+    background: #ffa559; /* Bright orange */
+}
+
+.orange-theme input, .orange-theme select, .orange-theme textarea, .orange-theme button {
+    background: #ff8c42;
+    color: #ffffff;
+}
