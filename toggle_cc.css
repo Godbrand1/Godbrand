@@ -1,3 +1,35 @@
+/* Ensure iframe controls are visible */
+#iframe-controls {
+outline: 2px solid green; /* Highlight the controls area */
+    display: flex;
+    justify-content: flex-end; /* Align buttons to the right */
+    gap: 10px; /* Add space between buttons */
+    padding: 10px; /* Add padding for visibility */
+    background-color: #3a3a3a; /* Match the iframe container background */
+    border-bottom: 1px solid #4CAF50; /* Optional: Add a separator */
+    z-index: 10; /* Ensure it's on top of other content */
+}
+
+/* Style the buttons for better visibility */
+#minimizeButton, #closeButton {
+    padding: 5px 10px;
+    font-size: 14px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+
+#minimizeButton:hover {
+    background-color: #e6b800; /* Darker yellow on hover */
+}
+
+
+#closeButton:hover {
+    background-color: #d43f3f; /* Darker red on hover */
+}
+
+
 a {
     color: white;
     text-decoration: none; /* Optional: Removes underline */
@@ -194,21 +226,29 @@ body {
     background-color: #3e8e41; /* Slightly darker green */
 }
 
+/* Prevent the iframe container from being cut off */
+/* Ensure the iframe container uses the full available space */
 #iframe-container {
-    flex: 1; /* Take remaining space */
+    position: relative; /* Enable absolute positioning for children */
     display: flex;
     flex-direction: column;
+    height: 100%;
+    width: 100%;
     background-color: #3a3a3a;
     border-radius: 8px;
-    padding: 10px;
-    overflow: hidden;
+    overflow: hidden; /* Prevent overflow issues */
+    z-index: 10; /* Ensure it appears above other elements */
 }
 
+/* Style the iframe itself to fit the container */
 #iframe-container iframe {
-    flex: 1; /* Allow iframe to stretch */
-    width: 100%; /* Full width */
+    flex: 1; /* Allow the iframe to take up remaining space */
+    width: 100%;
+    height: 100%;
     border: none;
+    border-radius: 8px;
 }
+
 /* Main Container */
 .main-container {
     display: flex;

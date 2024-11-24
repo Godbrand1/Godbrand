@@ -4,6 +4,9 @@ document.addEventListener("DOMContentLoaded", () => {
     displaySavedCodes();
     setupKeyListeners();
     bindIframeButtons();
+document.getElementById("minimizeButton").addEventListener("click", minimizeIframe);
+document.getElementById("closeButton").addEventListener("click", closeIframe);
+
 });
 // Function to create a new custom list
 function createCustomList() {
@@ -147,6 +150,7 @@ function createListItem(code) {
     return listItem;
 }
 
+
 // **Iframe Controls**
 function openIframeWithCode(connectCode) {
     const iframe = document.getElementById("slippiFrame");
@@ -154,19 +158,83 @@ function openIframeWithCode(connectCode) {
 
     iframe.src = `https://slippi.gg/user/${encodeURIComponent(connectCode)}`;
     iframeContainer.style.display = "flex";
+    iframeContainer.style.height = "100%"; // Ensure full height
+    iframeContainer.style.width = "100%"; // Ensure full width
+    iframe.style.width = "100%"; // Match container width
+    iframe.style.height = "calc(100% - 50px)"; // Subtract controls' height
 }
 
-function closeIframe() {
-    const iframe = document.getElementById("slippiFrame");
-    iframe.src = "";
-    document.getElementById("iframe-container").style.display = "none";
-}
 
 function minimizeIframe() {
     const iframeContainer = document.getElementById("iframe-container");
-    iframeContainer.style.height =
-        iframeContainer.style.height === "50px" ? "100%" : "50px";
+
+    if (!iframeContainer) {
+        console.error("Iframe container not found.");
+        return;
+    }
+
+    // Get the computed dimensions (fallback for initial state)
+    const currentHeight = iframeContainer.style.height || window.getComputedStyle(iframeContainer).height;
+    const currentWidth = iframeContainer.style.width || window.getComputedStyle(iframeContainer).width;
+
+    // Normalize dimensions for comparison
+    const isMinimized = currentHeight === "10%" && currentWidth === "10%";
+
+    if (isMinimized) {
+        // Restore to full size
+        iframeContainer.style.height = "100%";
+        iframeContainer.style.width = "100%";
+        iframeContainer.style.overflow = "visible"; // Ensure content is visible
+        console.log("Iframe maximized: Full height and width restored.");
+    } else {
+        // Minimize to 10% of screen size
+        iframeContainer.style.height = "10%";
+        iframeContainer.style.width = "10%";
+        iframeContainer.style.overflow = "hidden"; // Hide overflow content
+        console.log("Iframe minimized: Height and width set to 10%.");
+    }
 }
+
+
+function maximizeIframe() {
+    const iframeContainer = document.getElementById("iframe-container");
+
+    if (!iframeContainer) {
+        console.error("Iframe container not found.");
+        return;
+    }
+
+    // Get the computed dimensions (fallback for initial state)
+    const currentHeight = iframeContainer.style.height || window.getComputedStyle(iframeContainer).height;
+    const currentWidth = iframeContainer.style.width || window.getComputedStyle(iframeContainer).width;
+
+    // Normalize dimensions for comparison
+    const isMinimized = currentHeight === "10%" && currentWidth === "10%";
+
+    if (isMinimized) {
+        // Restore to full size
+        iframeContainer.style.height = "100%";
+        iframeContainer.style.width = "100%";
+        iframeContainer.style.overflow = "visible"; // Ensure content is visible
+        console.log("Iframe maximized: Full height and width restored.");
+    } else {
+        // Minimize to 10% of screen size
+        iframeContainer.style.height = "10%";
+        iframeContainer.style.width = "10%";
+        iframeContainer.style.overflow = "hidden"; // Hide overflow content
+        console.log("Iframe minimized: Height and width set to 10%.");
+    }
+}
+
+
+function closeIframe() {
+    const iframeContainer = document.getElementById("iframe-container");
+    const iframe = document.getElementById("slippiFrame");
+    iframe.src = ""; // Clear iframe content
+    iframeContainer.style.display = "none"; // Hide the container
+    console.log("Close button clicked");
+}
+
 
 // Function to enforce formatting with a maximum of 3 numbers
 function formatConnectCode() {
