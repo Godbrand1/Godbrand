@@ -1,67 +1,3 @@
-/* Ensure iframe controls are visible */
-#iframe-controls {
-outline: 2px solid green; /* Highlight the controls area */
-    display: flex;
-    justify-content: flex-end; /* Align buttons to the right */
-    gap: 10px; /* Add space between buttons */
-    padding: 10px; /* Add padding for visibility */
-    background-color: #3a3a3a; /* Match the iframe container background */
-    border-bottom: 1px solid #4CAF50; /* Optional: Add a separator */
-    z-index: 10; /* Ensure it's on top of other content */
-}
-
-/* Style the buttons for better visibility */
-#minimizeButton, #closeButton {
-    padding: 5px 10px;
-    font-size: 14px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-}
-
-
-#minimizeButton:hover {
-    background-color: #e6b800; /* Darker yellow on hover */
-}
-
-
-#closeButton:hover {
-    background-color: #d43f3f; /* Darker red on hover */
-}
-
-
-a {
-    color: white;
-    text-decoration: none; /* Optional: Removes underline */
-}
-
-a:hover {
-    text-decoration: underline; /* Optional: Adds underline on hover */
-    color: #f0f0f0; /* Optional: Slightly lighter color on hover */
-}
-
-
-/* Drag-and-drop styles */
-.draggable-list li {
-    padding: 10px;
-    background-color: #3a3a3a;
-    color: #ffffff;
-    border-radius: 4px;
-    cursor: grab; /* Indicate draggable item */
-    transition: background-color 0.3s ease;
-}
-
-.draggable-list li.dragging {
-    opacity: 0.5; /* Semi-transparent while dragging */
-}
-
-.draggable-list li.placeholder {
-    background-color: #6A6A6A; /* Gray background */
-    border: 2px dashed #4CAF50; /* Dashed border */
-    height: 40px; /* Match the height of list items */
-}
-
-
 /* General Reset */
 * {
     box-sizing: border-box;
@@ -69,59 +5,200 @@ a:hover {
     padding: 0;
 }
 
-/* Connect Code Section Heading */
+/* Body Styling */
+body {
+    background-color: #2b2b2b;
+    color: #f0f0f0;
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    text-align: center;
+}
+
+/* Navbar Styling */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #4CAF50;
+    padding: 10px 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+.navbar .nav-link {
+    color: #ffffff;
+    font-size: 16px;
+    text-decoration: none;
+    margin: 0 10px;
+    padding: 6px 12px;
+    border-radius: 6px;
+    transition: background-color 0.2s ease;
+}
+
+.navbar .nav-link:hover {
+    background-color: #3e8e41;
+    color: #f0f0f0;
+}
+
+
+/* Dropdown Styling */
+select {
+    width: 100%; /* Full width */
+    max-width: 400px; /* Consistent with other inputs */
+    padding: 12px 16px; /* Padding for usability */
+    font-size: 16px; /* Match input font size */
+    font-weight: bold;
+    color: white; /* White text for visibility */
+    background-color: #333333; /* Dark background */
+    border: 2px solid #333333; /* Match input default border */
+    border-radius: 8px; /* Rounded edges */
+    outline: none; /* Remove default focus outline */
+    transition: border-color 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+    appearance: none; /* Remove default dropdown arrow for consistency */
+    cursor: pointer; /* Add pointer to show interactivity */
+}
+
+/* Dropdown Hover Effect */
+select:hover {
+    background-color: #3e3e3e; /* Slightly lighter background */
+}
+
+/* Dropdown Focus Glow */
+select:focus {
+    border-color: rgba(0, 123, 255, 0.8); /* Blue border on focus */
+    box-shadow: 0 0 8px rgba(0, 123, 255, 0.8); /* Blue glow */
+}
+
+/* Dropdown Options Styling */
+select option {
+    background-color: #333333; /* Same dark background */
+    color: white; /* White text for visibility */
+    padding: 12px; /* Padding for options */
+    font-size: 16px; /* Consistent font size */
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Dropdown Option Hover Effect */
+select option:hover {
+    background-color: #3e8e41; /* Slightly lighter green for hover */
+    color: white; /* Ensure text is visible */
+}
+
+
+
+/* Content Container */
+.content-container {
+    display: flex;
+    flex-direction: row;
+    flex: 1;
+    gap: 20px;
+    overflow: hidden;
+    height: 100vh;
+}
+
+/* Saved Users Container */
+.saved-users-container {
+    flex: 0 0 25%;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    background-color: #424242;
+    border-radius: 8px;
+    overflow-y: auto;
+}
+
+.saved-users-container h3 {
+    color: #4CAF50;
+}
+
+.saved-users-container ul {
+    flex: 1;
+    overflow-y: auto;
+    border: 1px solid #4CAF50;
+    border-radius: 8px;
+    background: #3a3a3a;
+    padding: 10px;
+}
+
+.saved-users-container li {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    margin-bottom: 10px;
+    background: #3a3a3a;
+    border-radius: 4px;
+    transition: background 0.3s ease;
+}
+
+.saved-users-container li:hover {
+    background: #4CAF50;
+    color: white;
+}
+
+.saved-users-container li .delete-button {
+    background: #ff4c4c;
+    border: none;
+    padding: 5px 10px;
+    color: white;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+/* Connect Code Section */
+.connect-code-section {
+    padding: 20px;
+    background-color: #333;
+    color: white;
+    border-bottom: 2px solid #4CAF50;
+}
+
 .connect-code-section h1 {
-    color: orange; /* Set the heading color to orange */
-    font-size: 28px; /* Ensure the font size stands out */
-    margin-bottom: 16px; /* Add spacing below the heading */
-}
-
-
-/* Connect Code Input Box */
-/* Input Field Styling */
-#connectCode {
-    transition: border-color 0.3s ease;
-}
-
-#connectCodeError {
-    margin-top: 5px;
-    font-size: 0.9em;
-    color: red;
-    display: none;
-}
-
-.connect-code-section #connectCode {
-    width: 100%; /* Full width of the parent container */
-    max-width: 400px; /* Limit the maximum width */
-    padding: 12px 16px; /* Add padding for better usability */
-    font-size: 16px; /* Increase font size for readability */
-    border: 2px solid #4CAF50; /* Green border for style */
-    border-radius: 8px; /* Rounded corners */
-    background-color: #333333; /* Dark background for contrast */
-    color: #ffffff; /* White text */
-    outline: none; /* Remove default outline */
-    transition: border-color 0.3s ease, box-shadow 0.3s ease;
-}
-
-.connect-code-section #connectCode:focus {
-    border-color: orange; /* Orange border on focus */
-    box-shadow: 0 0 8px orange; /* Subtle glow effect */
+    color: orange;
+    font-size: 28px;
+    margin-bottom: 16px;
 }
 
 .connect-code-section label {
-    font-size: 16px; /* Slightly larger label font */
-    display: block; /* Ensure label appears above the input */
-    margin-bottom: 8px; /* Add space between label and input */
-    color: #f0f0f0; /* Match label color with the theme */
+    font-size: 16px;
+    display: block;
+    margin-bottom: 8px;
+    color: #f0f0f0;
 }
+
+/* Text Box Styling */
+.connect-code-section #connectCode,
+input[type="text"], input[type="email"], textarea {
+    width: 100%;
+    max-width: 400px;
+    padding: 12px 16px;
+    font-size: 16px;
+    border: 2px solid #333333; /* Initial dark border */
+    border-radius: 8px;
+    background-color: #333333;
+    color: #ffffff;
+    outline: none;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+#connectCode:focus, input[type="text"]:focus, input[type="email"]:focus, textarea:focus {
+    border-color: orange !important; /* Orange border only */
+    box-shadow: 0 0 8px rgba(255, 165, 0, 0.8); /* Orange glow */
+}
+
+/* Ensure Textarea Behavior */
+textarea {
+    resize: vertical;
+    min-height: 80px;
+}
+
 /* Toggle Container */
 .toggle-container {
     display: flex;
-    flex-direction: column; /* Stack items vertically */
-    align-items: center; /* Center items horizontally */
-    justify-content: center; /* Center items vertically */
-    gap: 16px; /* Add spacing between each element */
-    margin-top: 16px; /* Optional: Adjust spacing from the top */
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    margin-top: 16px;
 }
 
 /* Slider Toggle */
@@ -163,7 +240,7 @@ a:hover {
 }
 
 input:checked + .slider {
-    background-color: #4CAF50; /* Green background when checked */
+    background-color: #4CAF50;
 }
 
 input:checked + .slider:before {
@@ -171,9 +248,85 @@ input:checked + .slider:before {
 }
 
 /* Button Styling */
+/* General Button Styling */
+button {
+    padding: 8px 16px;
+    font-size: 14px;
+    font-weight: bold;
+    color: white; /* Ensure text is always visible */
+    background-color: #4CAF50; /* Default green background */
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.2s ease;
+}
+
+/* Button Hover Glow Effect */
+button:hover {
+    background-color: #3e8e41; /* Slightly darker green */
+    box-shadow: 0 0 8px rgba(0, 123, 255, 0.8); /* Blue glow */
+    transform: scale(1.05); /* Add subtle scale effect */
+}
+
+/* Button Focus Glow Effect */
+button:focus {
+    outline: none; /* Remove default focus outline */
+    box-shadow: 0 0 8px rgba(0, 123, 255, 0.8); /* Blue glow */
+    border: 2px solid rgba(0, 123, 255, 0.8); /* Add a matching blue border */
+}
+
+/* Minimize and Close Button Specific Styling */
+#minimizeButton {
+    background-color: #ffcc00; /* Yellow for Minimize */
+    color: black; /* Ensure text is visible on yellow background */
+}
+
+#minimizeButton:hover {
+    background-color: #e6b800; /* Slightly darker yellow */
+    box-shadow: 0 0 8px rgba(0, 123, 255, 0.8); /* Blue glow */
+}
+
+#closeButton {
+    background-color: #ff4c4c; /* Red for Close */
+    color: white; /* Ensure text is visible */
+    margin-left: 10px;
+}
+
+#closeButton:hover {
+    background-color: #d43f3f; /* Slightly darker red */
+    box-shadow: 0 0 8px rgba(0, 123, 255, 0.8); /* Blue glow */
+}
+
+/* Navbar Button Styling */
+.navbar .nav-link {
+    color: white; /* Ensure text is visible */
+    font-size: 16px;
+    text-decoration: none;
+    margin: 0 10px;
+    padding: 6px 12px;
+    border-radius: 6px;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.2s ease;
+}
+
+/* Navbar Button Hover Effect */
+.navbar .nav-link:hover {
+    background-color: #3e8e41; /* Slightly darker green */
+    color: #f0f0f0; /* Light gray for better contrast */
+    box-shadow: 0 0 8px rgba(0, 123, 255, 0.8); /* Blue glow */
+    transform: scale(1.05); /* Add subtle scale effect */
+}
+
+/* Navbar Button Focus Glow Effect */
+.navbar .nav-link:focus {
+    outline: none; /* Remove default focus outline */
+    box-shadow: 0 0 8px rgba(0, 123, 255, 0.8); /* Blue glow */
+    border: 2px solid rgba(0, 123, 255, 0.8); /* Add a matching blue border */
+}
+
+/* Go Button Specific Styling */
 #goButton {
-    background-color: #4CAF50;
-    color: #ffffff;
+    background-color: #4CAF50; /* Default green background */
+    color: white; /* Ensure text is visible */
     border: none;
     padding: 10px 20px;
     font-size: 16px;
@@ -181,228 +334,54 @@ input:checked + .slider:before {
     text-transform: uppercase;
     border-radius: 4px;
     cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.2s ease;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.2s ease;
 }
 
 #goButton:hover {
-    background-color: #3e8e41;
-    transform: scale(1.05);
-}
-
-/* Label Text for "Saved Connect Codes" */
-.saved-connect-codes-label {
-    font-size: 16px;
-    font-weight: bold;
-    color: #f0f0f0;
-}
-body {
-    background-color: #2b2b2b;
-    color: #f0f0f0;
-    font-family: Arial, sans-serif;
-    line-height: 1.6;
-    text-align: center;
-}
-
-/* Navbar Styling */
-.navbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: #4CAF50;
-    padding: 10px 20px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-}
-/* Navbar Buttons Styling (Simple Updates) */
-.navbar .nav-link {
-    color: #ffffff; /* White text */
-    text-decoration: none;
-    font-size: 16px;
-    padding: 8px 12px;
-    border-radius: 4px;
-    transition: background-color 0.2s ease;
-}
-
-.navbar .nav-link:hover {
     background-color: #3e8e41; /* Slightly darker green */
+    box-shadow: 0 0 8px rgba(0, 123, 255, 0.8); /* Blue glow */
+    transform: scale(1.05); /* Add subtle scale effect */
 }
 
-/* Prevent the iframe container from being cut off */
-/* Ensure the iframe container uses the full available space */
+/* Iframe Section */
 #iframe-container {
-    position: relative; /* Enable absolute positioning for children */
+    position: relative;
     display: flex;
     flex-direction: column;
     height: 100%;
     width: 100%;
     background-color: #3a3a3a;
     border-radius: 8px;
-    overflow: hidden; /* Prevent overflow issues */
-    z-index: 10; /* Ensure it appears above other elements */
+    overflow: hidden;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    transition: height 0.3s ease, width 0.3s ease;
 }
 
-/* Style the iframe itself to fit the container */
 #iframe-container iframe {
-    flex: 1; /* Allow the iframe to take up remaining space */
+    flex: 1;
     width: 100%;
     height: 100%;
     border: none;
     border-radius: 8px;
 }
 
-/* Main Container */
-.main-container {
-    display: flex;
-    flex-direction: column;
-    height: 100vh; /* Full viewport height */
-}
-
-.content-container {
-    display: flex;
-    flex-direction: row; /* Saved users and iframe side-by-side */
-    flex: 1; /* Occupy the remaining vertical space */
-    gap: 20px; /* Add spacing between sections */
-    overflow: hidden; /* Prevent overflow */
-}
-
-/* Saved Users Container */
-.saved-users-container {
-    flex: 0 0 25%; /* Allocate 25% of the width for the saved users container */
-    display: flex;
-    flex-direction: column;
-    padding: 20px;
-    background-color: #424242;
-    border-radius: 8px;
-    overflow-y: auto;
-}
-
-.saved-users-container h3 {
-    color: #4CAF50;
-}
-
-.saved-users-container ul {
-    flex: 1; /* Fill available height */
-    overflow-y: auto;
-    border: 1px solid #4CAF50;
-    border-radius: 8px;
-    background: #3a3a3a;
-    padding: 10px;
-}
-
-.saved-users-container li {
-    display: flex;
-    justify-content: space-between;
-    padding: 10px;
-    margin-bottom: 10px;
-    background: #3a3a3a;
-    border-radius: 4px;
-    transition: background 0.3s ease;
-}
-
-.saved-users-container li:hover {
-    background: #4CAF50;
+/* Link Styling */
+a {
     color: white;
+    text-decoration: none;
+    transition: color 0.3s ease, text-decoration 0.3s ease;
 }
 
-.saved-users-container li .delete-button {
-    background: #ff4c4c;
-    border: none;
-    padding: 5px 10px;
-    color: white;
-    border-radius: 4px;
-    cursor: pointer;
+a:hover {
+    color: #f0f0f0;
+    text-decoration: underline;
 }
 
-/* Saved Users Container */
-.saved-users-container {
-    flex: 0 0 25%; /* Allocate fixed height (or width if row layout) */
-    display: flex;
-    flex-direction: column;
-    padding: 20px;
-    background-color: #424242;
-    border-radius: 8px;
-    overflow-y: auto; /* Allow scrolling if content exceeds height */
+a:focus, a:active {
+    outline: none;
+    color: #ffcc00;
 }
 
-
-/* Iframe Section */
-
-
-/* Theme Toggle Button (Minimal Style) */
-.theme-toggle-button {
-    background-color: #4CAF50; /* Match navbar green */
-    color: #ffffff;
-    border: none;
-    padding: 6px 12px;
-    font-size: 14px;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background-color 0.2s ease;
-}
-
-.theme-toggle-button:hover {
-    background-color: #3e8e41; /* Slightly darker green on hover */
-}
-
-/* Theme Toggle Button (Minimal Style) */
-.theme-toggle-button {
-    background-color: #4CAF50; /* Match navbar green */
-    color: #ffffff;
-    border: none;
-    padding: 6px 12px;
-    font-size: 14px;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background-color 0.2s ease;
-}
-
-.theme-toggle-button:hover {
-    background-color: #3e8e41; /* Slightly darker green on hover */
-}
-/* Slider Toggle Checkbox (Simple and Clean) */
-.slider-toggle {
-    position: relative;
-    display: inline-block;
-    width: 40px;
-    height: 20px;
-}
-
-.slider-toggle input {
-    opacity: 0;
-    width: 0;
-    height: 0;
-}
-
-.slider {
-    position: absolute;
-    cursor: pointer;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: #ccc;
-    border-radius: 10px;
-    transition: background-color 0.2s ease;
-}
-
-.slider:before {
-    position: absolute;
-    content: "";
-    height: 16px;
-    width: 16px;
-    left: 2px;
-    bottom: 2px;
-    background-color: white;
-    border-radius: 50%;
-    transition: transform 0.2s ease;
-}
-
-input:checked + .slider {
-    background-color: #4CAF50; /* Green background when checked */
-}
-
-input:checked + .slider:before {
-    transform: translateX(20px);
-}
 /* Responsive Design */
 @media (max-width: 768px) {
     .content-container {
