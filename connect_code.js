@@ -76,6 +76,7 @@ function displaySavedCodes() {
         ? (JSON.parse(localStorage.getItem("customLists")) || {})[customListName] || []
         : JSON.parse(localStorage.getItem("connectCodes")) || [];
 
+    // Render the saved codes in the correct order
     savedCodes.forEach((code) => {
         const listItem = createListItem(code);
         savedUsersList.appendChild(listItem);
@@ -125,6 +126,7 @@ function deleteSavedCode(code) {
 function createListItem(code) {
     const listItem = document.createElement("li");
 
+    // Create the clickable connect code link
     const link = document.createElement("a");
     link.textContent = code;
     link.href = "#";
@@ -134,8 +136,10 @@ function createListItem(code) {
         openIframeWithCode(code);
     });
 
+    // Append the link to the list item
     listItem.appendChild(link);
 
+    // Create and append the delete button
     const deleteButton = document.createElement("button");
     deleteButton.textContent = "Delete";
     deleteButton.className = "delete-button";
