@@ -28,16 +28,48 @@ function toggleSaveFilesVisibility() {
 
 
 function listSaveFiles() {
-    console.log("Initializing saved files list...");
     const saveFilesContainer = document.getElementById('saveFilesContainer');
     if (!saveFilesContainer) {
         console.error("Save files container not found.");
         return;
     }
+    saveFilesContainer.innerHTML = ''; // Clear existing entries
 
-    // Dummy example for debugging
-    saveFilesContainer.innerHTML = '<p>Example Saved File 1</p>';
-    console.log("Saved files list populated.");
+    const EXCLUDED_KEYS = RESERVED_NAMES;
+    let hasSavedFiles = false;
+
+    for (let i = 0; i < localStorage.length; i++) {
+        const key = localStorage.key(i);
+        if (EXCLUDED_KEYS.includes(key)) {
+            continue;
+        }
+
+        hasSavedFiles = true;
+
+        const saveFileDiv = document.createElement('div');
+        saveFileDiv.className = 'save-file-div';
+
+        const saveFileButton = document.createElement('button');
+        saveFileButton.className = 'save-file-button';
+        saveFileButton.textContent = key;
+        saveFileButton.onclick = () => loadTasksFromLocalStorageByName(key);
+
+        const deleteButton = document.createElement('span');
+        deleteButton.className = 'delete-save-file';
+        deleteButton.textContent = 'X';
+        deleteButton.setAttribute('aria-label', `Delete ${key}`);
+        deleteButton.onclick = (e) => {
+            e.stopPropagation();
+            deleteSaveFile(key);
+        };
+
+        saveFileDiv.appendChild(saveFileButton);
+        saveFileDiv.appendChild(deleteButton);
+        saveFilesContainer.appendChild(saveFileDiv);
+    }
+
+    const savedFilesContent = document.getElementById('savedFilesContent');
+    savedFilesContent.style.display = hasSavedFiles ? 'block' : 'none';
 }
 
 

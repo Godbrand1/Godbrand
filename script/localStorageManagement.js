@@ -7,6 +7,8 @@ const RESERVED_NAMES = [
     'Huel',
     'customLists',
     'dailyCalories'
+'iframeDimensions'
+'selectedTheme'
 ];
 
 function saveTasksWithName() {
