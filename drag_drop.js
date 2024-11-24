@@ -10,12 +10,15 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 
-    list.addEventListener("dragend", (e) => {
-        if (e.target.tagName === "LI") {
-            draggedItem = null;
-            e.target.classList.remove("dragging");
-        }
-    });
+list.addEventListener("dragend", (e) => {
+    if (e.target.tagName === "LI") {
+        draggedItem = null;
+        e.target.classList.remove("dragging");
+
+        // Save the updated order to local storage
+        saveListOrder();
+    }
+});
 
     list.addEventListener("dragover", (e) => {
         e.preventDefault();
@@ -26,6 +29,26 @@ document.addEventListener("DOMContentLoaded", () => {
             list.insertBefore(draggedItem, afterElement);
         }
     });
+
+function saveListOrder() {
+    const customListName = document.getElementById("customListsDropdown").value;
+
+    const listItems = [...list.children].map((item) => {
+        // Extract the connect code from the anchor tag inside the list item
+        const link = item.querySelector(".connect-code-link");
+        return link ? link.textContent.trim() : "";
+    });
+
+    const customLists = JSON.parse(localStorage.getItem("customLists")) || {};
+
+    if (customListName) {
+        customLists[customListName] = listItems;
+        localStorage.setItem("customLists", JSON.stringify(customLists));
+    } else {
+        localStorage.setItem("connectCodes", JSON.stringify(listItems));
+    }
+}
+
 
     function getDragAfterElement(container, y) {
         const draggableElements = [...container.querySelectorAll("li:not(.dragging)")];
