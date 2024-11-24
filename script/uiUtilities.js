@@ -1,3 +1,16 @@
+const EXCLUDED_KEYS = [
+    'wakeUpTime',
+    'connectCodes',
+    'bedTime',
+    'scheduleTasks',
+    'scheduleGenerated',
+    'Huel',
+    'customLists',
+    'dailyCalories',
+    'iframeDimensions',
+    'selectedTheme'
+];
+
 // uiUtilities.js
 
 window.toggleTheme = function () {
@@ -35,7 +48,7 @@ function listSaveFiles() {
     }
     saveFilesContainer.innerHTML = ''; // Clear existing entries
 
-    const EXCLUDED_KEYS = RESERVED_NAMES;
+    
     let hasSavedFiles = false;
 
     for (let i = 0; i < localStorage.length; i++) {

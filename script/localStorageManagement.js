@@ -6,11 +6,13 @@ const RESERVED_NAMES = [
     'scheduleGenerated',
     'Huel',
     'customLists',
-    'dailyCalories'
-'iframeDimensions'
-'selectedTheme'
+    'dailyCalories',
+    'iframeDimensions',
+    'selectedTheme'
 ];
+window.saveTasksWithName = saveTasksWithName;
 
+// Function to save tasks with a specified name
 function saveTasksWithName() {
     const saveFileNameInput = document.getElementById('saveFileName');
     const saveFileName = saveFileNameInput.value.trim();
@@ -19,6 +21,19 @@ function saveTasksWithName() {
         alert("Please enter a name for the save file.");
         return;
     }
+
+    const RESERVED_NAMES = [
+        'wakeUpTime',
+    'connectCodes',
+    'bedTime',
+    'scheduleTasks',
+    'scheduleGenerated',
+    'Huel',
+    'customLists',
+    'dailyCalories',
+'iframeDimensions',
+'selectedTheme'
+    ];
 
     if (RESERVED_NAMES.includes(saveFileName)) {
         alert(`"${saveFileName}" is a reserved name and cannot be used.`);
@@ -35,20 +50,22 @@ function saveTasksWithName() {
         for (let i = 1; i <= numTasks; i++) {
             const taskName = document.getElementById(`taskName${i}`)?.value;
             const duration = parseInt(document.getElementById(`duration${i}`)?.value || 0);
+
             if (!taskName || isNaN(duration) || duration <= 0) {
-                throw new Error("Invalid task data.");
+                throw new Error(`Invalid data for Task ${i}`);
             }
+
             tasks.push({ name: taskName, duration });
         }
 
-        // Save tasks to localStorage
+        // Save tasks to localStorage under the specified name
         localStorage.setItem(saveFileName, JSON.stringify(tasks));
         console.log(`Tasks saved as "${saveFileName}".`);
 
         // Refresh the list of saved files
         listSaveFiles();
 
-        // Clear the save file name input
+        // Clear the input field for the save file name
         saveFileNameInput.value = '';
     } catch (error) {
         console.error("Error saving tasks:", error);
