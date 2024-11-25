@@ -16,21 +16,20 @@ window.saveTasksWithName = saveTasksWithName;
 
 // Add this block to initialize the default "movement" tasks
 const defaultMovementTasks = [
-    { name: "Wavedashing (various patterns)", duration: 60 },
+    { name: "Wavedash", duration: 60 },
     { name: "Perfect Wavedashes", duration: 60 },
     { name: "Semi-perfect Wavedashes", duration: 60 },
-    { name: "Wavedash OOS (reversal training as well)", duration: 60 },
+    { name: "Wavedash out of shield", duration: 60 },
     { name: "Dash Wavedashing", duration: 60 },
-    { name: "Wavelanding (various stages)", duration: 60 },
     { name: "Dash Dancing", duration: 60 },
-    { name: "Ledge grab waveland", duration: 60 },
+    { name: "Ledge dash", duration: 60 },
     { name: "Shield drop", duration: 60 },
     { name: "Shield drop waveland", duration: 60 },
-    { name: "Dash SH FF Waveland", duration: 60 },
-    { name: "Phantasm to platforms (tops and sides)", duration: 60 },
-    { name: "DB OOC (don't need to practice, Y2 plus crouch = free)", duration: 60 },
-    { name: "Double jump wavelands (with or without shine)", duration: 60 },
-    { name: "Short hop waveland", duration: 60 }
+    { name: "Dash Short hop fast fall Waveland", duration: 60 },
+    { name: "Dash Back out of Crouch", duration: 60 },
+    { name: "Double jump wavelands", duration: 60 },
+    { name: "Short hop waveland", duration: 60 },
+    { name: "Wavelanding (various stages)", duration: 60 }
 ];
 
 // Check if "movement" is already saved
