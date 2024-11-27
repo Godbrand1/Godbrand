@@ -177,28 +177,21 @@ function minimizeIframe() {
         return;
     }
 
-    // Get the computed dimensions (fallback for initial state)
-    const currentHeight = iframeContainer.style.height || window.getComputedStyle(iframeContainer).height;
-    const currentWidth = iframeContainer.style.width || window.getComputedStyle(iframeContainer).width;
-
-    // Normalize dimensions for comparison
-    const isMinimized = currentHeight === "10%" && currentWidth === "10%";
+    // Check if already minimized
+    const isMinimized = iframeContainer.classList.contains("minimized");
 
     if (isMinimized) {
         // Restore to full size
-        iframeContainer.style.height = "100%";
-        iframeContainer.style.width = "100%";
-        iframeContainer.style.overflow = "visible"; // Ensure content is visible
+        iframeContainer.classList.remove("minimized");
+        iframeContainer.style.bottom = ''; // Clear inline styles if set
+        iframeContainer.style.right = '';
         console.log("Iframe maximized: Full height and width restored.");
     } else {
-        // Minimize to 10% of screen size
-        iframeContainer.style.height = "10%";
-        iframeContainer.style.width = "10%";
-        iframeContainer.style.overflow = "hidden"; // Hide overflow content
-        console.log("Iframe minimized: Height and width set to 10%.");
+        // Minimize with new dimensions
+        iframeContainer.classList.add("minimized");
+        console.log("Iframe minimized: Height set to 20%, width set to 25%.");
     }
 }
-
 
 function maximizeIframe() {
     const iframeContainer = document.getElementById("iframe-container");
@@ -208,27 +201,15 @@ function maximizeIframe() {
         return;
     }
 
-    // Get the computed dimensions (fallback for initial state)
-    const currentHeight = iframeContainer.style.height || window.getComputedStyle(iframeContainer).height;
-    const currentWidth = iframeContainer.style.width || window.getComputedStyle(iframeContainer).width;
-
-    // Normalize dimensions for comparison
-    const isMinimized = currentHeight === "10%" && currentWidth === "10%";
-
-    if (isMinimized) {
-        // Restore to full size
-        iframeContainer.style.height = "100%";
-        iframeContainer.style.width = "100%";
-        iframeContainer.style.overflow = "visible"; // Ensure content is visible
+    // Always restore full size
+    if (iframeContainer.classList.contains("minimized")) {
+        iframeContainer.classList.remove("minimized");
         console.log("Iframe maximized: Full height and width restored.");
     } else {
-        // Minimize to 10% of screen size
-        iframeContainer.style.height = "10%";
-        iframeContainer.style.width = "10%";
-        iframeContainer.style.overflow = "hidden"; // Hide overflow content
-        console.log("Iframe minimized: Height and width set to 10%.");
+        console.log("Iframe is already maximized.");
     }
 }
+
 
 
 function closeIframe() {
