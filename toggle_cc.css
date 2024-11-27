@@ -225,6 +225,7 @@ button:hover {
 }
 
 /* Iframe Section */
+/* Iframe Section */
 #iframe-container {
     flex: 1;
     background: #3a3a3a;
@@ -232,12 +233,45 @@ button:hover {
     overflow: hidden;
     display: flex;
     flex-direction: column;
+    position: fixed; /* For consistent positioning during minimization */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); /* Smooth animations */
+    z-index: 1000; /* Ensure it stays above other content */
 }
 
+/* Minimized state */
+#iframe-container.minimized {
+    height: 20%; /* Adjusted for a better aspect ratio */
+    width: 25%; /* Adjusted for aesthetics */
+    bottom: 10px; /* Position near the bottom */
+    right: 10px; /* Position near the right */
+    top: auto; /* Reset top position */
+    left: auto; /* Reset left position */
+    overflow: hidden; /* Hide overflow content */
+    border-radius: 16px; /* Enhance aesthetics with a rounded corner */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); /* Add a subtle shadow for depth */
+    z-index: 999; /* Reduce z-index for minimized state */
+}
+
+/* Iframe */
 #iframe-container iframe {
     flex: 1;
     border: none;
+    border-radius: inherit; /* Match container's border radius */
+    width: 100%;
+    height: 100%;
+    transition: transform 0.3s ease-in-out; /* Smooth iframe resizing */
 }
+
+/* Add hover effect for minimized iframe */
+#iframe-container.minimized:hover {
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4); /* Slightly stronger shadow on hover */
+    cursor: pointer; /* Indicate interactivity */
+}
+
 
 /* Links */
 a {
