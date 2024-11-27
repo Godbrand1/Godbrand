@@ -296,7 +296,24 @@ function setupKeyListeners() {
     });
 }
 
-function bindIframeButtons() {
-    document.getElementById("minimizeButton").addEventListener("click", minimizeIframe);
-    document.getElementById("closeButton").addEventListener("click", closeIframe);
-}
+document.addEventListener("DOMContentLoaded", () => {
+    populateDropdown();
+    displaySavedCodes();
+    setupKeyListeners();
+    bindIframeButtons();
+
+    const minimizeButton = document.getElementById("minimizeButton");
+    const closeButton = document.getElementById("closeButton");
+
+    if (minimizeButton) {
+        minimizeButton.addEventListener("click", minimizeIframe);
+    } else {
+        console.error("minimizeButton not found in the DOM.");
+    }
+
+    if (closeButton) {
+        closeButton.addEventListener("click", closeIframe);
+    } else {
+        console.error("closeButton not found in the DOM.");
+    }
+});
