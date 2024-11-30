@@ -11,39 +11,35 @@ color: green;
 .season_eps_container {
   display: flex;
   width: 100%;
+  justify-content: space-between;
 }
 
+.seasons_, .eps_ {
+  flex: 1;
+  max-width: 50%; /* Ensure each div takes up half of the container */
+  box-sizing: border-box; /* Ensure padding and border are included in the width */
+  padding: 10px;
+  display: flex;
+  flex-direction: column; /* Stack children vertically */
+}
+.eps_ {
+	align-items: flex-end;
+}
 #seasons_text {
-color: blue;
+  color: blue;
   font-weight: bold;
-justify-content: flex-start;
+  margin-left: 12px;
+
 }
 
 #eps_text {
-color: blue;
+  color: blue;
   font-weight: bold;
-justify-content: flex-end;
-}
-.seasons_ {
-  flex: 1;
-  max-width: 50%; /* Ensure this div takes up the right half */
-  box-sizing: border-box;
-  padding: 10px;
-  display: flex; /* Use flexbox to align items inside */
-  flex-direction: column;
-  align-items: flex-start; /* Align items to the right */
 }
 
-.eps_ {
-  flex: 1;
-  max-width: 50%; /* Ensure this div takes up the right half */
-  box-sizing: border-box;
-  padding: 10px;
-  display: flex; /* Use flexbox to align items inside */
-  flex-direction: column;
-  align-items: flex-end; /* Align items to the right */
-}
+#tricia_love {
 
+}
 
 
 .container {
