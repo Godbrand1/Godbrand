@@ -114,7 +114,22 @@ document.getElementById("addButton").addEventListener("click", async (event) => 
     alert("Failed to add item. Please try again.");
   }
 });
+// if statement to disable the season and episode count if movie is selected
+document.getElementById("categorySelect").addEventListener("change", function() {
+  const category = this.value;
+  const seasonCountInput = document.getElementById("seasonCount");
+  const episodeCountInput = document.getElementById("episodeCount");
 
+  if (category === "Movie") {
+    seasonCountInput.value = 0;
+    episodeCountInput.value = 0;
+    seasonCount.disabled = true;
+    episodeCount.disabled = true;
+  } else {
+    seasonCountInput.disabled = false;
+    episodeCountInput.disabled = false;
+  }
+});
 // Add this function to group items by genre
 function groupByGenre(docs) {
   const grouped = {};
@@ -155,6 +170,9 @@ function renderList(listId, docs, type) {
       list.appendChild(li);
     });
   });
+
+  // Reinitialize collapsibles after rendering the list
+  initializeCollapsibles();
 }
 
 // Snapshot Listeners modification
@@ -163,4 +181,54 @@ function renderList(listId, docs, type) {
     const listId = type === "movie" ? "movieList" : "showList";
     renderList(listId, snapshot.docs, type);
   });
+});
+
+// Collapsible Sections
+function initializeCollapsibles() {
+  const coll = document.getElementsByClassName("collapsible");
+  for (let i = 0; i < coll.length; i++) {
+    coll[i].addEventListener("click", function () {
+      this.classList.toggle("active");
+      const content = this.nextElementSibling;
+      if (content.style.display === "block") {
+        content.style.display = "none";
+      } else {
+        content.style.display = "block";
+      }
+    });
+  }
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  initializeCollapsibles();
+});
+
+// Delete Item Functionality
+document.addEventListener("click", async (event) => {
+  if (event.target.classList.contains("delete-button")) {
+    const id = event.target.parentElement.getAttribute("data-id");
+    const category = event.target.closest("ul").id === "movieList" ? "movie" : "show";
+    try {
+      const collection = getCollection(category);
+      await collection.doc(id).delete();
+    } catch (error) {
+      alert("Failed to delete item. Please try again.");
+    }
+  }
+});
+
+// Toggle Watched Functionality
+document.addEventListener("click", async (event) => {
+  if (event.target.classList.contains("toggle-watched-button")) {
+    const id = event.target.parentElement.getAttribute("data-id");
+    const category = event.target.closest("ul").id === "movieList" ? "movie" : "show";
+    try {
+      const collection = getCollection(category);
+      const doc = await collection.doc(id).get();
+      const watched = doc.data().watched;
+      await collection.doc(id).update({ watched: !watched });
+    } catch (error) {
+      alert("Failed to update item. Please try again.");
+    }
+  }
 });
