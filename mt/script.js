@@ -64,6 +64,19 @@ auth.onAuthStateChanged((user) => {
   }
 });
 
+// Add this function to group items by genre
+function groupByGenre(docs) {
+  const grouped = {};
+  docs.forEach(doc => {
+    const data = doc.data();
+    if (!grouped[data.genre]) {
+      grouped[data.genre] = [];
+    }
+    grouped[data.genre].push(doc);
+  });
+  return grouped;
+}
+
 // Add Item Functionality
 document.getElementById("addButton").addEventListener("click", async (event) => {
   event.preventDefault();
@@ -102,115 +115,52 @@ document.getElementById("addButton").addEventListener("click", async (event) => 
   }
 });
 
-// Render List Function
-function renderList(listId, doc, type) {
-  const list = document.getElementById(listId);
-  const data = doc.data();
-  const li = document.createElement("li");
-  li.setAttribute("data-id", doc.id);
-
-  li.innerHTML = `
-    <span class="${data.watched ? 'watched' : ''}">${data.title} (${data.genre})</span>
-    <button class="toggle-watched-button ${data.watched ? 'watched' : ''}">
-      ${data.watched ? '✅ Watched' : '🟢 Mark as Watched'}
-    </button>
-    <button class="delete-button">Delete</button>
-  `;
-
-  // Handle shows with seasons/episodes
-  if (type === "show" && Array.isArray(data.seasons)) {
-    const seasonList = document.createElement("ul");
-    seasonList.style.listStyle = "none";
-
-    data.seasons.forEach((season, seasonIndex) => {
-      const seasonItem = document.createElement("li");
-      const seasonHeader = document.createElement("button");
-      seasonHeader.textContent = `Season ${season.seasonNumber}`;
-      seasonHeader.style.cursor = "pointer";
-
-      const episodeList = document.createElement("ul");
-      episodeList.style.display = "none";
-
-      season.episodes.forEach((episode, episodeIndex) => {
-        const episodeItem = document.createElement("li");
-        episodeItem.style.display = "flex";
-        episodeItem.style.justifyContent = "space-between";
-
-        const label = document.createElement("label");
-        label.textContent = `Episode ${episode.episodeNumber}`;
-        label.style.flex = "1";
-
-        const checkbox = document.createElement("input");
-        checkbox.type = "checkbox";
-        checkbox.checked = episode.watched;
-
-        episodeItem.appendChild(label);
-        episodeItem.appendChild(checkbox);
-        episodeList.appendChild(episodeItem);
-
-        // Update episode watched status
-        checkbox.addEventListener("change", async () => {
-          const updatedSeasons = [...data.seasons];
-          updatedSeasons[seasonIndex].episodes[episodeIndex].watched = checkbox.checked;
-
-          const allWatched = updatedSeasons.every((season) =>
-            season.episodes.every((ep) => ep.watched)
-          );
-
-          try {
-            await getCollection(type).doc(doc.id).update({
-              seasons: updatedSeasons,
-              watched: allWatched,
-            });
-          } catch (error) {
-            alert("Failed to update episode status.");
-          }
-        });
-      });
-
-      seasonHeader.addEventListener("click", () => {
-        episodeList.style.display =
-          episodeList.style.display === "none" ? "block" : "none";
-      });
-
-      seasonItem.appendChild(seasonHeader);
-      seasonItem.appendChild(episodeList);
-      seasonList.appendChild(seasonItem);
-    });
-
-    li.appendChild(seasonList);
-  }
-
-  // Update main watched status
-  li.querySelector(".toggle-watched-button").addEventListener("click", async () => {
-    try {
-      await getCollection(type).doc(doc.id).update({
-        watched: !data.watched,
-      });
-    } catch (error) {
-      alert("Failed to update watched status.");
+// Add this function to group items by genre
+function groupByGenre(docs) {
+  const grouped = {};
+  docs.forEach(doc => {
+    const data = doc.data();
+    if (!grouped[data.genre]) {
+      grouped[data.genre] = [];
     }
+    grouped[data.genre].push(doc);
   });
-
-  // Delete item
-  li.querySelector(".delete-button").addEventListener("click", async () => {
-    try {
-      await getCollection(type).doc(doc.id).delete();
-      list.removeChild(li);
-    } catch (error) {
-      alert("Failed to delete item.");
-    }
-  });
-
-  list.appendChild(li);
+  return grouped;
 }
 
-// Snapshot Listeners
+// Modify the renderList function to use the new groupByGenre function
+function renderList(listId, docs, type) {
+  const list = document.getElementById(listId);
+  list.innerHTML = ''; // Clear the current list
+  const groupedDocs = groupByGenre(docs);
+
+  Object.keys(groupedDocs).forEach(genre => {
+    const genreHeader = document.createElement('h3');
+    genreHeader.textContent = genre;
+    list.appendChild(genreHeader);
+
+    groupedDocs[genre].forEach(doc => {
+      const data = doc.data();
+      const li = document.createElement('li');
+      li.setAttribute('data-id', doc.id);
+
+      li.innerHTML = `
+        <span class="${data.watched ? 'watched' : ''}">${data.title}</span>
+        <button class="toggle-watched-button ${data.watched ? 'watched' : ''}">
+          ${data.watched ? '\u2705 Watched' : '\ud83d\udfe2 Mark as Watched'}
+        </button>
+        <button class="delete-button">Delete</button>
+      `;
+
+      list.appendChild(li);
+    });
+  });
+}
+
+// Snapshot Listeners modification
 ["movie", "show"].forEach((type) => {
   getCollection(type).onSnapshot((snapshot) => {
     const listId = type === "movie" ? "movieList" : "showList";
-    const list = document.getElementById(listId);
-    list.innerHTML = "";
-    snapshot.forEach((doc) => renderList(listId, doc, type));
+    renderList(listId, snapshot.docs, type);
   });
 });
