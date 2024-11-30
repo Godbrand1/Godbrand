@@ -1,0 +1,24 @@
+name: Index Repository
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  index:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      search: write
+    
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: GitHub Code Search Indexing
+        uses: github/codeql-action/init@v2
+        with:
+          languages: javascript
+      
+      - name: Perform Analysis
+        uses: github/codeql-action/analyze@v2
