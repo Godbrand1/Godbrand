@@ -114,22 +114,8 @@ document.getElementById("addButton").addEventListener("click", async (event) => 
     alert("Failed to add item. Please try again.");
   }
 });
-// if statement to disable the season and episode count if movie is selected
-document.getElementById("categorySelect").addEventListener("change", function() {
-  const category = this.value;
-  const seasonCountInput = document.getElementById("seasonCount");
-  const episodeCountInput = document.getElementById("episodeCount");
 
-  if (category === "Movie") {
-    seasonCountInput.value = 0;
-    episodeCountInput.value = 0;
-    seasonCount.disabled = true;
-    episodeCount.disabled = true;
-  } else {
-    seasonCountInput.disabled = false;
-    episodeCountInput.disabled = false;
-  }
-});
+
 // Add this function to group items by genre
 function groupByGenre(docs) {
   const grouped = {};
@@ -198,8 +184,8 @@ function initializeCollapsibles() {
     });
   }
 }
-
 document.addEventListener("DOMContentLoaded", () => {
+
   initializeCollapsibles();
 });
 
