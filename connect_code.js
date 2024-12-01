@@ -3,35 +3,76 @@ document.addEventListener("DOMContentLoaded", () => {
     populateDropdown();
     displaySavedCodes();
     setupKeyListeners();
-    bindIframeButtons();
-document.getElementById("minimizeButton").addEventListener("click", minimizeIframe);
-document.getElementById("closeButton").addEventListener("click", closeIframe);
+   // bindIframeButtons();
+//document.getElementById("minimizeButton").addEventListener("click", minimizeIframe);
+//document.getElementById("closeButton").addEventListener("click", closeIframe);
 
 });
+
 // Function to create a new custom list
 function createCustomList() {
     const customLists = JSON.parse(localStorage.getItem("customLists")) || {};
-    const newListName = prompt("Enter a name for the new custom list:");
+    const modal = document.getElementById("customInputModal");
+    const modalInput = document.getElementById("modalInput");
+    const modalSubmit = document.getElementById("modalSubmit");
 
-    if (!newListName || newListName.trim() === "") {
-        alert("List name cannot be empty.");
-        return;
-    }
+    modal.style.display = "block";
+    modalInput.value = "";
 
-    if (customLists[newListName]) {
-        alert(`The list "${newListName}" already exists.`);
-        return;
-    }
+    const closeModal = () => {
+        modal.style.display = "none";
+    };
 
-    customLists[newListName] = []; // Initialize the new list as empty
-    localStorage.setItem("customLists", JSON.stringify(customLists));
+    const handleSubmit = () => {
+        const newListName = modalInput.value.trim();
+        if (!newListName) {
+            Toastify({
+                text: "List name cannot be empty.",
+                duration: 3000,
+                close: true,
+                gravity: "top",
+                position: "right",
+                backgroundColor: "#FF0000",
+            }).showToast();
+            return;
+        }
 
-    // Update the dropdown with the new list
-    populateDropdown();
-    alert(`Custom list "${newListName}" has been created.`);
+        if (customLists[newListName]) {
+            Toastify({
+                text: `The list "${newListName}" already exists.`,
+                duration: 3000,
+                close: true,
+                gravity: "top",
+                position: "right",
+                backgroundColor: "#FFA500",
+            }).showToast();
+            return;
+        }
+
+        customLists[newListName] = [];
+        localStorage.setItem("customLists", JSON.stringify(customLists));
+        populateDropdown();
+
+        Toastify({
+            text: `Custom list "${newListName}" has been created.`,
+            duration: 3000,
+            close: true,
+            gravity: "top",
+            position: "right",
+            // backgroundColor: "#9B59B6",
+        }).showToast();
+
+        closeModal();
+    };
+
+    document.querySelector(".close").onclick = closeModal;
+    modalSubmit.onclick = handleSubmit;
+    window.onclick = (event) => {
+        if (event.target === modal) {
+            closeModal();
+        }
+    };
 }
-
-
 // **Dropdown and List Management**
 function populateDropdown() {
     const dropdown = document.getElementById("customListsDropdown");
@@ -50,20 +91,49 @@ function deleteCustomList() {
     const customListName = document.getElementById("customListsDropdown").value;
 
     if (!customListName) {
-        alert("You cannot delete the default list.");
+        Toastify({
+            text: "You cannot delete the default list.",
+            duration: 3000,
+            close: true,
+            gravity: "top", // `top` or `bottom`
+            position: "right", // `left`, `center` or `right`
+            backgroundColor: "#FF0000", // Red background for error
+        }).showToast();
         return;
     }
 
-    const confirmation = confirm(`Are you sure you want to delete the list "${customListName}"?`);
-    if (!confirmation) return;
+    const showToastWithConfirmation = () => {
+        Toastify({
+            text: `Are you sure you want to delete the list "${customListName}"?`,
+            duration: 5000,
+            close: true,
+            gravity: "top",
+            position: "right",
+            backgroundColor: "#FFA500",
+            onClick: () => {
+                const customLists = JSON.parse(localStorage.getItem("customLists")) || {};
+                delete customLists[customListName];
+                localStorage.setItem("customLists", JSON.stringify(customLists));
 
-    const customLists = JSON.parse(localStorage.getItem("customLists")) || {};
-    delete customLists[customListName];
-    localStorage.setItem("customLists", JSON.stringify(customLists));
+                populateDropdown();
+                displaySavedCodes();
 
-    populateDropdown();
-    displaySavedCodes();
+                Toastify({
+                    text: `The list "${customListName}" has been deleted.`,
+                    duration: 3000,
+                    close: true,
+                    gravity: "top",
+                    position: "right",
+                    // backgroundColor: "#9B59B6",
+                }).showToast();
+            }
+        }).showToast();
+    };
+
+    showToastWithConfirmation();
 }
+
+
 
 // **Saved Codes Management**
 function displaySavedCodes() {
@@ -303,16 +373,16 @@ document.addEventListener("DOMContentLoaded", () => {
     populateDropdown();
     displaySavedCodes();
     setupKeyListeners();
-    bindIframeButtons();
+    //bindIframeButtons();
 
     const minimizeButton = document.getElementById("minimizeButton");
     const closeButton = document.getElementById("closeButton");
 
-    if (minimizeButton) {
-        minimizeButton.addEventListener("click", minimizeIframe);
-    } else {
-        console.error("minimizeButton not found in the DOM.");
-    }
+    //if (minimizeButton) {
+   //     minimizeButton.addEventListener("click", minimizeIframe);
+   // } else {
+   //     console.error("minimizeButton not found in the DOM.");
+   // }
 
     if (closeButton) {
         closeButton.addEventListener("click", closeIframe);

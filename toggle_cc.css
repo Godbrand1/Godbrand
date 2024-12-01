@@ -35,7 +35,6 @@ body {
     border: none;
     border-radius: 6px;
     cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
 }
 
 .theme-toggle-button:hover,
@@ -52,7 +51,6 @@ body {
     margin: 0 15px;
     padding: 6px 12px;
     border-radius: 6px;
-    transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
 .navbar .nav-link:hover {
@@ -68,10 +66,80 @@ body {
     height: calc(100vh - 80px);
 }
 
+.custom-button {
+    background-color: #3498DB; /* Blue background */
+    color: white; /* White text */
+    padding: 8px 16px; /* Adjust padding for size */
+    border: none; /* Remove border */
+    border-radius: 5px; /* Rounded corners */
+    cursor: pointer; /* Pointer cursor on hover */
+    font-size: 14px; /* Adjust font size */
+    transition: background-color 0.3s ease; /* Smooth background color transition */
+
+}
+
+.custom-button:hover {
+    background-color: #2980B9; /* Darker blue on hover */
+}
+
+.list-management {
+    display: flex;
+    flex-direction: column;
+    gap: 10px; /* Add spacing between elements */
+    margin-bottom: 10px; /* Add space below the buttons */
+	align-items: center; /* Center buttons horizontally */
+	
+}
+
+/* Global CSS for Toastify notifications */
+.toastify {
+    background: #5D3A9B; /* A darker, less red purple: #5D3A9B */
+}
+/* Modal styles */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.4);
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+}
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+
+.collapsed {
+    display: none;
+}
+
+.expanded {
+    display: block;
+}
+
 /* Saved Users Container */
-
-
-
 .saved-users-container {
     flex: 0 0 25%;
     padding: 20px;
@@ -95,11 +163,9 @@ body {
     border-radius: 8px;
     background-color: #333;
     color: #f0f0f0;
-    transition: border-color 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
     margin-bottom: 15px;
 }
 
-/* Text Box Hover/Focus Styles */
 #searchConnectCode:focus {
     border-color: #ffcc00;
     background-color: #444;
@@ -115,26 +181,22 @@ select {
     border-radius: 8px;
     background-color: #333;
     color: #f0f0f0;
-    transition: border-color 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
     margin-bottom: 15px;
     cursor: pointer;
 }
 
-/* Dropdown List Focus Styles */
 select:focus {
     border-color: #4CAF50;
     background-color: #444;
     box-shadow: 0 0 8px rgba(76, 175, 80, 0.8);
 }
 
-/* Dropdown Option Styling */
 select option {
     background-color: #333;
     color: #f0f0f0;
     padding: 8px;
 }
 
-/* Dropdown Option Hover Styles */
 select option:hover {
     background-color: #555;
 }
@@ -153,15 +215,13 @@ select option:hover {
     margin-bottom: 10px;
     background: #3a3a3a;
     border-radius: 4px;
-    transition: background 0.3s ease, transform 0.2s ease;
 }
 
 .saved-users-container li:hover {
-    background: #2f4f4f; /* Dark Slate Gray */
-    color: #f0f0f0; /* Light Gray Text */
-    transform: scale(1.02); /* Slight Enlargement */
+    background: #2f4f4f;
+    color: #f0f0f0;
+    transform: scale(1.02);
 }
-
 
 /* Main Container */
 .main-container {
@@ -200,7 +260,6 @@ select option:hover {
     background-color: #333;
     color: white;
     font-size: 16px;
-    transition: border-color 0.3s ease;
 }
 
 .connect-code-section input[type="text"]:focus {
@@ -216,7 +275,6 @@ button {
     cursor: pointer;
     color: white;
     background-color: #4CAF50;
-    transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
 button:hover {
@@ -224,43 +282,75 @@ button:hover {
     transform: scale(1.05);
 }
 
-/* Iframe Section */
-/* Iframe Section */
-#iframe-container {
-    flex: 1;
-    background: #3a3a3a;
-    border-radius: 8px;
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-}
-/* Minimized state */
-#iframe-container.minimized {
-    height: 20%; /* Adjusted for a better aspect ratio */
-    width: 25%; /* Adjusted for aesthetics */
-    bottom: 10px; /* Position near the bottom */
-    right: 10px; /* Position near the right */
-    top: auto; /* Reset top position */
-    left: auto; /* Reset left position */
-    overflow: hidden; /* Hide overflow content */
-    z-index: 999; /* Reduce z-index if necessary */
-}
-#iframe-container iframe {
-    flex: 1;
+#mainCollapseButton {
+    align-self: flex-start; /* Aligns the button to the start of the flex container */
+    width: auto; /* Ensure the button does not stretch */
+    margin: 10px;
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
     border: none;
-}
-/* Add hover effect for minimized iframe */
-#iframe-container.minimized:hover {
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4); /* Slightly stronger shadow on hover */
-    cursor: pointer; /* Indicate interactivity */
+    border-radius: 4px;
+    cursor: pointer;
 }
 
+/* Iframe Section */
+.parent-container {
+    display: flex;
+    width: 100%;
+}
+
+#iframe-container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    background-color: #3a3a3a;
+    border-radius: 8px;
+    max-width: 100%; /* Ensures the iframe doesn't expand beyond the parent container's width */
+}
+
+.resize-handle {
+    position: absolute;
+    background: transparent;
+}
+
+.resize-handle.top {
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 5px;
+    cursor: n-resize;
+}
+
+.resize-handle.right {
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 5px;
+    cursor: e-resize;
+}
+
+.resize-handle.bottom {
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 5px;
+    cursor: s-resize;
+}
+
+.resize-handle.left {
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 5px;
+    cursor: w-resize;
+}
 
 /* Links */
 a {
     color: #4CAF50;
     text-decoration: none;
-    transition: color 0.3s ease;
 }
 
 a:hover {
@@ -278,6 +368,7 @@ a:hover {
         margin-bottom: 20px;
     }
 }
+
 /* Center the toggle container */
 .toggle-container {
     display: flex;
@@ -311,7 +402,6 @@ a:hover {
     right: 0;
     bottom: 0;
     background-color: #ccc;
-    transition: background-color 0.4s, transform 0.3s ease;
     border-radius: 50px;
     border: 2px solid #aaa;
 }
@@ -324,9 +414,7 @@ a:hover {
     left: 2px;
     bottom: 2px;
     background-color: white;
-    transition: transform 0.3s ease;
     border-radius: 50%;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
 /* Slider Checked State */
@@ -337,10 +425,8 @@ a:hover {
 
 .slider-toggle input:checked + .slider:before {
     transform: translateX(26px);
-    background-color: white;
 }
 
-/* Slider Hover Effect */
 .slider:hover {
     box-shadow: 0 0 8px rgba(0, 123, 255, 0.6);
 }

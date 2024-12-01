@@ -1,8 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <link rel="stylesheet" href="toggle_cc.css?v=1.1">
-<link rel="stylesheet" href="Themes.css">
+		<!-- Toast -->
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+
+
+    <link rel="stylesheet" href="toggle_cc.css">
+    <link rel="stylesheet" href="Themes.css">
+
+
+
 
     <link rel="icon" href="images/gb.jpg">
     <meta charset="UTF-8">
@@ -14,7 +22,7 @@
     <header class="navbar">
         <nav>
             <a href="practice.html" class="nav-link">Practice</a>
-           <button class="theme-toggle-button" onclick="toggleTheme()" aria-label="Toggle Theme">Toggle Theme</button>
+            <button class="theme-toggle-button" onclick="toggleTheme()" aria-label="Toggle Theme">Toggle Theme</button>
             <button id="clearThemeButton" onclick="clearTheme()">Clear Theme</button>
         </nav>
     </header>
@@ -28,8 +36,25 @@
                 <select id="customListsDropdown" onchange="displaySavedCodes()">
                     <option value="">Default List</option>
                 </select>
-                <button onclick="createCustomList()">Create New List</button>
-                <button onclick="deleteCustomList()">Delete Selected List</button>
+
+
+<!-- Custom Input Modal -->
+<div id="customInputModal" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <p style="color: Orange;">Enter a name for the new custom list:</p>
+        <input type="text" id="modalInput" placeholder="List name">
+        <button id="modalSubmit">Submit</button>
+    </div>
+</div>
+
+
+
+
+                <div class="list-management">
+    <button class="custom-button" onclick="createCustomList()">Create New List</button>
+    <button class="custom-button" onclick="deleteCustomList()">Delete Selected List</button>
+</div>
             </div>
             <div class="search-container">
                 <input type="text" id="searchConnectCode" placeholder="Search connect codes..." oninput="filterSavedCodes()" />
@@ -39,16 +64,21 @@
 
         <!-- Main Container -->
         <div class="main-container" style="flex: 1; display: flex; flex-direction: column; height: 100vh;">
+            <!-- Collapse/Expand Button -->
+            <button id="mainCollapseButton">
+                Collapse
+            </button>
+
             <!-- Connect Code Section -->
-            <div class="connect-code-section" style="padding: 20px; background-color: #333; color: white; border-bottom: 2px solid #4CAF50;">
+            <div id="connectCodeSection" class="connect-code-section expanded" style="padding: 20px; background-color: #333; color: white; border-bottom: 2px solid #4CAF50;">
                 <h1>Check Slippi Rank</h1>
                 <label for="connectCode">Enter Slippi Connect Code:</label>
                 <input
                     type="text"
                     id="connectCode"
-                    placeholder="e.g., ABCDE-123"
+                    placeholder="e.g., ABCDEF-123"
                     oninput="formatConnectCode()"
-                    maxlength="9"
+                    maxlength="10"
                     style="width: 100%; max-width: 400px; padding: 10px; margin-top: 10px; border: 2px solid #4CAF50; border-radius: 8px; background-color: #444; color: white;" 
                 />
                 <span id="connectCodeError" style="color: red; font-size: 0.9em; display: none;">Invalid format: Use ABCDE-123</span>
@@ -65,21 +95,25 @@
             </div>
 
             <!-- Iframe Section -->
-            <div id="iframe-container" style="flex: 1; display: flex; flex-direction: column; overflow: hidden; background-color: #3a3a3a; border-radius: 8px;">
+            <div id="iframe-container" style="flex: 1; display: flex; flex-direction: column; overflow: hidden; background-color: #3a3a3a; border-radius: 8px; position: relative;">
                 <div id="iframe-controls" style="display: flex; justify-content: space-between; padding: 10px;">
                     
-<button id="maximizeButton" onclick="maximizeIframe()">Minimize</button>
                     <button id="closeButton" onclick="closeIframe()">Close</button>
                 </div>
+                <div class="resize-handle top"></div>
+                <div class="resize-handle right"></div>
+                <div class="resize-handle bottom"></div>
+                <div class="resize-handle left"></div>
                 <iframe id="slippiFrame" src="" title="Slippi Page" style="flex: 1; width: 100%; border: none; border-radius: 8px; margin-top: 10px;"></iframe>
             </div>
         </div>
     </div>
 
     <!-- Scripts -->
-    <script src="connect_code.js?v=1.1"></script>
+    <script src="mainCollapseButton.js"></script>
+    <script src="connect_code.js"></script>
     <script src="drag_drop.js"></script>
-    <script src="script/iframe.js"></script>
+    <script src="iframe.js"></script>
     <script src="ToggleTheme.js"></script>
 </body>
 </html>
