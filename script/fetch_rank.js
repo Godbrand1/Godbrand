@@ -10,12 +10,14 @@ document.addEventListener('DOMContentLoaded', () => {
             if (!response.ok) {
                 throw new Error(`Network response was not ok, status: ${response.status}`);
             }
-            const data = await response.json();
-            if (data.rank) {
-                console.log('Rank:', data.rank);
-                // Process the rank data as needed
+            const html = await response.text();
+            const parser = new DOMParser();
+            const doc = parser.parseFromString(html, 'text/html');
+            const rankElement = doc.querySelector('.MuiTypography-root.MuiTypography-body1.jss14.css-1rxv754');
+            if (rankElement) {
+                console.log('Rank:', rankElement.textContent);
             } else {
-                console.error('Failed to fetch rank data');
+                console.error('Rank element not found');
             }
         } catch (error) {
             console.error('Error:', error);
@@ -68,12 +70,4 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Bind openSlippiPage function to the Go button click
     goButton.onclick = openSlippiPage;
-
-    // Log rank element's text content
-    const rankElement = document.querySelector('.MuiTypography-root.MuiTypography-body1.jss14.css-1rxv754');
-    if (rankElement) {
-        console.log('Rank:', rankElement.textContent);
-    } else {
-        console.error('Rank element not found');
-    }
 });
