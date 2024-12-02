@@ -349,9 +349,9 @@ function openSlippiPage() {
 }
 
 function filterSavedCodes() {
-    const searchTerm = document.getElementById("searchConnectCode").value.toLowerCase();
+    const searchTerm = document.getElementById("searchConnectCode").value.toLowerCase().trim();
     document.querySelectorAll("#savedUsersList li").forEach((item) => {
-        const code = item.textContent.toLowerCase();
+        const code = item.querySelector(".connect-code-link").textContent.toLowerCase().trim(); // Ensure we are only searching the connect code
         item.style.display = code.includes(searchTerm) ? "flex" : "none";
     });
 }
