@@ -3,7 +3,7 @@ name: Deploy Proxy Server
 on:
   push:
     branches:
-      - proxy-server
+      - main
 
 jobs:
   deploy:
@@ -34,4 +34,4 @@ jobs:
           password $HEROKU_API_KEY
           " > ~/.netrc
           heroku git:remote -a $HEROKU_APP_NAME
-          git push heroku proxy-server:main
+          git push heroku main:main
