@@ -68,4 +68,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Bind openSlippiPage function to the Go button click
     goButton.onclick = openSlippiPage;
+
+    // Log rank element's text content
+    const rankElement = document.querySelector('.MuiTypography-root.MuiTypography-body1.jss14.css-1rxv754');
+    if (rankElement) {
+        console.log('Rank:', rankElement.textContent);
+    } else {
+        console.error('Rank element not found');
+    }
 });
