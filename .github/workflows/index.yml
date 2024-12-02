@@ -2,7 +2,7 @@ name: Index Repository
 
 on:
   push:
-    branches: [ main ]
+    branches: [ main, proxy-server ]
   workflow_dispatch:
 
 jobs:
