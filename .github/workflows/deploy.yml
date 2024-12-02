@@ -1,0 +1,33 @@
+name: Deploy Proxy Server
+
+on:
+  push:
+    branches:
+      - proxy-server
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+
+      - name: Install dependencies
+        run: npm install
+        working-directory: ./proxy-server
+
+      - name: Deploy to Heroku
+        env:
+          HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+          HEROKU_APP_NAME: godbrand-rank
+        run: |
+          npm install -g heroku
+          heroku git:remote -a $HEROKU_APP_NAME
+          git push heroku proxy-server:main
+        working-directory: ./proxy-server
