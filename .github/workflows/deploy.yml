@@ -20,7 +20,6 @@ jobs:
 
       - name: Install dependencies
         run: npm install
-        working-directory: ./proxy-server
 
       - name: Deploy to Heroku
         env:
@@ -30,8 +29,3 @@ jobs:
           npm install -g heroku
           heroku git:remote -a $HEROKU_APP_NAME
           git push heroku proxy-server:main
-        working-directory: ./proxy-server
-
-      - name: Add CORS package
-        run: npm install cors
-        working-directory: ./proxy-server
