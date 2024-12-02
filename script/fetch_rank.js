@@ -3,7 +3,7 @@ document.getElementById('slippiFrame').onload = async function() {
     const url = iframe.src;
 
     try {
-        const response = await fetch(`https://godbrand-rank.herokuapp.com/fetch-rank?url=${encodeURIComponent(url)}`);
+        const response = await fetch(`https://godbrand-rank-022b9b50b4a4.herokuapp.com/fetch-rank?url=${encodeURIComponent(url)}`);
         const data = await response.json();
 
         if (data.rank) {
