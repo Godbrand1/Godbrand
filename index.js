@@ -37,8 +37,8 @@ app.get('/fetch-rank', async (req, res) => {
 
 function extractRankFromHtml(html) {
     const $ = cheerio.load(html);
-    const rank = $('#rank-element').text(); // Adjust the selector as needed
-    return rank;
+    const ratingText = $('.MuiTypography-root.MuiTypography-body1.jss14.css-1rxv754').text(); // Adjust the selector based on the actual HTML structure
+    return ratingText;
 }
 
 app.listen(PORT, () => {
