@@ -28,10 +28,13 @@ jobs:
           HEROKU_EMAIL: ${{ secrets.HEROKU_EMAIL }}
         run: |
           npm install -g heroku
-          heroku git:remote -a $HEROKU_APP_NAME
           echo "machine api.heroku.com
           login $HEROKU_EMAIL
           password $HEROKU_API_KEY
           " > ~/.netrc
+          echo "machine git.heroku.com
+          login $HEROKU_EMAIL
+          password $HEROKU_API_KEY
+          " >> ~/.netrc
           heroku git:remote -a $HEROKU_APP_NAME
-          git push heroku main:main
+          git push https://git.heroku.com/godbrand-rank.git main:main
