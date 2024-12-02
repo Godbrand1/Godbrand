@@ -13,7 +13,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
         with:
-          fetch-depth: 0  # Fetch all history for all branches and tags
+          fetch-depth: 0  # Ensure full clone
 
       - name: Set up Node.js
         uses: actions/setup-node@v2
@@ -39,5 +39,4 @@ jobs:
           password $HEROKU_API_KEY
           " >> ~/.netrc
           heroku git:remote -a $HEROKU_APP_NAME
-          git fetch --unshallow
           git push heroku main:main
