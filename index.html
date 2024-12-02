@@ -26,7 +26,6 @@
 document.addEventListener('DOMContentLoaded', () => {
     console.log('Script loaded and DOMContentLoaded event fired');
 
-    const iframe = document.getElementById('slippiFrame');
     const goButton = document.getElementById('goButton');
     const connectCodeInput = document.getElementById('connectCode');
 
@@ -40,6 +39,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
             const data = await response.text();
             console.log('Response from Heroku:', data);
+            console.log('Heroku URL fetched successfully');
         } catch (error) {
             console.error('Error:', error);
         }
@@ -47,50 +47,29 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Event listener for the Go button
     goButton.addEventListener('click', () => {
-        const url = iframe.src;
-        if (!url) {
-            console.error('URL query parameter is required');
+        const connectCode = connectCodeInput.value.trim();
+        if (!connectCode) {
+            console.error('Connect code is required');
             return;
         }
+        const url = `https://slippi.gg/user/${encodeURIComponent(connectCode)}`;
+        console.log('Iframe URL set to:', url);
         checkHerokuURL(url);
     });
 
     // Event listener for Enter key in the input field
     connectCodeInput.addEventListener('keydown', (event) => {
         if (event.key === 'Enter') {
-            const url = iframe.src;
-            if (!url) {
-                console.error('URL query parameter is required');
+            const connectCode = connectCodeInput.value.trim();
+            if (!connectCode) {
+                console.error('Connect code is required');
                 return;
             }
+            const url = `https://slippi.gg/user/${encodeURIComponent(connectCode)}`;
+            console.log('Iframe URL set to:', url);
             checkHerokuURL(url);
         }
     });
-
-    // Update iframe src when user enters the connect code
-    function openIframeWithCode(connectCode) {
-        iframe.src = `https://slippi.gg/user/${encodeURIComponent(connectCode)}`;
-    }
-
-    // Function to open Slippi page
-    function openSlippiPage() {
-        const connectCode = connectCodeInput.value.trim();
-        const validFormat = /^[A-Z]{1,6}-\d{1,3}$/; // Adjusted to 6 letters
-
-        if (!validFormat.test(connectCode)) {
-            alert('Invalid format. Use ABCDEF-123.');
-            return;
-        }
-
-        if (document.getElementById('saveToggle').checked) {
-            saveConnectCode(connectCode);  // Assuming saveConnectCode is defined elsewhere
-        }
-
-        openIframeWithCode(connectCode);
-    }
-
-    // Bind openSlippiPage function to the Go button click
-    goButton.onclick = openSlippiPage;
 });
 </script>
 
