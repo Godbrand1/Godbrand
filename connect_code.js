@@ -204,7 +204,6 @@ function createListItem(code) {
     link.addEventListener("click", (e) => {
         e.preventDefault();
         openIframeWithCode(code);
-        fetchRankData(url); // Call fetchRankData on link click
     });
 
     // Append the link to the list item
