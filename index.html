@@ -22,63 +22,7 @@
 	
 
 
-    <script>
-    document.addEventListener('DOMContentLoaded', () => {
-        console.log('Script loaded and DOMContentLoaded event fired');
-
-        const goButton = document.getElementById('goButton');
-        const connectCodeInput = document.getElementById('connectCode');
-        const rankDisplay = document.getElementById('rankDisplay'); // New element to display rank
-
-        // Function to fetch rank data
-        async function checkHerokuURL(url) {
-            try {
-                console.log('Sending URL to Heroku:', url);
-                const response = await fetch(`https://godbrand-rank-022b9b50b4a4.herokuapp.com/fetch-rank?url=${encodeURIComponent(url)}`);
-                if (!response.ok) {
-                    throw new Error(`Network response was not ok, status: ${response.status}`);
-                }
-                const data = await response.json();
-                console.log('Response from Heroku:', data);
-                if (data.rank) {
-                    rankDisplay.textContent = `Rank: ${data.rank}`; // Update the rank display
-                } else {
-                    rankDisplay.textContent = 'Rank data not found';
-                }
-            } catch (error) {
-                console.error('Error:', error);
-                rankDisplay.textContent = `Error: ${error.message}`;
-            }
-        }
-
-        // Event listener for the Go button
-        goButton.addEventListener('click', () => {
-            const connectCode = connectCodeInput.value.trim();
-            if (!connectCode) {
-                console.error('Connect code is required');
-                return;
-            }
-            const url = `https://slippi.gg/user/${encodeURIComponent(connectCode)}`;
-            console.log('Iframe URL set to:', url);
-            checkHerokuURL(url);
-        });
-
-        // Event listener for Enter key in the input field
-        connectCodeInput.addEventListener('keydown', (event) => {
-            if (event.key === 'Enter') {
-                const connectCode = connectCodeInput.value.trim();
-                if (!connectCode) {
-                    console.error('Connect code is required');
-                    return;
-                }
-                const url = `https://slippi.gg/user/${encodeURIComponent(connectCode)}`;
-                console.log('Iframe URL set to:', url);
-                checkHerokuURL(url);
-            }
-        });
-    });
-    </script>
-
+   
 
 
 
