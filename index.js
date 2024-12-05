@@ -23,7 +23,7 @@ app.get('/fetch-rank', async (req, res) => {
             throw new Error(`Failed to fetch data from ${url}`);
         }
         const html = await response.text();
-        const rank = extractRankFromHtml(html); // Implement this function based on the HTML structure
+        const rank = extractRankFromHtml(html);
 
         if (rank) {
             res.json({ rank });
@@ -37,7 +37,18 @@ app.get('/fetch-rank', async (req, res) => {
 
 function extractRankFromHtml(html) {
     const $ = cheerio.load(html);
-    const ratingText = $('.MuiTypography-root.MuiTypography-body1.jss14.css-1rxv754').text(); // Adjust the selector based on the actual HTML structure
+    let ratingText = '';
+
+    // Look for the text "Rating" and extract the preceding digits
+    $('body').find('*').each((index, element) => {
+        const text = $(element).text();
+        const match = text.match(/(\d+)\s*Rating/);
+        if (match) {
+            ratingText = match[1]; // Extract the number preceding "Rating"
+            return false; // Exit the loop once the rating is found
+        }
+    });
+
     return ratingText;
 }
 
