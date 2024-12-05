@@ -39,6 +39,47 @@ app.get('/fetch-rating', async (req, res) => {
     }
 });
 
+const express = require('express');
+const puppeteer = require('puppeteer');
+const cheerio = require('cheerio');
+const cors = require('cors');
+const app = express();
+const PORT = process.env.PORT || 3000;
+
+app.use(cors());
+
+app.get('/', (req, res) => {
+    res.send('Hello, world!');
+});
+
+app.get('/fetch-rating', async (req, res) => {
+    const url = req.query.url;
+    if (!url) {
+        return res.status(400).json({ error: 'URL query parameter is required' });
+    }
+
+    try {
+        const browser = await puppeteer.launch({
+            headless: true,
+            args: ['--no-sandbox', '--disable-setuid-sandbox'],
+            executablePath: process.env.CHROME_BIN || null
+        });
+        const page = await browser.newPage();
+        await page.goto(url, { waitUntil: 'networkidle0' });
+        const html = await page.content();
+        await browser.close();
+
+        const rating = extractRatingFromHtml(html);
+        if (rating) {
+            res.json({ rating });
+        } else {
+            res.status(404).json({ error: 'Rating data not found' });
+        }
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
 function extractRatingFromHtml(html) {
     const $ = cheerio.load(html);
     let ratingText = '';
@@ -51,6 +92,11 @@ function extractRatingFromHtml(html) {
             return false; // Exit the loop once the rating is found
         }
     });
+
+    // Remove leading digit if rating starts with '316'
+    if (ratingText.startsWith('316')) {
+        ratingText = ratingText.slice(1);
+    }
 
     return ratingText;
 }
