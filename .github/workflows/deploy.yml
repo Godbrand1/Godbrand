@@ -15,10 +15,10 @@ jobs:
         with:
           fetch-depth: 0  # Ensure full clone
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v2
-        with:
-          node-version: '14'
+- name: Set up Node.js
+  uses: actions/setup-node@v2
+  with:
+    node-version: '18'
 
       - name: Install dependencies
         run: npm install
