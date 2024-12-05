@@ -23,6 +23,14 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    // Event listener for iframe load
+    iframe.addEventListener('load', () => {
+        const url = iframe.src;
+        console.log('Iframe loaded URL:', url);
+        fetchRankData(url);
+    });
+
+
     // Event listener for the Go button
     goButton.addEventListener('click', () => {
         const connectCode = connectCodeInput.value.trim();
