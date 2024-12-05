@@ -18,7 +18,11 @@ app.get('/fetch-rating', async (req, res) => {
     }
 
     try {
-        const browser = await puppeteer.launch({ headless: true });
+        const browser = await puppeteer.launch({
+            headless: true,
+            args: ['--no-sandbox', '--disable-setuid-sandbox'],
+            executablePath: process.env.CHROME_BIN || null
+        });
         const page = await browser.newPage();
         await page.goto(url, { waitUntil: 'networkidle0' });
         const html = await page.content();
