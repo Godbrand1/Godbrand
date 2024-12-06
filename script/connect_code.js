@@ -220,7 +220,7 @@ function createListItem(item) {
 
     // Create the clickable connect code link
     const link = document.createElement("a");
-    link.textContent = `${item.code} (Rating: ${item.rating})`;
+    link.innerHTML = `${item.code} (<strong>Rating:</strong> ${item.rating})`;
     link.href = "#";
     link.classList.add("connect-code-link");
     link.addEventListener("click", (e) => {
