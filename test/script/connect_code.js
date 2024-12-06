@@ -136,6 +136,7 @@ function deleteCustomList() {
 
 
 // **Saved Codes Management**
+// Ensure displaySavedCodes function displays ratings
 function displaySavedCodes() {
     const savedUsersList = document.getElementById("savedUsersList");
     const customListName = document.getElementById("customListsDropdown").value;
@@ -155,25 +156,31 @@ function displaySavedCodes() {
     enableDragAndDrop();
 }
 
-function saveConnectCode(code) {
+
+function saveConnectCode(code, rating) {
     const customListName = document.getElementById("customListsDropdown").value;
     const customLists = JSON.parse(localStorage.getItem("customLists")) || {};
-    const rating = localStorage.getItem('savedRating') || 'N/A'; // Get the saved rating
 
-    const item = { code, rating };
+    const item = { code, rating }; // Include rating in the item
 
     if (customListName) {
         customLists[customListName] = customLists[customListName] || [];
-        if (!customLists[customListName].some(savedItem => savedItem.code === code)) {
-            customLists[customListName].push(item); // Save item with code and rating
-            localStorage.setItem("customLists", JSON.stringify(customLists));
+        const index = customLists[customListName].findIndex(savedItem => savedItem.code === code);
+        if (index !== -1) {
+            customLists[customListName][index] = item; // Update existing item with rating
+        } else {
+            customLists[customListName].push(item); // Add new item with rating
         }
+        localStorage.setItem("customLists", JSON.stringify(customLists));
     } else {
         const savedCodes = JSON.parse(localStorage.getItem("connectCodes")) || [];
-        if (!savedCodes.some(savedItem => savedItem.code === code)) {
-            savedCodes.push(item); // Save item with code and rating
-            localStorage.setItem("connectCodes", JSON.stringify(savedCodes));
+        const index = savedCodes.findIndex(savedItem => savedItem.code === code);
+        if (index !== -1) {
+            savedCodes[index] = item; // Update existing item with rating
+        } else {
+            savedCodes.push(item); // Add new item with rating
         }
+        localStorage.setItem("connectCodes", JSON.stringify(savedCodes));
     }
 
     displaySavedCodes();
@@ -201,23 +208,16 @@ function createListItem(item) {
 
     // Create the clickable connect code link
     const link = document.createElement("a");
-    link.textContent = item.code; // Use item.code
+    link.textContent = `${item.code} (Rating: ${item.rating})`;
     link.href = "#";
     link.classList.add("connect-code-link");
     link.addEventListener("click", (e) => {
         e.preventDefault();
-        openIframeWithCode(item.code); // Use item.code
-        document.getElementById("connectCode").value = item.code; // Use item.code
+        openIframeWithCode(item.code);
     });
-
-    // Create and append the rating paragraph
-    const ratingParagraph = document.createElement("p");
-    ratingParagraph.textContent = `Rating: ${item.rating || 'N/A'}`;
-    ratingParagraph.style.display = "inline"; // Ensure it appears inline
 
     // Append the link to the list item
     listItem.appendChild(link);
-    listItem.appendChild(ratingParagraph); // Append rating paragraph
 
     // Create and append the delete button
     const deleteButton = document.createElement("button");
@@ -225,7 +225,7 @@ function createListItem(item) {
     deleteButton.className = "delete-button";
     deleteButton.addEventListener("click", (e) => {
         e.stopPropagation();
-        deleteSavedCode(item.code); // Use item.code
+        deleteSavedCode(item.code);
     });
 
     listItem.appendChild(deleteButton);
@@ -233,7 +233,6 @@ function createListItem(item) {
 
     return listItem;
 }
-
 
 // **Iframe Controls**
 function openIframeWithCode(connectCode) {
@@ -352,7 +351,10 @@ function openSlippiPage() {
     }
 
     if (document.getElementById("saveToggle").checked) {
-        saveConnectCode(connectCode);
+        const rating = document.getElementById('ratingInput').value || 'N/A'; // Get the current rating
+        saveConnectCode(connectCode, rating);
+    } else {
+        saveConnectCode(connectCode, 'N/A');
     }
 
     openIframeWithCode(connectCode);
