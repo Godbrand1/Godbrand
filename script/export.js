@@ -1,7 +1,7 @@
 function exportSavedCodes() {
     const customLists = JSON.parse(localStorage.getItem("customLists")) || {};
     const defaultList = JSON.parse(localStorage.getItem("connectCodes")) || [];
-    const data = { customLists, defaultList };
+    const data = { version: 1, customLists, defaultList };
 
     const blob = new Blob([JSON.stringify(data, null, 2)], { type: "application/json" });
     const url = URL.createObjectURL(blob);
