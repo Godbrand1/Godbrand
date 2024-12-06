@@ -1,15 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-		<!-- Toast -->
-	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+    <!-- Toast -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
     <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
-
-
     <link rel="stylesheet" href="toggle_cc.css">
     <link rel="stylesheet" href="Themes.css">
-
-
     <link rel="icon" href="images/gb.jpg">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -22,9 +18,9 @@
             <a href="practice.html" class="nav-link">Practice</a>
             <button class="theme-toggle-button" onclick="toggleTheme()" aria-label="Toggle Theme">Toggle Theme</button>
             <button id="clearThemeButton" onclick="clearTheme()">Clear Theme</button>
-<button id="exportButton">Export Saved Codes</button>
-<input type="file" id="importInput" style="display: none;">
-<button id="importButton">Import Saved Codes</button>
+            <button id="exportButton">Export Saved Codes</button>
+            <input type="file" id="importInput" style="display: none;">
+            <button id="importButton">Import Saved Codes</button>
         </nav>
     </header>
 
@@ -38,24 +34,20 @@
                     <option value="">Default List</option>
                 </select>
 
-
-<!-- Custom Input Modal -->
-<div id="customInputModal" class="modal">
-    <div class="modal-content">
-        <span class="close">&times;</span>
-        <p style="color: Orange;">Enter a name for the new custom list:</p>
-        <input type="text" id="modalInput" placeholder="List name">
-        <button id="modalSubmit">Submit</button>
-    </div>
-</div>
-
-
-
+                <!-- Custom Input Modal -->
+                <div id="customInputModal" class="modal">
+                    <div class="modal-content">
+                        <span class="close">&times;</span>
+                        <p style="color: Orange;">Enter a name for the new custom list:</p>
+                        <input type="text" id="modalInput" placeholder="List name">
+                        <button id="modalSubmit">Submit</button>
+                    </div>
+                </div>
 
                 <div class="list-management">
-    <button class="custom-button" onclick="createCustomList()">Create New List</button>
-    <button class="custom-button" onclick="deleteCustomList()">Delete Selected List</button>
-</div>
+                    <button class="custom-button" onclick="createCustomList()">Create New List</button>
+                    <button class="custom-button" onclick="deleteCustomList()">Delete Selected List</button>
+                </div>
             </div>
             <div class="search-container">
                 <input type="text" id="searchConnectCode" placeholder="Search connect codes..." oninput="filterSavedCodes()" />
@@ -93,34 +85,30 @@
                 <button id="goButton" onclick="openSlippiPage()" style="margin-top: 20px; background-color: #4CAF50; color: white; padding: 10px 20px; border: none; border-radius: 4px; cursor: pointer;">
                     Go to User Page
                 </button>
-		     <div id="rankDisplay" style="margin-top: 20px; font-size: 1.2em; color: #ffcc00;"></div> <!-- New element to display rank -->
+                <div id="rankDisplay" style="margin-top: 20px; font-size: 1.2em; color: #ffcc00;"></div> <!-- New element to display rank -->
             </div>
 
             <!-- Iframe Section -->
             <div id="iframe-container" style="flex: 1; display: flex; flex-direction: column; overflow: hidden; background-color: #3a3a3a; border-radius: 8px; position: relative;">
                 <div id="iframe-controls" style="display: flex; justify-content: space-between; padding: 10px;">
-                    
                     <button id="closeButton" onclick="closeIframe()">Close</button>
                 </div>
-                <div class="resize-handle top"></div>
-                <div class="resize-handle right"></div>
-                <div class="resize-handle bottom"></div>
-                <div class="resize-handle left"></div>
                 <iframe id="slippiFrame" src="" title="Slippi Page" style="flex: 1; width: 100%; border: none; border-radius: 8px; margin-top: 10px;"></iframe>
             </div>
         </div>
     </div>
-<!-- New Elements for repo-description and language-composition -->
+    <!-- New Elements for repo-description and language-composition -->
     <div id="repo-description" style="display:none;"></div>
     <ul id="language-composition" style="display:none;"></ul>
+
     <!-- Scripts -->
+
     <script src="mainCollapseButton.js"></script>
     <script src="connect_code.js"></script>
     <script src="drag_drop.js"></script>
     <script src="script/iframe.js"></script>
     <script src="ToggleTheme.js"></script>
-<script src="script/export.js"></script>
-<script src="script/import.js"></script>
-
+    <script src="script/export.js"></script>
+    <script src="script/import.js"></script>
 </body>
 </html>
