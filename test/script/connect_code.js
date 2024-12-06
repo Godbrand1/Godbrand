@@ -157,28 +157,40 @@ function displaySavedCodes() {
 }
 
 
-function saveConnectCode(code, rating) {
+function saveConnectCode(code) {
     const customListName = document.getElementById("customListsDropdown").value;
     const customLists = JSON.parse(localStorage.getItem("customLists")) || {};
+    const saveRatingToggle = document.getElementById('ratingToggle').checked;
 
-    const item = { code, rating }; // Include rating in the item
+    let item = { code };
+
+    if (saveRatingToggle) {
+        const rating = document.getElementById('ratingInput').value;
+        item.rating = rating;
+    } else {
+        const existingItem = customLists[customListName]?.find(savedItem => savedItem.code === code) 
+                             || JSON.parse(localStorage.getItem("connectCodes"))?.find(savedItem => savedItem.code === code);
+        if (existingItem) {
+            item.rating = existingItem.rating;
+        }
+    }
 
     if (customListName) {
         customLists[customListName] = customLists[customListName] || [];
         const index = customLists[customListName].findIndex(savedItem => savedItem.code === code);
         if (index !== -1) {
-            customLists[customListName][index] = item; // Update existing item with rating
+            customLists[customListName][index] = item; // Update existing item
         } else {
-            customLists[customListName].push(item); // Add new item with rating
+            customLists[customListName].push(item); // Add new item
         }
         localStorage.setItem("customLists", JSON.stringify(customLists));
     } else {
         const savedCodes = JSON.parse(localStorage.getItem("connectCodes")) || [];
         const index = savedCodes.findIndex(savedItem => savedItem.code === code);
         if (index !== -1) {
-            savedCodes[index] = item; // Update existing item with rating
+            savedCodes[index] = item; // Update existing item
         } else {
-            savedCodes.push(item); // Add new item with rating
+            savedCodes.push(item); // Add new item
         }
         localStorage.setItem("connectCodes", JSON.stringify(savedCodes));
     }
@@ -232,6 +244,21 @@ function createListItem(item) {
     listItem.draggable = true;
 
     return listItem;
+}
+function deleteSavedCode(code) {
+    const customListName = document.getElementById("customListsDropdown").value;
+    const customLists = JSON.parse(localStorage.getItem("customLists")) || {};
+
+    if (customListName) {
+        customLists[customListName] = customLists[customListName].filter((savedItem) => savedItem.code !== code);
+        localStorage.setItem("customLists", JSON.stringify(customLists));
+    } else {
+        let savedCodes = JSON.parse(localStorage.getItem("connectCodes")) || [];
+        savedCodes = savedCodes.filter((savedItem) => savedItem.code !== code);
+        localStorage.setItem("connectCodes", JSON.stringify(savedCodes));
+    }
+
+    displaySavedCodes();
 }
 
 // **Iframe Controls**
@@ -351,10 +378,12 @@ function openSlippiPage() {
     }
 
     if (document.getElementById("saveToggle").checked) {
-        const rating = document.getElementById('ratingInput').value || 'N/A'; // Get the current rating
-        saveConnectCode(connectCode, rating);
-    } else {
-        saveConnectCode(connectCode, 'N/A');
+        if (document.getElementById("ratingToggle").checked) {
+            const rating = document.getElementById('ratingInput').value;
+            saveConnectCode(connectCode, rating);
+        } else {
+            saveConnectCode(connectCode);
+        }
     }
 
     openIframeWithCode(connectCode);
