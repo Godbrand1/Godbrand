@@ -20,7 +20,9 @@ function importSavedCodes(event) {
                 close: true,
                 gravity: "top",
                 position: "right",
-                backgroundColor: "#4CAF50",
+                style: {
+                    background: "#4CAF50",
+                },
             }).showToast();
         } catch (error) {
             Toastify({
@@ -29,7 +31,9 @@ function importSavedCodes(event) {
                 close: true,
                 gravity: "top",
                 position: "right",
-                backgroundColor: "#FF0000",
+                style: {
+                    background: "#FF0000",
+                },
             }).showToast();
         }
     };
