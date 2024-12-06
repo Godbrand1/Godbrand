@@ -265,6 +265,10 @@ function deleteSavedCode(code) {
 function openIframeWithCode(connectCode) {
     const iframe = document.getElementById("slippiFrame");
     const iframeContainer = document.getElementById("iframe-container");
+    const connectCodeInput = document.getElementById("connectCode");
+
+    // Set the input value to the connect code
+    connectCodeInput.value = connectCode;
 
     iframe.src = `https://slippi.gg/user/${encodeURIComponent(connectCode)}`;
     iframeContainer.style.display = "flex";
