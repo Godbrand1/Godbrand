@@ -16,7 +16,20 @@ body {
     width: 300px;
     text-align: center;
 }
-
+.main_container {
+	display: flex;
+	gap: 20px;  /* Space between the divs */
+	align-items: flex-start;
+}
+.right_container {
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 300px;
+    /* Add any specific styles for your right div */
+}
+}
 h1 {
     margin-bottom: 20px;
 }
@@ -34,6 +47,10 @@ button {
 button:hover {
     background: #0056b3;
 }
+.delete-item {
+    margin-left: 10px;  /* Adds space to the left of the delete button */
+	margin: 0;              /* Override the default button margin */
+}
 
 #log {
     margin-top: 20px;
@@ -49,4 +66,40 @@ button:hover {
     margin: 5px 0;
     padding: 10px;
     border-radius: 4px;
+    display: flex;           /* Add this */
+    justify-content: space-between; /* Add this */
+    align-items: center;     /* Add this */
+}
+
+
+
+#medication-details, #total-medication-effects {
+    margin-top: 20px;
+    padding: 10px;
+    border-radius: 4px;
+}
+
+#medication-details {
+    background-color: #f8f9fa;
+}
+
+#total-medication-effects {
+    background-color: #e9ecef;
+    margin-top: 15px;
+}
+
+.individual-effect {
+    margin: 10px 0;
+    padding: 10px;
+    border-left: 3px solid #007bff;
+}
+
+.active {
+    color: #28a745;
+    font-weight: bold;
+}
+
+.total-active {
+    color: #dc3545;
+    font-weight: bold;
 }

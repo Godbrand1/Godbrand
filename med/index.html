@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+<div class="main_container">
     <div class="container">
         <h1>Medicine Tracker</h1>
         <label for="dosage-amount">Dosage Amount:</label>
@@ -22,11 +23,17 @@
         <div id="total">
             <h2>Total Amount Taken: <span id="total-amount">0</span> mg</h2>
         </div>
+    </div>
+<div class="right_container">
 <div id="medication-details">
-<p>hi</p>
             <!-- Medication effects will be displayed here -->
         </div>
-    </div>
+<div id="total-medication-effects">
+    <!-- Total/overlapping medication effects will be displayed here -->
+</div>
+</div>
+</div>
+
     <script src="script.js"></script>
     <script src="medicationEffects.js"></script>
 </body>
