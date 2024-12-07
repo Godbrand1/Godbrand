@@ -16,30 +16,25 @@ body {
     width: 300px;
     text-align: center;
 }
+
 .main_container {
-	display: flex;
-	gap: 20px;  /* Space between the divs */
-	align-items: flex-start;
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
 }
+
 .right_container {
     background: #fff;
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     width: 300px;
-    /* Add any specific styles for your right div */
 }
-.upcoming {
-    color: #666;
-    font-style: italic;
-}
+
 h1 {
     margin-bottom: 20px;
 }
-.waiting {
-    color: #666;
-    font-style: italic;
-}
+
 button {
     padding: 10px;
     margin: 10px 0;
@@ -53,9 +48,10 @@ button {
 button:hover {
     background: #0056b3;
 }
+
 .delete-item {
-    margin-left: 10px;  /* Adds space to the left of the delete button */
-	margin: 0;              /* Override the default button margin */
+    margin-left: 10px;
+    margin: 0;
 }
 
 #log {
@@ -72,13 +68,12 @@ button:hover {
     margin: 5px 0;
     padding: 10px;
     border-radius: 4px;
-    display: flex;           /* Add this */
-    justify-content: space-between; /* Add this */
-    align-items: center;     /* Add this */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
-
-
+/* Medication Effects Styles */
 #medication-details, #total-medication-effects {
     margin-top: 20px;
     padding: 10px;
@@ -90,22 +85,73 @@ button:hover {
 }
 
 #total-medication-effects {
+    margin-top: 10px;
+    margin-bottom: 20px;
     background-color: #e9ecef;
-    margin-top: 15px;
+}
+
+#total-medication-effects p {
+    margin: 5px 0;
+    font-size: 14px;
 }
 
 .individual-effect {
     margin: 10px 0;
     padding: 10px;
     border-left: 3px solid #007bff;
+    background-color: #ffffff;
 }
 
+/* Status Styles */
 .active {
     color: #28a745;
     font-weight: bold;
 }
 
+.waiting {
+    color: #666;
+    font-style: italic;
+}
+
+.upcoming {
+    color: #666;
+    font-style: italic;
+}
+
+.residual {
+    color: #888;
+    font-style: italic;
+}
+
 .total-active {
     color: #dc3545;
+    font-weight: bold;
+}
+
+.total-residual {
+    color: #666;
+    font-style: italic;
+}
+
+.no-effects {
+    color: #666;
+    font-style: italic;
+}
+
+/* Total Section Specific Styles */
+#total {
+    padding: 15px;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+
+#total h2 {
+    color: #333;
+    margin-bottom: 10px;
+}
+
+#total-amount {
+    color: #007bff;
     font-weight: bold;
 }
