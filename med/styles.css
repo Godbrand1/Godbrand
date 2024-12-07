@@ -8,6 +8,59 @@ body {
     margin: 0;
 }
 
+/* Collapsible styles */
+.collapsible {
+    background-color: #f1f1f1;
+    color: #444;
+    cursor: pointer;
+    padding: 18px;
+    width: 100%;
+    border: none;
+    text-align: left;
+    outline: none;
+    font-size: 15px;
+    margin-top: 10px;
+}
+
+.active, .collapsible:hover {
+    background-color: #e0e0e0;
+}
+
+.content {
+    padding: 0 18px;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.2s ease-out;
+    background-color: white;
+}
+
+.content textarea {
+    width: calc(100% - 20px); /* Account for padding */
+    min-height: 200px; /* Taller default height */
+    margin: 10px 0;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    resize: vertical;
+    font-size: 14px;
+    line-height: 1.5;
+    font-family: Arial, sans-serif;
+}
+
+/* Make sure the container adjusts when expanded */
+.content.show {
+    max-height: 500px; /* Increased max height */
+}
+
+.save-btn {
+    margin: 10px 0;
+    background-color: #4CAF50;
+}
+
+.save-btn:hover {
+    background-color: #45a049;
+}
+
 .container {
     background: #fff;
     padding: 20px;

@@ -7,6 +7,15 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+<div class="collapsible-container">
+    <button type="button" class="collapsible">Notes ▼</button>
+    <div class="content">
+        <textarea id="saved-notes" rows="8" cols="35" placeholder="Enter your notes here..."></textarea>
+        <button id="save-notes" class="save-btn">Save Notes</button>
+    </div>
+</div>
+
+
 <div class="main_container">
     <div class="container">
         <h1>Medicine Tracker</h1>
@@ -33,7 +42,7 @@
 </div>
 </div>
 </div>
-
+<script src="notes.js"></script>
     <script src="script.js"></script>
     <script src="medicationEffects.js"></script>
 </body>
