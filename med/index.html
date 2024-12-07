@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Medicine Tracker</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Medicine Tracker</h1>
+        <label for="dosage-amount">Dosage Amount:</label>
+        <input type="number" id="dosage-amount" step="7.5" min="0" placeholder="e.g., 7.5">
+        <label for="custom-datetime">Date and Time (optional):</label>
+        <input type="datetime-local" id="custom-datetime">
+        <button id="add-timestamp">Take Medicine</button>
+        <button id="clear-storage">Clear All</button>
+        <div id="log">
+            <h2>Logged Times</h2>
+            <ul id="timestamp-list"></ul>
+        </div>
+        <div id="total">
+            <h2>Total Amount Taken: <span id="total-amount">0</span> mg</h2>
+        </div>
+<div id="medication-details">
+            <!-- Medication effects will be displayed here -->
+        </div>
+    </div>
+    <script src="script.js"></script>
+    <script src="medicationEffects.js"></script>
+</body>
+</html>
