@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
     const detailsContainer = document.getElementById('medication-details');
-    const storedDoseTime = localStorage.getItem('custom-datetime');
+    const storedDoseTime = localStorage.getItem('timestamps');
 
     if (storedDoseTime) {
         displayMedicationEffects(new Date(storedDoseTime));
