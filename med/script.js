@@ -48,11 +48,12 @@ document.addEventListener('DOMContentLoaded', () => {
         totalAmountElement.textContent = totalAmount;
     }
 
-    function clearStorage() {
-        localStorage.removeItem('timestamps');
-        displayTimestamps();
-        updateTotalAmount();
-    }
+function clearStorage() {
+    localStorage.removeItem('timestamps');
+    document.getElementById('medication-details').innerHTML = '';  // Clear the medication effects display
+    displayTimestamps();
+    updateTotalAmount();
+}
 
     addTimestampButton.addEventListener('click', saveTimestamp);
     clearStorageButton.addEventListener('click', clearStorage);

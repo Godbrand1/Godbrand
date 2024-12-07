@@ -1,9 +1,22 @@
 document.addEventListener('DOMContentLoaded', () => {
     const detailsContainer = document.getElementById('medication-details');
-    const storedDoseTime = localStorage.getItem('timestamps');
 
-    if (storedDoseTime) {
-        displayMedicationEffects(new Date(storedDoseTime));
+    // Initial display based on most recent timestamp
+    displayLatestMedicationEffects();
+
+    // Add listener for new medications
+    document.getElementById('add-timestamp').addEventListener('click', () => {
+        displayLatestMedicationEffects();
+    });
+
+    function displayLatestMedicationEffects() {
+        const timestamps = JSON.parse(localStorage.getItem('timestamps')) || [];
+        if (timestamps.length > 0) {
+            // Get the most recent timestamp
+            const latestEntry = timestamps[timestamps.length - 1];
+            const doseTime = new Date(latestEntry.timestamp);
+            displayMedicationEffects(doseTime);
+        }
     }
 
     function displayMedicationEffects(doseTime) {
