@@ -29,11 +29,17 @@ body {
     width: 300px;
     /* Add any specific styles for your right div */
 }
+.upcoming {
+    color: #666;
+    font-style: italic;
 }
 h1 {
     margin-bottom: 20px;
 }
-
+.waiting {
+    color: #666;
+    font-style: italic;
+}
 button {
     padding: 10px;
     margin: 10px 0;

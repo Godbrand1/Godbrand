@@ -33,14 +33,29 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    function deleteItem(event) {
-        const index = event.target.getAttribute('data-index');
-        let timestamps = JSON.parse(localStorage.getItem('timestamps')) || [];
-        timestamps.splice(index, 1);
-        localStorage.setItem('timestamps', JSON.stringify(timestamps));
-        displayTimestamps();
-        updateTotalAmount();
-    }
+// In script.js, modify the deleteItem function:
+function deleteItem(event) {
+    const index = event.target.getAttribute('data-index');
+    let timestamps = JSON.parse(localStorage.getItem('timestamps')) || [];
+    timestamps.splice(index, 1);
+    localStorage.setItem('timestamps', JSON.stringify(timestamps));
+    displayTimestamps();
+    updateTotalAmount();
+    // Add this line to update medication effects
+    updateAllEffects();  // This function needs to be accessible
+}
+
+// In script.js, modify the clearStorage function:
+function clearStorage() {
+    localStorage.removeItem('timestamps');
+    displayTimestamps();
+    updateTotalAmount();
+    // Add these lines to reset medication effects displays
+    const detailsContainer = document.getElementById('medication-details');
+    const totalEffectsContainer = document.getElementById('total-medication-effects');
+    if (detailsContainer) detailsContainer.innerHTML = '<h2>Individual Medication Effects</h2>';
+    if (totalEffectsContainer) totalEffectsContainer.innerHTML = '<h2>Total Active Effects</h2>';
+}
 
     function updateTotalAmount() {
         const timestamps = JSON.parse(localStorage.getItem('timestamps')) || [];
@@ -48,12 +63,6 @@ document.addEventListener('DOMContentLoaded', () => {
         totalAmountElement.textContent = totalAmount;
     }
 
-function clearStorage() {
-    localStorage.removeItem('timestamps');
-    document.getElementById('medication-details').innerHTML = '';  // Clear the medication effects display
-    displayTimestamps();
-    updateTotalAmount();
-}
 
     addTimestampButton.addEventListener('click', saveTimestamp);
     clearStorageButton.addEventListener('click', clearStorage);
