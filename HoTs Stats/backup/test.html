@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Heroes of the Storm Tracker</title>
+  <link rel="stylesheet" href="test.css">
+</head>
+
+<body>
+  <header>
+    <h1>Heroes of the Storm Tracker</h1>
+  </header>
+
+  <main style="display: flex; flex-direction: column;">
+    <div style="display: flex;">
+      <!-- Player List -->
+      <aside style="flex: 0 0 200px; padding: 20px; background-color: #2c2c2c; border-right: 1px solid #444;">
+        <h3>Players</h3>
+        <label for="list-selector">Select List:</label>
+        <select id="list-selector"></select>
+        <button id="create-list-button" onclick="showCreateListToast()">Create List</button>
+        <button id="delete-list-button" onclick="showDeleteListToast()">Delete Selected List</button>
+        <input type="text" id="search-bar" placeholder="Search players..." oninput="filterPlayers()" />
+        <ul id="player-list"></ul>
+        <div id="pagination-controls">
+          <button id="prev-page" onclick="prevPage()">Previous</button>
+          <span id="page-info"></span>
+          <button id="next-page" onclick="nextPage()">Next</button>
+        </div>
+        <button id="export-data-button" onclick="exportData()">Export to JSON</button>
+        <button id="import-data-button" onclick="document.getElementById('import-json-input').click()">Import from JSON</button>
+        <input type="file" id="import-json-input" style="display: none;" accept=".json" onchange="importData(event)" />
+      </aside>
+
+      <!-- Text Section -->
+      <section id="more-stats" style="flex: 1; padding: 20px; background-color: #2c2c2c; border-left: 1px solid #444;">
+        <h2></h2>
+      </section>
+
+      <!-- Player Management -->
+      <section id="player-management" style="flex: 1; padding: 20px; background-color: #2c2c2c; border-left: 1px solid #444; max-width: 600px;">
+        <h2>Player Stats</h2>
+        <form id="add-player-form">
+          <label for="player-name">Player Name:</label>
+          <input type="text" id="player-name" placeholder="Player Name" required />
+        
+          <label for="hero-category">Hero Category:</label>
+          <div id="hero-category-buttons">
+            <button type="button" onclick="selectHeroCategory('Tank')">Tank</button>
+            <button type="button" onclick="selectHeroCategory('Bruiser')">Bruiser</button>
+            <button type="button" onclick="selectHeroCategory('Ranged Assassin')">Ranged Assassin</button>
+            <button type="button" onclick="selectHeroCategory('Melee Assassin')">Melee Assassin</button>
+            <button type="button" onclick="selectHeroCategory('Healer')">Healer</button>
+            <button type="button" onclick="selectHeroCategory('Support')">Support</button>
+          </div>
+        
+          <label for="player-hero">Hero Played:</label>
+          <select id="player-hero">
+            <option value="">Select Hero</option>
+            <!-- Options will be dynamically populated based on selected category -->
+          </select>
+        
+          <label for="match-map">Map Name:</label>
+          <select id="match-map">
+            <option value="">Select Map</option>
+            <option value="Alterac Pass">Alterac Pass</option>
+            <option value="Battlefield of Eternity">Battlefield of Eternity</option>
+            <option value="Blackheart's Bay">Blackheart's Bay</option>
+            <option value="Braxis Holdout">Braxis Holdout</option>
+            <option value="Cursed Hollow">Cursed Hollow</option>
+            <option value="Dragon Shire">Dragon Shire</option>
+            <option value="Garden of Terror">Garden of Terror</option>
+            <option value="Hanamura Temple">Hanamura Temple</option>
+            <option value="Infernal Shrines">Infernal Shrines</option>
+            <option value="Sky Temple">Sky Temple</option>
+            <option value="Tomb of the Spider Queen">Tomb of the Spider Queen</option>
+            <option value="Towers of Doom">Towers of Doom</option>
+            <option value="Volskaya Foundry">Volskaya Foundry</option>
+            <option value="Warhead Junction">Warhead Junction</option>
+            
+          </select>
+        
+          <label for="match-outcome">Outcome:</label>
+          <select id="match-outcome">
+            <option value="">Select Outcome</option>
+            <option value="Win">Win</option>
+            <option value="Loss">Loss</option>
+          </select>
+
+          <label for="match-id">Match ID:</label>
+          <input type="text" id="match-id" placeholder="Match ID" />
+
+          <label for="team">Team:</label>
+          <select id="team">
+            <option value="">Select Team</option>
+            <option value="Ally">Ally</option>
+            <option value="Opponent">Opponent</option>
+          </select>
+
+          <label for="match-image">Match Image URL:</label>
+          <input type="url" id="match-image" placeholder="Match Image URL" />
+        
+          <label for="player-notes">Notes:</label>
+          <textarea id="player-notes" placeholder="Notes"></textarea>
+        
+          <button type="submit" id="add-player">Add Record</button>
+        </form>
+      </section>
+
+
+
+      <!-- Player vs Player Summary -->
+      <section id="player-vs-player-summary" style="flex: 1; padding: 20px; background-color: #2c2c2c; border-left: 1px solid #444;">
+        <h2>Player vs Player Summary</h2>
+        <div id="pvp-summary-content"></div>
+      </section>
+
+      <!-- Character Matchup Summary -->
+      <section id="character-matchup-summary" style="flex: 1; padding: 20px; background-color: #2c2c2c; border-left: 1px solid #444;">
+        <h2>Character Matchup Summary</h2>
+        <div id="matchup-summary-content"></div>
+      </section>
+    </div>
+
+    <!-- Iframe Section -->
+    <section id="iframe-container" style="padding: 20px; background-color: #2c2c2c; border-left: 1px solid #444;">
+      <iframe id="player-stats-iframe" style="width: 100%; height: 500px; border: none;"></iframe>
+    </section>
+  </main>
+
+  <div id="toast-container"></div>
+
+  <script src="scripts/Initialization_and_Initial_Setup.js"></script>
+  <script src="scripts/List_Management_Functions.js"></script>
+  <script src="scripts/Data_Management_Functions.js"></script>
+  <script src="scripts/Player_Filtering_and_Pagination_Functions.js"></script>
+  <script src="scripts/Player_Management_Functions.js"></script>
+  <script src="scripts/Player_Stats_Display_Functions.js"></script>
+  <script src="scripts/Toast_Notification_Functions.js"></script>
+
+</body>
+</html>

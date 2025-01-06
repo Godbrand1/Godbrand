@@ -1,0 +1,58 @@
+List Management Functions
+
+    showCreateListToast
+    showDeleteListToast
+    updateListSelector
+
+Player Filtering and Pagination Functions
+
+    filterPlayers
+    renderPlayerList
+    prevPage
+    nextPage
+
+Player Management Functions
+
+    selectHeroCategory
+    deletePlayer
+    editMatch
+    deleteMatch
+    Event Listeners:
+        document.getElementById('list-selector').addEventListener('change', ...)
+        document.getElementById('create-list-button').addEventListener('click', showCreateListToast)
+        document.getElementById('delete-list-button').addEventListener('click', showDeleteListToast)
+        document.getElementById('search-bar').addEventListener('input', filterPlayers)
+        document.getElementById('add-player-form').addEventListener('submit', ...)
+        document.addEventListener('DOMContentLoaded', ...)
+
+Player Stats Display Functions
+
+    openPlayerStats
+    updateMoreStats
+    updatePlayerVsPlayerSummary
+    updateCharacterMatchupSummary
+
+Toast Notification Functions
+
+    showToast
+
+Data Management Functions
+
+    exportData
+    importData
+
+Initialization and Initial Setup
+
+    Initialization code:
+        const playerLists = ...
+        let currentList = ...
+        let editPlayerIndex = ...
+        let editMatchIndex = ...
+        let currentPage = ...
+        const playersPerPage = ...
+        let filteredPlayers = ...
+    Initial setup:
+        if (!playerLists['default']) { ... }
+        document.addEventListener('DOMContentLoaded', ...)
+        updateListSelector()
+        filterPlayers()

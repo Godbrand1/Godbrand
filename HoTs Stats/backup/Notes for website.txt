@@ -1,0 +1,13 @@
+In my website I need to create new arrays(?) for the match which will contain the players hero stats and match stats.
+
+Then I need to create a new page for each person's profile.
+
+Each match needs a list of players. This list needs to be separate from the list of players. 
+
+
+Can't delete items listed i a search. 
+
+if im not on Page 1 of # it won't let me search, or rather it won't display the search because it displays the search on page 1 and im not on page one. 
+
+
+another bug, when clicking edit on a player's match it only selects the hero if the proper category is selected before hand. 

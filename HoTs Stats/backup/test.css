@@ -1,0 +1,202 @@
+body {
+  font-family: Arial, sans-serif;
+  background-color: #1e1e1e;
+  color: #cfcfcf;
+}
+
+header {
+  background-color: #2c2c2c;
+  padding: 20px;
+  text-align: center;
+  color: #cfcfcf;
+}
+
+h1, h2, h3 {
+  color: #cfcfcf;
+}
+
+aside {
+  background-color: #2c2c2c;
+  padding: 20px;
+  border-right: 1px solid #444;
+}
+
+section {
+  background-color: #2c2c2c;
+  padding: 20px;
+  border-left: 1px solid #444;
+}
+
+form {
+  margin-bottom: 20px;
+}
+
+label {
+  display: block;
+  margin-bottom: 5px;
+  color: #cfcfcf;
+}
+
+input, select, textarea, button {
+  width: 100%;
+  max-width: 300px;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #444;
+  background-color: #3c3c3c;
+  color: #cfcfcf;
+}
+
+button {
+  background-color: #444;
+  cursor: pointer;
+  width: auto; /* Add this line to override the width for buttons */
+}
+
+button:hover {
+  background-color: #555;
+}
+
+ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+li {
+  padding: 10px;
+  border-bottom: 1px solid #444;
+  cursor: pointer;
+}
+
+li:hover {
+  background-color: #333;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+th, td {
+  border: 1px solid #444;
+  padding: 8px;
+  text-align: center;
+  color: #cfcfcf;
+}
+
+th {
+  background-color: #3c3c3c;
+  font-weight: bold;
+  font-size: 1.1em;
+}
+
+tr:nth-child(even) {
+  background-color: #2c2c2c;
+}
+
+tr:hover {
+  background-color: #333;
+}
+
+img {
+  display: block;
+  margin: 10px auto;
+  max-width: 100px;
+  height: auto;
+}
+
+#add-list-form, #add-player-form {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  max-width: 500px; /* Add this line to limit the width */
+}
+
+#add-list-form button, #add-player-form button {
+  align-self: flex-start;
+}
+
+#player-management {
+  flex: 1;
+  padding: 20px;
+  background-color: #2c2c2c;
+  border-left: 1px solid #444;
+  max-width: 600px; /* Add this line to limit the width */
+}
+
+/* Add styles for #more-stats section */
+#more-stats h2, #more-stats h3 {
+  color: #ffcc00; /* Yellow color for headings */
+}
+
+#more-stats p {
+  color: #cfcfcf; /* Light gray color for paragraphs */
+}
+
+/* Add styles for hero names */
+.hero-name {
+  color: #ff5733; /* Orange color for hero names */
+}
+
+/* search bar */
+#search-bar {
+  width: 100%;
+  max-width: 90%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+/* Add styles for the toast notifications */
+#toast-container {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 1000;
+}
+
+.toast {
+  background-color: #444;
+  color: #fff;
+  padding: 10px 20px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.toast button {
+  background: none;
+  border: none;
+  color: #fff;
+  cursor: pointer;
+  font-size: 1em;
+}
+
+/* Add styles for the pagination controls */
+#pagination-controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 10px;
+}
+
+#pagination-controls button {
+  background-color: #444;
+  color: #fff;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
+#pagination-controls button:hover {
+  background-color: #555;
+}
+
+#pagination-controls span {
+  color: #cfcfcf;
+}
