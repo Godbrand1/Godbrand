@@ -1,6 +1,17 @@
 function selectHeroCategory(category) {
   const heroSelect = document.getElementById('player-hero');
   heroSelect.innerHTML = '<option value="">Select Hero</option>'; // Clear existing options
+
+  // Highlight the selected category button
+  const buttons = document.querySelectorAll('#hero-category-buttons button');
+  buttons.forEach(button => {
+    if (button.textContent === category) {
+      button.classList.add('selected-hero-category');
+    } else {
+      button.classList.remove('selected-hero-category');
+    }
+  });
+
   heroCategories[category].forEach(hero => {
     const option = document.createElement('option');
     option.value = hero;
