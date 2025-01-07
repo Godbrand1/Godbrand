@@ -157,6 +157,17 @@ img {
   z-index: 1000;
 }
 
+/* Highlight styles */
+.selected-hero-category {
+  background-color: #000000; /* A darker background for selected category */
+  color: #fff; /* White text color */
+}
+
+.selected-player {
+  background-color: #000000; /* A darker background for selected player */
+  color: #fff; /* White text color */
+}
+
 .toast {
   background-color: #444;
   color: #fff;
