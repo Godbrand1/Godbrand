@@ -16,20 +16,37 @@ function importData(event) {
     reader.onload = (e) => {
       try {
         const importedData = JSON.parse(e.target.result);
+
+        // Validate imported JSON structure
+        if (typeof importedData !== 'object' || importedData === null) {
+          throw new Error('Invalid JSON structure.');
+        }
+
         Object.keys(importedData).forEach(listName => {
           if (!playerLists[listName]) {
             playerLists[listName] = importedData[listName];
           } else {
-            playerLists[listName] = [...playerLists[listName], ...importedData[listName]];
+            importedData[listName].forEach(importedPlayer => {
+              const existingPlayer = playerLists[listName].find(player => player.name === importedPlayer.name);
+              if (!existingPlayer) {
+                playerLists[listName].push(importedPlayer);
+              }
+            });
           }
         });
+
         localStorage.setItem('playerLists', JSON.stringify(playerLists));
         updateListSelector();
         filterPlayers();
+
+        alert('Data imported successfully.');
       } catch (error) {
         alert('Failed to import data. Please ensure the file is in the correct format.');
       }
     };
+
     reader.readAsText(file);
+  } else {
+    alert('No file selected.');
   }
 }
