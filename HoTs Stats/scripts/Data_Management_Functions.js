@@ -1,4 +1,14 @@
+// Ensure playerLists is defined
+if (typeof playerLists === 'undefined') {
+  const playerLists = JSON.parse(localStorage.getItem('playerLists')) || {};
+}
+
 function exportData() {
+  if (Object.keys(playerLists).length === 0) {
+    alert('No player lists to export.');
+    return;
+  }
+
   const dataStr = JSON.stringify(playerLists, null, 2);
   const blob = new Blob([dataStr], { type: 'application/json' });
   const url = URL.createObjectURL(blob);
@@ -7,6 +17,8 @@ function exportData() {
   a.download = 'playerLists.json';
   a.click();
   URL.revokeObjectURL(url);
+
+  alert('Data exported successfully.');
 }
 
 function importData(event) {
@@ -49,4 +61,30 @@ function importData(event) {
   } else {
     alert('No file selected.');
   }
+}
+
+// Ensure importData is connected to an input element
+document.addEventListener('DOMContentLoaded', () => {
+  const importInput = document.getElementById('import-json-input');
+  if (importInput) {
+    importInput.addEventListener('change', importData);
+  } else {
+    console.error('Element with ID "import-json-input" not found.');
+  }
+
+  const exportButton = document.getElementById('export-data-button');
+  if (exportButton) {
+    exportButton.addEventListener('click', exportData);
+  } else {
+    console.error('Element with ID "export-data-button" not found.');
+  }
+});
+
+// Ensure updateListSelector and filterPlayers functions are defined
+function updateListSelector() {
+  // ...existing code...
+}
+
+function filterPlayers() {
+  // ...existing code...
 }
