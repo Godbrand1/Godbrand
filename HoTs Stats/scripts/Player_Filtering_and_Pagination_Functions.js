@@ -28,7 +28,14 @@ function renderPlayerList() {
       deletePlayer(startIndex + index);
     });
     listItem.appendChild(deleteButton);
-    listItem.addEventListener('click', () => openPlayerStats(player));
+    listItem.addEventListener('click', () => {
+      // Highlight the selected player
+      const listItems = document.querySelectorAll('#player-list li');
+      listItems.forEach(item => item.classList.remove('selected-player'));
+      listItem.classList.add('selected-player');
+
+      openPlayerStats(player);
+    });
     playerList.appendChild(listItem);
   });
 
