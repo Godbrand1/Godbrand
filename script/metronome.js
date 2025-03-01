@@ -11,9 +11,9 @@ const clickSound = new Audio('audio/click.wav');
 
 // Function to start the metronome
 function startMetronome() {
-  const bpm = parseInt(tempoInput.value, 10); // Get BPM value from input
+  const bpm = parseFloat(tempoInput.value); // Get BPM value from input
   if (isNaN(bpm) || bpm <= 0 || bpm > 240) {
-    alert('Please enter a tempo between 0.1 and 240 BPM.'); // Validation
+    alert('Please enter a tempo between 0 and 240 BPM.'); // Validation
     return;
   }
 
