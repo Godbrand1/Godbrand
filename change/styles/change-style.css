@@ -1,101 +1,44 @@
-body {
-    font-family: Arial, sans-serif;
-    background-color: #f0f0f0;
-    color: #333;
-}
-
-.dark-mode {
-    background-color: #333;
-    color: #f0f0f0;
-}
-
-.container {
-    max-width: 600px;
-    margin: 20px auto;
-    padding: 20px;
-    background-color: #fff;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+.change_firstRow {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
 }
 
 .input-group {
-    margin-bottom: 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
-input[type="number"],
-input[type="text"] {
-    width: calc(100% - 20px);
-    padding: 8px;
-    margin-left: 10px;
+.input-container {
+    position: relative;
+    display: flex;
+    align-items: center;
 }
 
-button {
-    margin: 5px;
-    padding: 10px 20px;
-    background-color: #007bff;
-    color: #fff;
+.input-container .currency {
+    position: absolute;
+    left: 10px;
+    color: white;
+}
+
+.input-container input {
+    width: 150px;
+    height: 40px;
+    padding-left: 25px;
+    margin-right: 5px;
+    background-color: black;
+    color: white;
+}
+
+.increment-btn, .decrement-btn {
+    width: 40px;
+    height: 40px;
+    background-color: rgb(204, 0, 0);
+    color: white;
     border: none;
-    border-radius: 5px;
     cursor: pointer;
-}
-
-button:hover {
-    background-color: #0056b3;
-}
-
-.result {
-    margin-top: 20px;
-}
-
-.history-container {
-    max-width: 600px;
-    margin: 20px auto;
-    padding: 20px;
-    background-color: #fff;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-
-.top-button {
-    position: fixed;
-    top: 10px;
-    right: 10px;
-}
-
-.history-date {
-    font-weight: bold;
-    margin-top: 10px;
-}
-
-.history-entry {
-    margin-left: 20px;
-}
-
-.history-entry.under {
-    color: red;
-}
-
-.history-entry.over {
-    color: green;
-}
-
-.change_firstRow input {
-    display: flex;
-    background-color: black;
-    color: white;
-}
-
-.change_secondRow input {
-    display: flex;
-    background-color: black;
-    color: white;
-}
-
-.extra_money {
-    background-color: black;
-    color: white;
+    margin-left: 5px;
 }
 
 .calculate-change {
@@ -114,17 +57,17 @@ button:hover {
 }
 
 .calculate-change:hover {
-    opacity: 0.8;
+    opacity: 0.8
 }
 
-.delete-recent {
-    background-color: rgb(255, 0, 0);
+.reset-values {
+    background-color: rgb(0, 0, 0);
     color: white;
     border: none;
     border-radius: 2px;
     cursor: pointer;
     margin-right: 8px;
-    margin-left: 10px;
+    margin-left: 8px;
     padding-top: 10px;
     padding-bottom: 10px;
     padding-left: 16px;
@@ -132,8 +75,31 @@ button:hover {
     transition: opacity 0.15s;
 }
 
-.delete-recent:hover {
-    opacity: 0.8;
+.reset-values:hover {
+    opacity: 0.8
+}
+
+.clear-history {
+    background-color: rgb(255, 69, 0);
+    color: white;
+    border: none;
+    border-radius: 2px;
+    cursor: pointer;
+    margin-right: 8px;
+    margin-left: 8px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 16px;
+    padding-right: 16px;
+    transition: opacity 0.15s;
+}
+
+.clear-history:hover {
+    opacity: 0.8
+}
+
+.q1 {
+    color: black;
 }
 
 .output {
@@ -142,6 +108,49 @@ button:hover {
     box-shadow: 5px 5px 10px;
 }
 
+.history {
+    margin-top: 20px;
+}
+
+.history h3 {
+    margin: 0;
+    padding: 0;
+}
+
+.history ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.history-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 5px 10px;
+    background-color: #f7f7f7;
+    border: 1px solid #ddd;
+    margin-bottom: 5px;
+}
+
+.history-item span {
+    display: inline-block;
+}
+
+.history-item .difference-text {
+    font-weight: bold;
+}
+
+/* Remove the up and down arrows from number inputs */
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+input[type="number"] {
+    -moz-appearance: textfield; /* Firefox */
+}
+
+/* a is targeting all <a> (anchor) elements */
 .menu a {
     font-size: 18px;
     color: white;
@@ -161,6 +170,7 @@ button:hover {
     color: white;
 }
 
+/* header / nav starts here */
 .header {
     position: fixed;
     top: 0;

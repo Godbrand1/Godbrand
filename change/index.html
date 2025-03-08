@@ -1,68 +1,133 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+
+<head>
     <link rel="stylesheet" href="styles/change-style.css">
-    <script src="JavaScript/change.js" defer></script>
+    <script src="JavaScript/change.js"></script>
     <link rel="icon" href="images/gb.jpg">
     <title>Change Counter</title>
-  </head>
-    
-  <body class="changeBody" style="background-color: white;">
-    
-    <header class="header">
-      <img src="images/gb.jpg" width="25px">
+</head>
 
-      <nav class="menu">
-        <p class="menu-paragraph">Change Counter</p>
-      </nav>
+<body class="changeBody" style="background-color: white;" onload="initializePage()">
+
+    <header class="header">
+        <img src="images/gb.jpg" width="25px">
+        <nav class="menu">
+            <a href="/index.html">Inventory</a>
+            <p class="menu-paragraph">Change Counter</p>
+        </nav>
     </header>
     <main>
-    <br/> 
-    <br/>
-    <br/>
-    <!-- dollars -->
-    <div class="change_firstRow" style="display: grid; grid-template-columns: 177px 177px;">
-      <p>Fifties</p>
-      <input id="fifty" type="text" placeholder="50's">
-      <p>Twenties</p>
-      <input id="twenty" type="text" placeholder="20's">
-      <p>Tens</p>
-      <input id="ten" type="text" placeholder="10's">
-      <p>Fives</p>
-      <input id="five" type="text" placeholder="5's">
-      <p>Ones</p>
-      <input id="one" type="text" placeholder="1's">
-    
-    <!-- change -->
-    
-      <p>Quarters</p>
-      <input id="quarter" type="text" placeholder="Quarters">
-      <p>Dimes</p>
-      <input id="dime" type="text" placeholder="Dimes">
-      <p>Nickels</p>
-      <input id="nickel" type="text" placeholder="Nickels">
-      <p>Pennies</p>
-      <input id="penny" type="text" placeholder="Pennies">
-    </div>
-    <br/>
-    <div></div>
-    
-    <div style="display: grid; grid-template-columns: 177px 177px;">
-      <p>Extra $</p>
-      <input id="extra_moneyz" class="extra_money" type="text">
-    </div>
-    
-    <p class="output" id="output1" style="margin-left: 177px; font-size: 30px;">&nbsp;</p>
+        <br />
+        <br />
+        <br />
+        <!-- dollars -->
+        <div class="change_firstRow">
+            <div class="input-group">
+                <p>Fifties</p>
+                <div class="input-container">
+                    <span class="currency">$</span>
+                    <input id="fifty" type="number" value="0" step="1" min="0">
+                    <button class="increment-btn" onclick="incrementValue('fifty')">▲</button>
+                    <button class="decrement-btn" onclick="decrementValue('fifty')">▼</button>
+                </div>
+            </div>
+            <div class="input-group">
+                <p>Twenties</p>
+                <div class="input-container">
+                    <span class="currency">$</span>
+                    <input id="twenty" type="number" value="0" step="1" min="0">
+                    <button class="increment-btn" onclick="incrementValue('twenty')">▲</button>
+                    <button class="decrement-btn" onclick="decrementValue('twenty')">▼</button>
+                </div>
+            </div>
+            <div class="input-group">
+                <p>Tens</p>
+                <div class="input-container">
+                    <span class="currency">$</span>
+                    <input id="ten" type="number" value="0" step="1" min="0">
+                    <button class="increment-btn" onclick="incrementValue('ten')">▲</button>
+                    <button class="decrement-btn" onclick="decrementValue('ten')">▼</button>
+                </div>
+            </div>
+            <div class="input-group">
+                <p>Fives</p>
+                <div class="input-container">
+                    <span class="currency">$</span>
+                    <input id="five" type="number" value="0" step="1" min="0">
+                    <button class="increment-btn" onclick="incrementValue('five')">▲</button>
+                    <button class="decrement-btn" onclick="decrementValue('five')">▼</button>
+                </div>
+            </div>
+            <div class="input-group">
+                <p>Ones</p>
+                <div class="input-container">
+                    <span class="currency">$</span>
+                    <input id="one" type="number" value="0" step="1" min="0">
+                    <button class="increment-btn" onclick="incrementValue('one')">▲</button>
+                    <button class="decrement-btn" onclick="decrementValue('one')">▼</button>
+                </div>
+            </div>
+            <div class="input-group">
+                <p>Quarters</p>
+                <div class="input-container">
+                    <span class="currency">$</span>
+                    <input id="quarter" type="number" value="0" step="1" min="0">
+                    <button class="increment-btn" onclick="incrementValue('quarter')">▲</button>
+                    <button class="decrement-btn" onclick="decrementValue('quarter')">▼</button>
+                </div>
+            </div>
+            <div class="input-group">
+                <p>Dimes</p>
+                <div class="input-container">
+                    <span class="currency">$</span>
+                    <input id="dime" type="number" value="0" step="1" min="0">
+                    <button class="increment-btn" onclick="incrementValue('dime')">▲</button>
+                    <button class="decrement-btn" onclick="decrementValue('dime')">▼</button>
+                </div>
+            </div>
+            <div class="input-group">
+                <p>Nickels</p>
+                <div class="input-container">
+                    <span class="currency">$</span>
+                    <input id="nickel" type="number" value="0" step="1" min="0">
+                    <button class="increment-btn" onclick="incrementValue('nickel')">▲</button>
+                    <button class="decrement-btn" onclick="decrementValue('nickel')">▼</button>
+                </div>
+            </div>
+            <div class="input-group">
+                <p>Pennies</p>
+                <div class="input-container">
+                    <span class="currency">$</span>
+                    <input id="penny" type="number" value="0" step="1" min="0">
+                    <button class="increment-btn" onclick="incrementValue('penny')">▲</button>
+                    <button class="decrement-btn" onclick="decrementValue('penny')">▼</button>
+                </div>
+            </div>
+        </div>
+        <br />
+        <div class="input-group">
+            <p>Extra $</p>
+            <div class="input-container">
+                <span class="currency">$</span>
+                <input id="extra_moneyz" class="extra_money" type="number" value="0" step="1" min="0">
+                <button class="increment-btn" onclick="incrementValue('extra_moneyz')">▲</button>
+                <button class="decrement-btn" onclick="decrementValue('extra_moneyz')">▼</button>
+            </div>
+        </div>
+        <p class="error" id="error-message" style="color: red; text-align: center;"></p>
+        <p class="output" id="output1" style="margin-left: 177px; font-size: 30px;">&nbsp;</p>
+        <p class="output" id="difference" style="margin-left: 177px; font-size: 30px;">&nbsp;</p>
+        <div>
+            <button class="calculate-change" onclick="calculateMoney()">Calculate</button>
+            <button class="reset-values" onclick="resetValues()">Reset</button>
+            <button class="clear-history" onclick="clearHistory()">Clear History</button>
+        </div>
+        <div id="history" class="history">
+            <h3>Calculation History</h3>
+            <ul id="history-list"></ul>
+        </div>
+    </main>
+</body>
 
-    <div>
-      <button class="calculate-change" onclick="calculateMoney()">Calculate</button>
-      <button class="delete-recent" onclick="deleteMostRecent()">Delete Most Recent</button>
-    </div>
-
-    <div class="history-container" id="history-list-container">
-      <h3>Calculation History</h3>
-      <ul id="history-list"></ul>
-    </div>
-  </main>
-  </body>
 </html>
