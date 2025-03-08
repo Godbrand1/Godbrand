@@ -180,4 +180,27 @@ input[type="number"] {
     background: seagreen;
     display: flex;
     align-items: center;
+	z-index: 99;
 }
+
+/* Corner Image */
+.corner-image {
+    position: fixed;
+    bottom: 10px;
+    right: 10px;
+    width: 10vw;
+    z-index: 1000;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease, opacity 0.3s ease; /* Added opacity transition */
+}
+
+.corner-image:hover {
+    transform: scale(1.1);
+}
+
+/* Class to hide the image */
+.hidden {
+    opacity: 0;
+}
+
