@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <link rel="stylesheet" href="styles/change-style.css">
+    <script src="JavaScript/change.js"></script>
+    <link rel="icon" href="images/gb.jpg">
+    <title>Change Counter</title>
+  </head>
+    
+  <body class="changeBody" style="background-color: white;">
+    
+    <header class="header">
+      <img src="images/gb.jpg" width="25px">
+
+      <nav class="menu">
+        <a href="/index.html">Inventory</a>
+        <p class="menu-paragraph">Change Counter</p>
+      </nav>
+    </header>
+    <main>
+    <br/> 
+    <br/>
+    <br/>
+    <!-- dollars -->
+    <div class="change_firstRow" style="display: grid;
+    grid-template-columns: 177px 177px;
+    ">
+      <p>Fifties</p>
+      <input id="fifty" type="text" placeholder="50's">
+      <p>Twenties</p>
+      <input id="twenty" type="text" placeholder="20's">
+      <p>Tens</p>
+      <input id="ten" type="text" placeholder="10's">
+      <p>Fives</p>
+      <input id="five" type="text" placeholder="5's">
+      <p>Ones</p>
+      <input id="one" type="text" placeholder="1's">
+    
+    <!-- change -->
+    
+      <p>Quarters</p>
+      <input id="quarter" type="text" placeholder="Quarters">
+      <p>Dimes</p>
+      <input id="dime" type="text" placeholder="Dimes">
+      <p>Nickels</p>
+      <input id="nickel" type="text" placeholder="Nickels">
+      <p>Pennies</p>
+      <input id="penny" type="text" placeholder="Pennies">
+    </div>
+    <br/>
+    <div ></div>
+    
+    <div style="display: grid;
+    grid-template-columns: 177px 177px;
+    "><p>Extra $</p>
+      <input id="extra_moneyz" class="extra_money" type="text">
+    </div>
+    
+    <p class="output" id="output1" style="margin-left: 177px; font-size: 30px;">&nbsp;</p>
+
+    <div>
+      <button class="calculate-change" onclick="calculateMoney()">Calculate</button>
+    </div>
+    
+  </main>
+  </body>
+</html>
