@@ -1,9 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
-
   <head>
     <link rel="stylesheet" href="styles/change-style.css">
-    <script src="JavaScript/change.js"></script>
+    <script src="JavaScript/change.js" defer></script>
     <link rel="icon" href="images/gb.jpg">
     <title>Change Counter</title>
   </head>
@@ -14,7 +13,6 @@
       <img src="images/gb.jpg" width="25px">
 
       <nav class="menu">
-        <a href="/index.html">Inventory</a>
         <p class="menu-paragraph">Change Counter</p>
       </nav>
     </header>
@@ -23,9 +21,7 @@
     <br/>
     <br/>
     <!-- dollars -->
-    <div class="change_firstRow" style="display: grid;
-    grid-template-columns: 177px 177px;
-    ">
+    <div class="change_firstRow" style="display: grid; grid-template-columns: 177px 177px;">
       <p>Fifties</p>
       <input id="fifty" type="text" placeholder="50's">
       <p>Twenties</p>
@@ -49,11 +45,10 @@
       <input id="penny" type="text" placeholder="Pennies">
     </div>
     <br/>
-    <div ></div>
+    <div></div>
     
-    <div style="display: grid;
-    grid-template-columns: 177px 177px;
-    "><p>Extra $</p>
+    <div style="display: grid; grid-template-columns: 177px 177px;">
+      <p>Extra $</p>
       <input id="extra_moneyz" class="extra_money" type="text">
     </div>
     
@@ -61,8 +56,13 @@
 
     <div>
       <button class="calculate-change" onclick="calculateMoney()">Calculate</button>
+      <button class="delete-recent" onclick="deleteMostRecent()">Delete Most Recent</button>
     </div>
-    
+
+    <div class="history-container" id="history-list-container">
+      <h3>Calculation History</h3>
+      <ul id="history-list"></ul>
+    </div>
   </main>
   </body>
 </html>
