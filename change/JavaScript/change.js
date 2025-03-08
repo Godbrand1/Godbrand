@@ -1,6 +1,6 @@
 // function to generate a unique identifier
 function generateUUID() {
-    return 'xxxx-xxxx-4xxx-yxxx-xxxx-xxxx-xxxx-xxxx'.replace(/[xy]/g, function(c) {
+    return 'xxxx-xxxx-4xxx-yxxx-xxxx-xxxx-xxxx'.replace(/[xy]/g, function(c) {
         var r = Math.random() * 16 | 0,
             v = c === 'x' ? r : (r & 0x3 | 0x8);
         return v.toString(16);
@@ -45,10 +45,10 @@ function calculateMoney() {
     let totalAmount = totalAmount1 + totalAmount2 + totalAmount3 + totalAmount4 + totalAmount5 + totalAmount6 + totalAmount7 + totalAmount8 + totalAmount9 + extraMoneyValue;
     let roundedToHundredth = totalAmount.toFixed(2);
 
-    // Display error message if total is not within the valid range
+    // Display error message if total amount is zero or below
     let errorMessage = document.getElementById('error-message');
-    if (roundedToHundredth < 1.00 || roundedToHundredth > 100.00) {
-        errorMessage.textContent = 'Enter value between $1.00 and $100.00';
+    if (roundedToHundredth <= 0 || roundedToHundredth <= 0) {
+        errorMessage.textContent = 'Enter values greater than 0.';
         return;
     } else {
         errorMessage.textContent = '';
@@ -57,6 +57,8 @@ function calculateMoney() {
     // calculate difference from $50.00
     let difference = roundedToHundredth - 50;
     let differenceText = difference > 0 ? `Over by $${difference.toFixed(2)}` : `Under by $${Math.abs(difference).toFixed(2)}`;
+    let differenceAmountText = difference > 0 ? `+$${difference.toFixed(2)}` : `-$${Math.abs(difference).toFixed(2)}`;
+    let differenceColor = difference > 0 ? 'green' : 'red';
 
     // grab the output1 value
     let out1 = document.getElementById('output1');
@@ -70,7 +72,14 @@ function calculateMoney() {
 
     // Create new elements to contain the results
     let resultDiv = document.createElement('div');
-    resultDiv.textContent = `$${roundedToHundredth}`;
+    resultDiv.textContent = `$${roundedToHundredth} `;
+
+    let diffAmountSpan = document.createElement('span');
+    diffAmountSpan.classList.add('history-diff-amount'); // Add class for CSS targeting
+    diffAmountSpan.textContent = differenceAmountText;
+    diffAmountSpan.style.color = differenceColor;
+
+    resultDiv.appendChild(diffAmountSpan);
 
     let diffDiv = document.createElement('div');
     diffDiv.textContent = differenceText;
@@ -90,10 +99,15 @@ function calculateMoney() {
     historyItemContent.classList.add('history-item');
     let historyText = document.createElement('span');
     historyText.textContent = `$${roundedToHundredth}`;
+    let historyDiffAmount = document.createElement('span');
+    historyDiffAmount.classList.add('history-diff-amount'); // Add class for CSS targeting
+    historyDiffAmount.textContent = differenceAmountText;
+    historyDiffAmount.style.color = differenceColor;
     let historyDiff = document.createElement('span');
     historyDiff.textContent = differenceText;
     historyDiff.classList.add('difference-text');
     historyItemContent.appendChild(historyText);
+    historyItemContent.appendChild(historyDiffAmount);
     historyItemContent.appendChild(historyDiff);
     historyItem.appendChild(historyItemContent);
     historyItem.setAttribute('data-id', uuid);
@@ -104,7 +118,7 @@ function calculateMoney() {
     historyList.appendChild(historyItem);
 
     // Save to local storage
-    saveHistory({ id: uuid, value: roundedToHundredth, difference: differenceText });
+    saveHistory({ id: uuid, value: roundedToHundredth, difference: differenceAmountText });
 }
 
 // function to reset values
@@ -152,10 +166,15 @@ function loadHistory() {
         historyItemContent.classList.add('history-item');
         let historyText = document.createElement('span');
         historyText.textContent = `$${entry.value}`;
+        let historyDiffAmount = document.createElement('span');
+        historyDiffAmount.classList.add('history-diff-amount'); // Add class for CSS targeting
+        historyDiffAmount.textContent = entry.difference;
+        historyDiffAmount.style.color = entry.difference.charAt(0) === '+' ? 'green' : 'red';
         let historyDiff = document.createElement('span');
-        historyDiff.textContent = entry.difference;
+        historyDiff.textContent = entry.differenceText;
         historyDiff.classList.add('difference-text');
         historyItemContent.appendChild(historyText);
+        historyItemContent.appendChild(historyDiffAmount);
         historyItemContent.appendChild(historyDiff);
         historyItem.appendChild(historyItemContent);
         historyItem.setAttribute('data-id', entry.id);

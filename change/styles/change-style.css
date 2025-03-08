@@ -204,3 +204,6 @@ input[type="number"] {
     opacity: 0;
 }
 
+.history-diff-amount {
+    margin-left: 1px; /* Adjust this value as needed */
+}
