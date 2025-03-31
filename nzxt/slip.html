@@ -1,1 +1,85 @@
-<iframe src="https://slippi.gg/user/xd-69" width="240" height="240" style="border:none;"></iframe>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=240, height=240, user-scalable=no">
+  <title>Slippi LCD Display</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: #111;
+      color: white;
+      font-family: Arial, sans-serif;
+      width: 240px;
+      height: 240px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .container {
+      text-align: center;
+    }
+
+    .rank-icon {
+      width: 96px;
+      height: 96px;
+      margin-bottom: 8px;
+    }
+
+    .name {
+      font-size: 16px;
+      font-weight: bold;
+      color: #fff;
+    }
+
+    .elo {
+      font-size: 14px;
+      color: #0ff;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <img id="rankIcon" class="rank-icon" src="" alt="Rank Icon" />
+    <div id="displayName" class="name">Loading...</div>
+    <div id="elo" class="elo"></div>
+  </div>
+  <script>
+    async function loadSlippiStats() {
+      try {
+        const response = await fetch("https://gql-gateway-dot-slippi.uc.r.appspot.com/graphql", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            query: `
+              query {
+                getUser(slippiUid: "xd-69") {
+                  displayName
+                  rankedNetplayProfile {
+                    ratingOrdinal
+                    rankIcon
+                  }
+                }
+              }
+            `
+          })
+        });
+
+        const result = await response.json();
+        const profile = result.data.getUser;
+
+        document.getElementById("rankIcon").src = profile.rankedNetplayProfile.rankIcon;
+        document.getElementById("displayName").textContent = profile.displayName;
+        document.getElementById("elo").textContent = "ELO: " + Math.round(profile.rankedNetplayProfile.ratingOrdinal);
+      } catch (error) {
+        console.error("Failed to load Slippi data", error);
+        document.getElementById("displayName").textContent = "Error loading data";
+      }
+    }
+
+    loadSlippiStats();
+  </script>
+</body>
+</html>
