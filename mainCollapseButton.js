@@ -3,18 +3,15 @@ document.addEventListener('DOMContentLoaded', () => {
     const button = document.getElementById('mainCollapseButton');
 
     if (section && button) {
+        // Button click listener
         button.addEventListener('click', toggleSection);
 
-        // 🔽 ✅ ADDED: Listen for Escape key
+        // ✅ Escape key toggles section open/closed
         document.addEventListener('keydown', (event) => {
             if (event.key === 'Escape') {
-                if (section.classList.contains('expanded')) {
-                    toggleSection(); // Collapse if expanded
-                }
+                toggleSection(); // No condition — just toggle
             }
         });
-        // 🔼 ✅ END: Escape key listener
-
     } else {
         console.error('Section or button not found');
     }
