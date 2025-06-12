@@ -415,12 +415,18 @@ function filterSavedCodes() {
 
 function setupKeyListeners() {
     const connectCodeInput = document.getElementById("connectCode");
-    connectCodeInput.addEventListener("keydown", (event) => {
-        if (event.key === "Enter") {
-            openSlippiPage();
-        }
-    });
+    if (connectCodeInput) {
+        connectCodeInput.addEventListener("keydown", (event) => {
+            console.log("Key pressed:", event.key); // DEBUG
+            if (event.key === "Enter") {
+                openSlippiPage();
+            }
+        });
+    } else {
+        console.warn("#connectCode not found.");
+    }
 }
+
 
 document.addEventListener("DOMContentLoaded", () => {
     populateDropdown();
@@ -428,14 +434,14 @@ document.addEventListener("DOMContentLoaded", () => {
     setupKeyListeners();
     //bindIframeButtons();
 
-    const minimizeButton = document.getElementById("minimizeButton");
-    const closeButton = document.getElementById("closeButton");
+    if (minimizeButton) {
+    minimizeButton.addEventListener("click", minimizeIframe);
+} else {
+    console.warn("minimizeButton not found in the DOM.");
+}
 
-    //if (minimizeButton) {
-   //     minimizeButton.addEventListener("click", minimizeIframe);
-   // } else {
-   //     console.error("minimizeButton not found in the DOM.");
-   // }
+    const closeButton = document.getElementById("closeButton");
+    
 
     if (closeButton) {
         closeButton.addEventListener("click", closeIframe);
