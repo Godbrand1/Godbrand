@@ -374,7 +374,7 @@ function formatConnectCode() {
 
 function openSlippiPage() {
     const connectCode = document.getElementById("connectCode").value.trim();
-    const validFormat = /^[A-Z]{1,6}-\d{1,3}$/; // Change to 6
+    const validFormat = /^[A-Z]{1,6}-\d{1,6}$/; // Change to 6
 
     if (!validFormat.test(connectCode)) {
         alert("Invalid format. Use ABCDE-123.");
