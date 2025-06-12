@@ -374,21 +374,24 @@ function formatConnectCode() {
 
 function openSlippiPage() {
     const connectCode = document.getElementById("connectCode").value.trim();
-//    const validFormat = /^[A-Z]{1,6}-\d{1,6}$/; // Change to 6
+
+    if (!connectCode) {
+        alert("Please enter a connect code.");
+        return;
+    }
 
 ////// old format to validate not needed    
 //    if (!validFormat.test(connectCode)) {
 //        alert("Invalid format. Use ABCDE-1234.");
 //        return;
 //    }
-        if (!connectCode) {
-        alert("Please enter a connect code.");
-        return;
-    }
+    const saveToggle = document.getElementById("saveToggle");
+    const ratingToggle = document.getElementById("ratingToggle");
+    const ratingInput = document.getElementById("ratingInput");
 
-    if (document.getElementById("saveToggle").checked) {
-        if (document.getElementById("ratingToggle").checked) {
-            const rating = document.getElementById('ratingInput').value;
+    if (saveToggle && saveToggle.checked) {
+        if (ratingToggle && ratingToggle.checked) {
+            const rating = ratingInput ? ratingInput.value : "";
             saveConnectCode(connectCode, rating);
         } else {
             saveConnectCode(connectCode);
@@ -397,7 +400,7 @@ function openSlippiPage() {
 
     openIframeWithCode(connectCode);
 }
-
+//
 function filterSavedCodes() {
     const searchTerm = document.getElementById("searchConnectCode").value.toLowerCase().trim();
     document.querySelectorAll("#savedUsersList li").forEach((item) => {
@@ -406,9 +409,9 @@ function filterSavedCodes() {
     });
 }
 
-function enableDragAndDrop() {
+//function enableDragAndDrop() {
     // Add drag-and-drop functionality
-}
+//}
 
 function setupKeyListeners() {
     const connectCodeInput = document.getElementById("connectCode");
