@@ -365,7 +365,7 @@ function formatConnectCode() {
 
     // Enforce limits: max 5 letters, max 3 numbers
     const formattedLetters = letters.slice(0, 6).join("");
-    const formattedNumbers = numbers.slice(0, 3).join("");
+    const formattedNumbers = numbers.slice(0, 5).join("");
 
     // Combine with a hyphen
     input.value = formattedLetters + (formattedNumbers ? `-${formattedNumbers}` : "");
