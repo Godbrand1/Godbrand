@@ -153,7 +153,7 @@ function displaySavedCodes() {
         savedUsersList.appendChild(listItem);
     });
 
-    enableDragAndDrop();
+//    enableDragAndDrop();
 }
 
 
