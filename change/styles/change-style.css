@@ -262,6 +262,22 @@ main {
     color: #225e3b;
 }
 
+.history-content {
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+.history-total, .history-diff {
+    margin-right: 18px;
+}
+.history-timestamp {
+    margin-left: auto;
+	margin-right: 20px;
+    color: #555;
+    font-size: 0.85em;
+    white-space: nowrap;
+}
+
 /* Corner Image */
 .corner-image {
     position: fixed;
@@ -339,8 +355,6 @@ input[type="number"] {
 
 
 
-
-
 /* --- Improved responsive adjustments for mobile --- */
 @media (max-width: 600px) {
     body {
@@ -410,6 +424,12 @@ input[type="number"] {
     }
     .history {
         padding: 10px 6px 5px 6px;
+    }
+    .history-timestamp {
+        margin-right: 8px !important;
+    }
+    .history-remove-btn {
+        margin-left: 4px !important;
     }
 }
 
