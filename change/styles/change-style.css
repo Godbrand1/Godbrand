@@ -50,7 +50,23 @@ main {
     gap: 32px;
 }
 
+
+
 /* Denominations Section */
+
+.denominations-flex {
+    display: flex;
+    gap: 32px;
+    justify-content: space-between;
+}
+.denoms-col {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    flex: 1;
+}
+
+
 .denominations-section {
     background: #222826;
     padding: 24px 18px 14px 18px;
@@ -66,11 +82,14 @@ main {
     margin-bottom: 10px;
 }
 
-.input-group {
+.input-group, .exact_input {
     display: flex;
     flex-direction: column;
     gap: 6px;
     align-items: flex-start;
+}
+.exact_input {
+margin-top: 10px;
 }
 
 .input-group label {
@@ -346,6 +365,8 @@ input[type="number"] {
     }
 }
 
+
+
 #advanced-section {
     display: none;
     margin-bottom: 0; /* or as needed */
@@ -367,6 +388,7 @@ input[type="number"] {
     cursor: pointer;
     transition: background 0.15s, color 0.15s;
     margin-bottom: 10px;
+	margin-top: 10px;
 }
 #toggle-advanced-btn:hover {
     background: #267a3e;
@@ -424,6 +446,14 @@ input[type="number"] {
         padding: 6px 2vw 3px 2vw;
         margin-bottom: 12px;
     }
+
+    .denominations-flex {
+        flex-direction: column;
+        gap: 0;
+    }
+    .denoms-col {
+        width: 100%;
+    }
     .corner-image {
         width: 24vw;
         min-width: 44px;
@@ -439,6 +469,7 @@ input[type="number"] {
         font-size: 1.15rem;
         padding: 5px 6px;
     }
+
 .button-card {
     background: #222826;
     border-radius: 14px;
