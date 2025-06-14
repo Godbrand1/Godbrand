@@ -38,39 +38,38 @@ function calculateMoney() {
         return;
     }
 
-function getCurrentTimestamp() {
-    const now = new Date();
+    function getCurrentTimestamp() {
+        const now = new Date();
 
-    const days = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
-    const monthsShort = [
-        "Jan","Feb","Mar","Apr","May","Jun",
-        "Jul","Aug","Sep","Oct","Nov","Dec"
-    ];
+        const days = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
+        const monthsShort = [
+            "Jan","Feb","Mar","Apr","May","Jun",
+            "Jul","Aug","Sep","Oct","Nov","Dec"
+        ];
 
-    const day = now.getDate();
-    const getDaySuffix = n => {
-        if (n >= 11 && n <= 13) return "th";
-        switch (n % 10) {
-            case 1: return "st";
-            case 2: return "nd";
-            case 3: return "rd";
-            default: return "th";
-        }
-    };
+        const day = now.getDate();
+        const getDaySuffix = n => {
+            if (n >= 11 && n <= 13) return "th";
+            switch (n % 10) {
+                case 1: return "st";
+                case 2: return "nd";
+                case 3: return "rd";
+                default: return "th";
+            }
+        };
 
-    let hours = now.getHours();
-    const minutes = now.getMinutes();
-    const ampm = hours >= 12 ? "PM" : "AM";
-    hours = hours % 12;
-    hours = hours ? hours : 12;
-    const minStr = minutes < 10 ? `0${minutes}` : minutes;
+        let hours = now.getHours();
+        const minutes = now.getMinutes();
+        const ampm = hours >= 12 ? "PM" : "AM";
+        hours = hours % 12;
+        hours = hours ? hours : 12;
+        const minStr = minutes < 10 ? `0${minutes}` : minutes;
 
-    // ↓↓↓ THIS IS THE LINE TO CHANGE ↓↓↓
-    return `${days[now.getDay()]} @ ${hours}:${minStr}\u202f${ampm} | ${monthsShort[now.getMonth()]} ${day}${getDaySuffix(day)}`;
-}
+        return `${days[now.getDay()]} @ ${hours}:${minStr}\u202f${ampm} | ${monthsShort[now.getMonth()]} ${day}${getDaySuffix(day)}`;
+    }
     // Calculate difference from 50
     const diff = total - 50;
-    let msg = '', diffMsg = '', diffSpan = null;
+    let msg = '', diffMsg = '';
 
     if (diff === 0) {
         msg = `Total: $${rounded}`;
@@ -81,34 +80,24 @@ function getCurrentTimestamp() {
         diffEl.textContent = diffMsg;
     } else {
         msg = `Total: $${rounded}`;
-        // Create the red difference span
-        diffSpan = document.createElement('span');
-        diffSpan.style.color = 'red';
-        if (diff > 0) {
-            diffSpan.textContent = ` (Over by $${diff.toFixed(2)})`;
-        } else {
-            diffSpan.textContent = ` (Under by $${Math.abs(diff).toFixed(2)})`;
-        }
-        outputEl.textContent = msg;
-        outputEl.appendChild(diffSpan);
+        outputEl.textContent = msg; // Only show the total in output1
 
-        // Difference message, red, text black
+        // Difference message, red
         diffMsg = diff > 0 
             ? `Over by $${diff.toFixed(2)}`
             : `Under by $${Math.abs(diff).toFixed(2)}`;
         diffEl.textContent = diffMsg;
-        // Only the difference text is red, rest remains black
         diffEl.style.color = 'red';
     }
 
     // Add to history
     addHistory({ 
-    id: generateId(), 
-    total: rounded, 
-    diff: diff.toFixed(2), 
-    diffMsg,
-    timestamp: getCurrentTimestamp()    // <-- add this!
-});
+        id: generateId(), 
+        total: rounded, 
+        diff: diff.toFixed(2), 
+        diffMsg,
+        timestamp: getCurrentTimestamp()
+    });
 }
 
 // History: add item
@@ -125,11 +114,6 @@ function addHistory(entry, shouldSave = true) {
     const totalSpan = document.createElement('span');
     totalSpan.className = 'history-total';
     totalSpan.textContent = `Total: $${entry.total}`;
-
-    // Spacer
-    // const spacer = document.createElement('span');
-    // spacer.className = 'history-spacer';
-    // spacer.innerHTML = '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'; // Add more as needed
 
     // Over/Under
     const diffSpan = document.createElement('span');
@@ -162,7 +146,6 @@ function addHistory(entry, shouldSave = true) {
 
     // Build structure
     contentDiv.appendChild(totalSpan);
-    // contentDiv.appendChild(spacer);
     contentDiv.appendChild(diffSpan);
     contentDiv.appendChild(timestampSpan);
 
@@ -210,7 +193,6 @@ function resetValues() {
     document.getElementById('difference').style.color = 'black';
 }
 
-
 // Increment/Decrement helpers
 function incrementValue(id) {
     const el = document.getElementById(id);
@@ -221,16 +203,15 @@ function decrementValue(id) {
     el.value = Math.max(0, parseInt(el.value, 10) - 1);
 }
 
-
 function toggleAdvanced() {
     var adv = document.getElementById('advanced-section');
     var btn = document.getElementById('toggle-advanced-btn');
     if (adv.style.display === "none" || adv.style.display === "") {
         adv.style.display = "block";
-        btn.textContent = "Hide Advanced";
+        btn.textContent = "Hide";
     } else {
         adv.style.display = "none";
-        btn.textContent = "Show Advanced";
+        btn.textContent = "Extra";
         // Optionally reset fifties when hiding
         document.getElementById('fifty').value = 0;
     }
