@@ -1,206 +1,209 @@
-// function to generate a unique identifier
-function generateUUID() {
-    return 'xxxx-xxxx-4xxx-yxxx-xxxx-xxxx-xxxx'.replace(/[xy]/g, function(c) {
-        var r = Math.random() * 16 | 0,
-            v = c === 'x' ? r : (r & 0x3 | 0x8);
-        return v.toString(16);
-    });
+// Utility: Generate a simple unique id for history items
+function generateId() {
+    return Date.now().toString() + Math.floor(Math.random() * 1000);
 }
 
-// function to calculate money
+// Main calculation function
 function calculateMoney() {
-    let fifties = document.getElementById('fifty').value;
-    let twenties = document.getElementById('twenty').value;
-    let tens = document.getElementById('ten').value;
-    let fives = document.getElementById('five').value;
-    let ones = document.getElementById('one').value;
-    let quarters = document.getElementById('quarter').value;
-    let dimes = document.getElementById('dime').value;
-    let nickels = document.getElementById('nickel').value;
-    let pennies = document.getElementById('penny').value;
-    let extra_money = document.getElementById('extra_moneyz').value;
+    // Read input values as integers or 0
+    const getVal = id => parseInt(document.getElementById(id).value, 10) || 0;
+    const fifties = getVal('fifty'), twenties = getVal('twenty'), tens = getVal('ten'),
+          fives = getVal('five'), ones = getVal('one'), quarters = getVal('quarter'),
+          dimes = getVal('dime'), nickels = getVal('nickel'), pennies = getVal('penny'),
+          extra = getVal('extra_moneyz');
+    
+    // Calculate total
+    const total = (
+        fifties * 50 + twenties * 20 + tens * 10 + fives * 5 + ones +
+        quarters * 0.25 + dimes * 0.10 + nickels * 0.05 + pennies * 0.01 +
+        extra
+    );
+    const rounded = total.toFixed(2);
 
-    // parse the values so they're numbers and not strings
-    let extraMoneyValue = parseInt(extra_money) || 0;
-    let fiftyValue = parseInt(fifties) || 0;
-    let twentyValue = parseInt(twenties) || 0;
-    let tenValue = parseInt(tens) || 0;
-    let fiveValue = parseInt(fives) || 0;
-    let oneValue = parseInt(ones) || 0;
-    let quarterValue = parseInt(quarters) || 0;
-    let dimeValue = parseInt(dimes) || 0;
-    let nickelValue = parseInt(nickels) || 0;
-    let pennyValue = parseInt(pennies) || 0;
+    // Elements for output
+    const errorEl = document.getElementById('error-message');
+    const outputEl = document.getElementById('output1');
+    const diffEl = document.getElementById('difference');
 
-    // calculate moneyz 
-    let totalAmount1 = fiftyValue * 50;
-    let totalAmount2 = twentyValue * 20;
-    let totalAmount3 = tenValue * 10;
-    let totalAmount4 = fiveValue * 5;
-    let totalAmount5 = oneValue * 1;
-    let totalAmount6 = quarterValue * 0.25;
-    let totalAmount7 = dimeValue * 0.1;
-    let totalAmount8 = nickelValue * 0.05;
-    let totalAmount9 = pennyValue * 0.01;
-    let totalAmount = totalAmount1 + totalAmount2 + totalAmount3 + totalAmount4 + totalAmount5 + totalAmount6 + totalAmount7 + totalAmount8 + totalAmount9 + extraMoneyValue;
-    let roundedToHundredth = totalAmount.toFixed(2);
+    // Reset outputs
+    errorEl.textContent = '';
+    outputEl.textContent = '';
+    diffEl.textContent = '';
+    outputEl.style.color = 'black';
+    diffEl.style.color = 'black';
 
-    // Display error message if total amount is zero or below
-    let errorMessage = document.getElementById('error-message');
-    if (roundedToHundredth <= 0 || roundedToHundredth <= 0) {
-        errorMessage.textContent = 'Enter values greater than 0.';
+    // Validate input
+    if (total <= 0) {
+        errorEl.textContent = 'Enter values greater than 0.';
         return;
+    }
+
+    // Calculate difference from 50
+    const diff = total - 50;
+    let msg = '', diffMsg = '', diffSpan = null;
+
+    if (diff === 0) {
+        msg = `Total: $${rounded}`;
+        diffMsg = 'You have exactly $50.00!';
+        outputEl.style.color = 'green';
+        diffEl.style.color = 'green';
+        outputEl.textContent = msg;
+        diffEl.textContent = diffMsg;
     } else {
-        errorMessage.textContent = '';
+        msg = `Total: $${rounded}`;
+        // Create the red difference span
+        diffSpan = document.createElement('span');
+        diffSpan.style.color = 'red';
+        if (diff > 0) {
+            diffSpan.textContent = ` (Over by $${diff.toFixed(2)})`;
+        } else {
+            diffSpan.textContent = ` (Under by $${Math.abs(diff).toFixed(2)})`;
+        }
+        outputEl.textContent = msg;
+        outputEl.appendChild(diffSpan);
+
+        // Difference message, red, text black
+        diffMsg = diff > 0 
+            ? `Over by $${diff.toFixed(2)}`
+            : `Under by $${Math.abs(diff).toFixed(2)}`;
+        diffEl.textContent = diffMsg;
+        // Only the difference text is red, rest remains black
+        diffEl.style.color = 'red';
     }
 
-    // calculate difference from $50.00
-    let difference = roundedToHundredth - 50;
-    let differenceText = difference > 0 ? `Over by $${difference.toFixed(2)}` : `Under by $${Math.abs(difference).toFixed(2)}`;
-    let differenceAmountText = difference > 0 ? `+$${difference.toFixed(2)}` : `-$${Math.abs(difference).toFixed(2)}`;
-    let differenceColor = difference > 0 ? 'green' : 'red';
-
-    // grab the output1 value
-    let out1 = document.getElementById('output1');
-
-    // grab the difference value
-    let diffElement = document.getElementById('difference');
-
-    // Clear any existing content
-    out1.textContent = '';
-    diffElement.textContent = '';
-
-    // Create new elements to contain the results
-    let resultDiv = document.createElement('div');
-    resultDiv.textContent = `$${roundedToHundredth} `;
-
-    let diffAmountSpan = document.createElement('span');
-    diffAmountSpan.classList.add('history-diff-amount'); // Add class for CSS targeting
-    diffAmountSpan.textContent = differenceAmountText;
-    diffAmountSpan.style.color = differenceColor;
-
-    resultDiv.appendChild(diffAmountSpan);
-
-    let diffDiv = document.createElement('div');
-    diffDiv.textContent = differenceText;
-    diffDiv.style.color = difference > 0 ? 'green' : 'orange';
-
-    // Append the new elements to the output containers
-    out1.appendChild(resultDiv);
-    diffElement.appendChild(diffDiv);
-
-    // Generate a unique identifier for the history item
-    let uuid = generateUUID();
-
-    // Update the history
-    let historyList = document.getElementById('history-list');
-    let historyItem = document.createElement('li');
-    let historyItemContent = document.createElement('div');
-    historyItemContent.classList.add('history-item');
-    let historyText = document.createElement('span');
-    historyText.textContent = `$${roundedToHundredth}`;
-    let historyDiffAmount = document.createElement('span');
-    historyDiffAmount.classList.add('history-diff-amount'); // Add class for CSS targeting
-    historyDiffAmount.textContent = differenceAmountText;
-    historyDiffAmount.style.color = differenceColor;
-    let historyDiff = document.createElement('span');
-    historyDiff.textContent = differenceText;
-    historyDiff.classList.add('difference-text');
-    historyItemContent.appendChild(historyText);
-    historyItemContent.appendChild(historyDiffAmount);
-    historyItemContent.appendChild(historyDiff);
-    historyItem.appendChild(historyItemContent);
-    historyItem.setAttribute('data-id', uuid);
-    historyItem.ondblclick = () => {
-        historyItem.remove();
-        removeFromLocalStorage(uuid);
-    }; // Double-click to remove
-    historyList.appendChild(historyItem);
-
-    // Save to local storage
-    saveHistory({ id: uuid, value: roundedToHundredth, difference: differenceAmountText });
+    // Add to history
+    addHistory({ id: generateId(), total: rounded, diff: diff.toFixed(2), diffMsg });
 }
 
-// function to reset values
-function resetValues() {
-    document.getElementById('fifty').value = 0;
-    document.getElementById('twenty').value = 0;
-    document.getElementById('ten').value = 0;
-    document.getElementById('five').value = 0;
-    document.getElementById('one').value = 0;
-    document.getElementById('quarter').value = 0;
-    document.getElementById('dime').value = 0;
-    document.getElementById('nickel').value = 0;
-    document.getElementById('penny').value = 0;
-    document.getElementById('extra_moneyz').value = 0;
-}
+// History: add item
+function addHistory(entry, shouldSave = true) {
+    const list = document.getElementById('history-list');
+    const li = document.createElement('li');
+    li.className = 'history-item';
 
-// function to increment value
-function incrementValue(id) {
-    let element = document.getElementById(id);
-    element.value = parseInt(element.value) + 1;
-}
+    // Container for main content (total and diff)
+    const contentDiv = document.createElement('div');
+    contentDiv.className = 'history-content';
 
-// function to decrement value
-function decrementValue(id) {
-    let element = document.getElementById(id);
-    if (parseInt(element.value) > 0) {
-        element.value = parseInt(element.value) - 1;
+    // Total
+    const totalSpan = document.createElement('span');
+    totalSpan.className = 'history-total';
+    totalSpan.textContent = `Total: $${entry.total}`;
+
+    // Spacer
+    const spacer = document.createElement('span');
+    spacer.className = 'history-spacer';
+    spacer.innerHTML = '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'; // Add more as needed
+
+    // Over/Under
+    const diffSpan = document.createElement('span');
+    diffSpan.className = 'history-diff';
+    diffSpan.style.color = 'red';
+    if (entry.diff === "0.00") {
+        diffSpan.textContent = "Exactly $50.00!";
+        diffSpan.style.color = "green";
+        totalSpan.style.color = "green";
+    } else if (parseFloat(entry.diff) > 0) {
+        diffSpan.textContent = `Over by $${parseFloat(entry.diff).toFixed(2)}`;
+    } else {
+        diffSpan.textContent = `Under by $${Math.abs(parseFloat(entry.diff)).toFixed(2)}`;
+    }
+
+    // X remove box
+    const removeBtn = document.createElement('button');
+    removeBtn.className = 'history-remove-btn';
+    removeBtn.innerHTML = '&times;';
+    removeBtn.title = 'Remove this entry';
+    removeBtn.onclick = () => {
+        li.remove();
+        removeFromLocalStorage(entry.id);
+    };
+
+    // Build structure
+    contentDiv.appendChild(totalSpan);
+    contentDiv.appendChild(spacer);
+    contentDiv.appendChild(diffSpan);
+
+    li.appendChild(contentDiv);
+    li.appendChild(removeBtn);
+
+    list.appendChild(li);
+
+    // Only save to localStorage if shouldSave is true
+    if (shouldSave) {
+        saveToLocalStorage(entry);
     }
 }
 
-// function to save history to local storage
-function saveHistory(entry) {
-    let history = JSON.parse(localStorage.getItem('calculationHistory')) || [];
-    history.push(entry);
-    localStorage.setItem('calculationHistory', JSON.stringify(history));
+// History: save/load/clear
+function saveToLocalStorage(entry) {
+    const hist = JSON.parse(localStorage.getItem('calculationHistory') || '[]');
+    hist.push(entry);
+    localStorage.setItem('calculationHistory', JSON.stringify(hist));
 }
-
-// function to load history from local storage
 function loadHistory() {
-    let history = JSON.parse(localStorage.getItem('calculationHistory')) || [];
-    let historyList = document.getElementById('history-list');
-    history.forEach(entry => {
-        let historyItem = document.createElement('li');
-        let historyItemContent = document.createElement('div');
-        historyItemContent.classList.add('history-item');
-        let historyText = document.createElement('span');
-        historyText.textContent = `$${entry.value}`;
-        let historyDiffAmount = document.createElement('span');
-        historyDiffAmount.classList.add('history-diff-amount'); // Add class for CSS targeting
-        historyDiffAmount.textContent = entry.difference;
-        historyDiffAmount.style.color = entry.difference.charAt(0) === '+' ? 'green' : 'red';
-        let historyDiff = document.createElement('span');
-        historyDiff.textContent = entry.differenceText;
-        historyDiff.classList.add('difference-text');
-        historyItemContent.appendChild(historyText);
-        historyItemContent.appendChild(historyDiffAmount);
-        historyItemContent.appendChild(historyDiff);
-        historyItem.appendChild(historyItemContent);
-        historyItem.setAttribute('data-id', entry.id);
-        historyItem.ondblclick = () => {
-            historyItem.remove();
-            removeFromLocalStorage(entry.id);
-        }; // Double-click to remove
-        historyList.appendChild(historyItem);
-    });
+    const hist = JSON.parse(localStorage.getItem('calculationHistory') || '[]');
+    const list = document.getElementById('history-list');
+    list.innerHTML = '';
+    hist.forEach(entry => addHistory(entry, false)); // Pass 'false' so entries are NOT re-saved
 }
-
-// function to remove item from local storage
 function removeFromLocalStorage(id) {
-    let history = JSON.parse(localStorage.getItem('calculationHistory')) || [];
-    history = history.filter(entry => entry.id !== id);
-    localStorage.setItem('calculationHistory', JSON.stringify(history));
+    let hist = JSON.parse(localStorage.getItem('calculationHistory') || '[]');
+    hist = hist.filter(entry => entry.id !== id);
+    localStorage.setItem('calculationHistory', JSON.stringify(hist));
 }
-
-// function to clear history
 function clearHistory() {
     localStorage.removeItem('calculationHistory');
-    let historyList = document.getElementById('history-list');
-    historyList.innerHTML = '';
+    document.getElementById('history-list').innerHTML = '';
 }
 
-// function to initialize the page
+// Reset all counters
+function resetValues() {
+    ['fifty','twenty','ten','five','one','quarter','dime','nickel','penny','extra_moneyz']
+      .forEach(id => document.getElementById(id).value = 0);
+    document.getElementById('error-message').textContent = '';
+    document.getElementById('output1').textContent = '';
+    document.getElementById('difference').textContent = '';
+    document.getElementById('output1').style.color = 'black';
+    document.getElementById('difference').style.color = 'black';
+}
+
+// Increment/Decrement helpers
+function incrementValue(id) {
+    const el = document.getElementById(id);
+    el.value = parseInt(el.value, 10) + 1;
+}
+function decrementValue(id) {
+    const el = document.getElementById(id);
+    el.value = Math.max(0, parseInt(el.value, 10) - 1);
+}
+
+
+function toggleAdvanced() {
+    var adv = document.getElementById('advanced-section');
+    var btn = document.getElementById('toggle-advanced-btn');
+    if (adv.style.display === "none" || adv.style.display === "") {
+        adv.style.display = "block";
+        btn.textContent = "Hide Advanced";
+    } else {
+        adv.style.display = "none";
+        btn.textContent = "Show Advanced";
+        // Optionally reset fifties when hiding
+        document.getElementById('fifty').value = 0;
+    }
+}
+
+window.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('input[type="number"]').forEach(function(input) {
+        input.addEventListener('focus', function() {
+            if (input.value === "0") {
+                input.select();
+            }
+        });
+    });
+});
+
+// Page initialization
 function initializePage() {
     loadHistory();
     resetValues();
