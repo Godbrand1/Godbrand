@@ -18,81 +18,87 @@
     </header>
 
     <main>
-        <section class="denominations-section">
-            <div class="denominations-grid">
-               
-                <div class="input-group">
-                    <label for="twenty">Twenties</label>
-                    <div class="input-container">
-                        <span class="currency">$</span>
-                        <input id="twenty" type="number" value="0" step="1" min="0" autocomplete="off">
-                        <button type="button" class="increment-btn" onclick="incrementValue('twenty')">▲</button>
-                        <button type="button" class="decrement-btn" onclick="decrementValue('twenty')">▼</button>
-                    </div>
+<section class="denominations-section">
+    <div class="denominations-flex">
+        <div class="denoms-col">
+            <div class="input-group">
+                <label for="twenty">Twenties</label>
+                <div class="input-container">
+                    <span class="currency">$</span>
+                    <input id="twenty" type="number" value="0" step="1" min="0" autocomplete="off">
+                    <button type="button" class="increment-btn" onclick="incrementValue('twenty')">▲</button>
+                    <button type="button" class="decrement-btn" onclick="decrementValue('twenty')">▼</button>
                 </div>
-                <div class="input-group">
-                    <label for="ten">Tens</label>
-                    <div class="input-container">
-                        <span class="currency">$</span>
-                        <input id="ten" type="number" value="0" step="1" min="0">
-                        <button type="button" class="increment-btn" onclick="incrementValue('ten')">▲</button>
-                        <button type="button" class="decrement-btn" onclick="decrementValue('ten')">▼</button>
-                    </div>
+            </div>
+            <div class="input-group">
+                <label for="ten">Tens</label>
+                <div class="input-container">
+                    <span class="currency">$</span>
+                    <input id="ten" type="number" value="0" step="1" min="0">
+                    <button type="button" class="increment-btn" onclick="incrementValue('ten')">▲</button>
+                    <button type="button" class="decrement-btn" onclick="decrementValue('ten')">▼</button>
                 </div>
-                <div class="input-group">
-                    <label for="five">Fives</label>
-                    <div class="input-container">
-                        <span class="currency">$</span>
-                        <input id="five" type="number" value="0" step="1" min="0">
-                        <button type="button" class="increment-btn" onclick="incrementValue('five')">▲</button>
-                        <button type="button" class="decrement-btn" onclick="decrementValue('five')">▼</button>
-                    </div>
+            </div>
+            <div class="input-group">
+                <label for="five">Fives</label>
+                <div class="input-container">
+                    <span class="currency">$</span>
+                    <input id="five" type="number" value="0" step="1" min="0">
+                    <button type="button" class="increment-btn" onclick="incrementValue('five')">▲</button>
+                    <button type="button" class="decrement-btn" onclick="decrementValue('five')">▼</button>
                 </div>
-                <div class="input-group">
-                    <label for="one">Ones</label>
-                    <div class="input-container">
-                        <span class="currency">$</span>
-                        <input id="one" type="number" value="0" step="1" min="0">
-                        <button type="button" class="increment-btn" onclick="incrementValue('one')">▲</button>
-                        <button type="button" class="decrement-btn" onclick="decrementValue('one')">▼</button>
-                    </div>
+            </div>
+            <div class="input-group">
+                <label for="one">Ones</label>
+                <div class="input-container">
+                    <span class="currency">$</span>
+                    <input id="one" type="number" value="0" step="1" min="0">
+                    <button type="button" class="increment-btn" onclick="incrementValue('one')">▲</button>
+                    <button type="button" class="decrement-btn" onclick="decrementValue('one')">▼</button>
                 </div>
-                <div class="input-group">
-                    <label for="quarter">Quarters</label>
-                    <div class="input-container">
-                        <span class="currency">$</span>
-                        <input id="quarter" type="number" value="0" step="1" min="0">
-                        <button type="button" class="increment-btn" onclick="incrementValue('quarter')">▲</button>
-                        <button type="button" class="decrement-btn" onclick="decrementValue('quarter')">▼</button>
-                    </div>
+            </div>
+
+
+        </div>
+        <div class="denoms-col">
+            <div class="input-group">
+                <label for="quarter">Quarters</label>
+                <div class="input-container">
+                    <span class="currency">$</span>
+                    <input id="quarter" type="number" value="0" step="1" min="0">
+                    <button type="button" class="increment-btn" onclick="incrementValue('quarter')">▲</button>
+                    <button type="button" class="decrement-btn" onclick="decrementValue('quarter')">▼</button>
                 </div>
-                <div class="input-group">
-                    <label for="dime">Dimes</label>
-                    <div class="input-container">
-                        <span class="currency">$</span>
-                        <input id="dime" type="number" value="0" step="1" min="0">
-                        <button type="button" class="increment-btn" onclick="incrementValue('dime')">▲</button>
-                        <button type="button" class="decrement-btn" onclick="decrementValue('dime')">▼</button>
-                    </div>
+            </div>
+            <div class="input-group">
+                <label for="dime">Dimes</label>
+                <div class="input-container">
+                    <span class="currency">$</span>
+                    <input id="dime" type="number" value="0" step="1" min="0">
+                    <button type="button" class="increment-btn" onclick="incrementValue('dime')">▲</button>
+                    <button type="button" class="decrement-btn" onclick="decrementValue('dime')">▼</button>
                 </div>
-                <div class="input-group">
-                    <label for="nickel">Nickels</label>
-                    <div class="input-container">
-                        <span class="currency">$</span>
-                        <input id="nickel" type="number" value="0" step="1" min="0">
-                        <button type="button" class="increment-btn" onclick="incrementValue('nickel')">▲</button>
-                        <button type="button" class="decrement-btn" onclick="decrementValue('nickel')">▼</button>
-                    </div>
+            </div>
+            <div class="input-group">
+                <label for="nickel">Nickels</label>
+                <div class="input-container">
+                    <span class="currency">$</span>
+                    <input id="nickel" type="number" value="0" step="1" min="0">
+                    <button type="button" class="increment-btn" onclick="incrementValue('nickel')">▲</button>
+                    <button type="button" class="decrement-btn" onclick="decrementValue('nickel')">▼</button>
                 </div>
-                <div class="input-group">
-                    <label for="penny">Pennies</label>
-                    <div class="input-container">
-                        <span class="currency">$</span>
-                        <input id="penny" type="number" value="0" step="1" min="0">
-                        <button type="button" class="increment-btn" onclick="incrementValue('penny')">▲</button>
-                        <button type="button" class="decrement-btn" onclick="decrementValue('penny')">▼</button>
-                    </div>
+            </div>
+            <div class="input-group">
+                <label for="penny">Pennies</label>
+                <div class="input-container">
+                    <span class="currency">$</span>
+                    <input id="penny" type="number" value="0" step="1" min="0">
+                    <button type="button" class="increment-btn" onclick="incrementValue('penny')">▲</button>
+                    <button type="button" class="decrement-btn" onclick="decrementValue('penny')">▼</button>
                 </div>
+            </div>
+        </div>
+    </div>
                 <div class="input-group">
                     <label for="extra_moneyz">Exact $ Entry</label>
                     <div class="input-container">
