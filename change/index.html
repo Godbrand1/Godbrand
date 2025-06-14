@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Change Counter</title>
-    <link rel="stylesheet" href="styles/change-style.css?v=2">
+    <link rel="stylesheet" href="styles/change-style.css?v=3">
     <link rel="icon" href="images/gb.jpg">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
@@ -103,12 +103,13 @@
                     </div>
                 </div>
             </div>
-        </section>
+
+<!-- ----------------------------------------------------- -->
 
 <!-- Add "Show Advanced" button above denominations grid -->
-<button type="button" id="toggle-advanced-btn" onclick="toggleAdvanced()" style="margin-bottom:10px;">Show Advanced</button>
+<button type="button" id="toggle-advanced-btn" onclick="toggleAdvanced()">Extra</button>
 
-<div id="advanced-section" style="display:none; margin-bottom: 16px;">
+<div id="advanced-section">
     <div class="input-group">
         <label for="fifty">Fifties</label>
         <div class="input-container">
@@ -119,19 +120,27 @@
         </div>
     </div>
 </div>
+        </section>
 
+<!-- ************************************************************************************** -->
         <section class="results-section">
+
             <p class="error" id="error-message"></p>
             <div class="outputs">
                 <p class="output" id="output1">&nbsp;</p>
                 <p class="output" id="difference">&nbsp;</p>
             </div>
-            <div class="button-group">
-                <button type="button" class="calculate-change" onclick="calculateMoney()">Calculate</button>
-                <button type="button" class="reset-values" onclick="resetValues()">Reset</button>
-                <button type="button" class="clear-history" onclick="clearHistory()">Clear History</button>
-            </div>
-        </section>
+        
+<div class="button-card">
+  <div class="button-group">
+    <button type="button" class="calculate-change" onclick="calculateMoney()">Calculate</button>
+    <details class="danger-details">
+      <summary class="danger-summary">More Actions</summary>
+      <button type="button" class="reset-values" onclick="resetValues()">Reset</button>
+      <button type="button" class="clear-history" onclick="clearHistory()">Clear History</button>
+    </details>
+  </div>
+</div></section>
 
         <aside id="history" class="history">
             <h2>Calculation History</h2>
