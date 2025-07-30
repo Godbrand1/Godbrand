@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Weekly Work Schedule Generator</title>
+  <link rel="stylesheet" href="css/styles.css" />
+  <script src="js/scripts.js" defer></script>
+  <script src="js/schedule.js" defer></script>
+</head>
+<body>
+
+  <h1>Weekly Work Schedule Generator</h1>
+
+  <section>
+    <h2>Generated Schedule</h2>
+    <button>Generate Schedule</button>
+    <div style="overflow-x:auto;">
+      <table id="output" style="width:100%;background:#eee;padding:1rem;border-radius:6px;">
+        <thead>
+          <tr>
+            <th>Day</th>
+            <th>Time</th>
+            <th>Employee</th>
+            <th>Role</th>
+            <th>Manager Coverage</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Schedule rows will be added here dynamically -->
+        </tbody>
+      </table>
+    </div>
+    <div id="hoursSummary" style="margin-top:1rem;font-weight:bold;">Total scheduled hours: 0 / <span id="maxHours">0</span></div>
+    <div id="quotaStatus" style="margin-top:1rem;font-weight:bold;color:red;"></div>
+  </section>
+
+  <section>
+    <h2>Employee List</h2>
+    <div style="max-height:350px;overflow-y:auto;border:1px solid #eee;border-radius:6px;">
+      <table id="employeeTable" style="width:100%;margin-bottom:2rem;">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Role</th>
+            <th>Availability</th>
+            <th>Unavailability</th>
+            <th>Desired Hours</th>
+            <th>Scheduled Hours</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Employee rows will be added here dynamically -->
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <h2>Add Employee</h2>
+    <label for="empName">Name:</label>
+    <input id="empName" placeholder="John Doe" />
+
+    <label>Roles:</label>
+    <div id="empRoles" style="margin-bottom:1rem;display:flex;flex-direction:column;gap:8px;max-width:220px;">
+      <label style="display:flex;align-items:center;"><input type="checkbox" value="GM" id="roleGM"> GM</label>
+      <label style="display:flex;align-items:center;"><input type="checkbox" value="Shift Lead" id="roleShiftLead"> Mgr</label>
+      <label style="display:flex;align-items:center;"><input type="checkbox" value="Cashier" id="roleCashier"> Cashier</label>
+      <label style="display:flex;align-items:center;"><input type="checkbox" value="Food Champion" id="roleFoodChampion"> Food</label>
+    </div>
+    <div style="font-size:0.95em;color:#555;margin-bottom:1rem;max-width:220px;">
+      <strong>Legend:</strong> GM = General Manager, Mgr = Shift Lead (Manager), Food = Food Champion
+    </div>
+
+    <label>Weekly Availability & Unavailability:</label>
+    <label style="display:flex;align-items:center;margin-bottom:8px;"><input type="checkbox" id="openAvail"> Open Availability (can work any time)</label>
+    <table id="empScheduleInput" style="width:100%;margin-bottom:1rem;">
+      <thead>
+        <tr>
+          <th>Day</th>
+          <th>Available?</th>
+          <th>Start</th>
+          <th>End</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Mon</td>
+          <td><input type="checkbox" id="availMon" checked /></td>
+          <td><input type="time" id="startMon" value="08:00" /></td>
+          <td><input type="time" id="endMon" value="16:00" /></td>
+        </tr>
+        <tr>
+          <td>Tue</td>
+          <td><input type="checkbox" id="availTue" checked /></td>
+          <td><input type="time" id="startTue" value="08:00" /></td>
+          <td><input type="time" id="endTue" value="16:00" /></td>
+        </tr>
+        <tr>
+          <td>Wed</td>
+          <td><input type="checkbox" id="availWed" checked /></td>
+          <td><input type="time" id="startWed" value="08:00" /></td>
+          <td><input type="time" id="endWed" value="16:00" /></td>
+        </tr>
+        <tr>
+          <td>Thu</td>
+          <td><input type="checkbox" id="availThu" checked /></td>
+          <td><input type="time" id="startThu" value="08:00" /></td>
+          <td><input type="time" id="endThu" value="16:00" /></td>
+        </tr>
+        <tr>
+          <td>Fri</td>
+          <td><input type="checkbox" id="availFri" checked /></td>
+          <td><input type="time" id="startFri" value="08:00" /></td>
+          <td><input type="time" id="endFri" value="16:00" /></td>
+        </tr>
+        <tr>
+          <td>Sat</td>
+          <td><input type="checkbox" id="availSat" checked /></td>
+          <td><input type="time" id="startSat" value="08:00" /></td>
+          <td><input type="time" id="endSat" value="16:00" /></td>
+        </tr>
+        <tr>
+          <td>Sun</td>
+          <td><input type="checkbox" id="availSun" checked /></td>
+          <td><input type="time" id="startSun" value="08:00" /></td>
+          <td><input type="time" id="endSun" value="16:00" /></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <label for="desiredHours" id="desiredHoursLabel" style="display:none;">Desired Hours (for Shift Lead, Food Champion, Cashier):</label>
+    <input id="desiredHours" type="number" min="0" step="0.5" placeholder="Desired Hours" style="display:none;" />
+
+    <label for="shiftPref" id="shiftPrefLabel" style="display:none;">Manager Shift Preference:</label>
+    <select id="shiftPref" style="display:none;">
+      <option value="">No Preference</option>
+      <option value="Morning">Morning (6am–2pm)</option>
+      <option value="Afternoon">Afternoon (2pm–10pm)</option>
+      <option value="Night">Night (10pm–6am)</option>
+    </select>
+
+    <button id="addEmployeeBtn">Add Employee</button>
+  </section>
+
+  <section>
+    <h2>Store Settings</h2>
+    <label for="storeHours">Total Weekly Store Hours:</label>
+    <input id="storeHours" type="number" placeholder="e.g. 160" />
+  </section>
+
+  <section>
+    <h2>Employee Stats</h2>
+    <div id="roleStats" style="font-weight:bold;"></div>
+  </section>
+
+  
+</body>
+</html>
