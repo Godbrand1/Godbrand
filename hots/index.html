@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Heroes of the Storm Match Tracker</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Heroes of the Storm Match Tracker</h1>
+            <p>Track your matches, players, and results</p>
+        </div>
+
+        <div class="content">
+            <!-- Player Profile Section -->
+            <div class="player-profile-section">
+                <div class="profile-header">
+                    <h3>My Profile</h3>
+                    <div class="profile-setup" id="profile-setup">
+                        <div class="autocomplete-wrapper">
+                            <input type="text" id="my-player-name" class="autocomplete-input" placeholder="Enter your player name..." />
+                            <div class="autocomplete-dropdown"></div>
+                        </div>
+                        <button onclick="setMyPlayerName()" class="btn-small">Choose Profile</button>
+                    </div>
+                </div>
+                <div class="my-profile" id="my-profile" style="display: none;">
+                    <div class="profile-info">
+                        <div class="player-identity">
+                            <img id="my-hero-icon" src="" alt="Most played hero" class="hero-icon" />
+                            <div class="player-details">
+                                <h4 id="my-display-name">Unknown Player</h4>
+                                <div class="player-stats">
+                                    <span class="stat-item">Matches: <span id="my-total-matches">0</span></span>
+                                    <span class="stat-item">W/L: <span id="my-win-rate">0% (0-0)</span></span>
+                                </div>
+                                <div class="most-played">Most played: <span id="my-most-played-hero">None</span></div>
+                            </div>
+                        </div>
+                        <div class="profile-actions">
+                            <button onclick="viewFullProfile()" class="btn-small">View Full Profile</button>
+                            <button onclick="changePlayerName()" class="btn-small secondary">Change Profile</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Add Match Form -->
+            <div class="form-section">
+                <h2>Add New Match</h2>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="map">Map</label>
+                        <select id="map">
+                            <option value="">Select Map</option>
+                            <option value="Alterac Pass">Alterac Pass</option>
+                            <option value="Battlefield of Eternity">Battlefield of Eternity</option>
+                            <option value="Braxis Holdout">Braxis Holdout</option>
+                            <option value="Cursed Hollow">Cursed Hollow</option>
+                            <option value="Dragon Shire">Dragon Shire</option>
+                            <option value="Garden of Terror">Garden of Terror</option>
+                            <option value="Hanamura Temple">Hanamura Temple</option>
+                            <option value="Infernal Shrines">Infernal Shrines</option>
+                            <option value="Sky Temple">Sky Temple</option>
+                            <option value="Tomb of the Spider Queen">Tomb of the Spider Queen</option>
+                            <option value="Towers of Doom">Towers of Doom</option>
+                            <option value="Volskaya Foundry">Volskaya Foundry</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="result">Match Result</label>
+                        <select id="result">
+                            <option value="">Select Result</option>
+                            <option value="win">Victory</option>
+                            <option value="loss">Defeat</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="timestamp">Date & Time</label>
+                        <input type="datetime-local" id="timestamp">
+                    </div>
+                </div>
+
+                <div class="players-section">
+                    <div class="team ally">
+                        <h3>Allied Team</h3>
+                        <div id="ally-players">
+                            <div class="player-row">
+                                <div class="autocomplete-wrapper">
+                                    <input type="text" placeholder="Player Name" class="ally-player">
+                                    <div class="autocomplete-dropdown"></div>
+                                </div>
+                                <div class="autocomplete-wrapper">
+                                    <input type="text" placeholder="Hero" class="ally-hero autocomplete-input">
+                                    <div class="autocomplete-dropdown"></div>
+                                </div>
+                            </div>
+                            <div class="player-row">
+                                <div class="autocomplete-wrapper">
+                                    <input type="text" placeholder="Player Name" class="ally-player">
+                                    <div class="autocomplete-dropdown"></div>
+                                </div>
+                                <div class="autocomplete-wrapper">
+                                    <input type="text" placeholder="Hero" class="ally-hero autocomplete-input">
+                                    <div class="autocomplete-dropdown"></div>
+                                </div>
+                            </div>
+                            <div class="player-row">
+                                <div class="autocomplete-wrapper">
+                                    <input type="text" placeholder="Player Name" class="ally-player">
+                                    <div class="autocomplete-dropdown"></div>
+                                </div>
+                                <div class="autocomplete-wrapper">
+                                    <input type="text" placeholder="Hero" class="ally-hero autocomplete-input">
+                                    <div class="autocomplete-dropdown"></div>
+                                </div>
+                            </div>
+                            <div class="player-row">
+                                <div class="autocomplete-wrapper">
+                                    <input type="text" placeholder="Player Name" class="ally-player">
+                                    <div class="autocomplete-dropdown"></div>
+                                </div>
+                                <div class="autocomplete-wrapper">
+                                    <input type="text" placeholder="Hero" class="ally-hero autocomplete-input">
+                                    <div class="autocomplete-dropdown"></div>
+                                </div>
+                            </div>
+                            <div class="player-row">
+                                <div class="autocomplete-wrapper">
+                                    <input type="text" placeholder="Player Name" class="ally-player">
+                                    <div class="autocomplete-dropdown"></div>
+                                </div>
+                                <div class="autocomplete-wrapper">
+                                    <input type="text" placeholder="Hero" class="ally-hero autocomplete-input">
+                                    <div class="autocomplete-dropdown"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="team enemy">
+                        <h3>Enemy Team</h3>
+                        <div id="enemy-players">
+                            <div class="player-row">
+                                <div class="autocomplete-wrapper">
+                                    <input type="text" placeholder="Player Name" class="enemy-player">
+                                    <div class="autocomplete-dropdown"></div>
+                                </div>
+                                <div class="autocomplete-wrapper">
+                                    <input type="text" placeholder="Hero" class="enemy-hero autocomplete-input">
+                                    <div class="autocomplete-dropdown"></div>
+                                </div>
+                            </div>
+                            <div class="player-row">
+                                <div class="autocomplete-wrapper">
+                                    <input type="text" placeholder="Player Name" class="enemy-player">
+                                    <div class="autocomplete-dropdown"></div>
+                                </div>
+                                <div class="autocomplete-wrapper">
+                                    <input type="text" placeholder="Hero" class="enemy-hero autocomplete-input">
+                                    <div class="autocomplete-dropdown"></div>
+                                </div>
+                            </div>
+                            <div class="player-row">
+                                <div class="autocomplete-wrapper">
+                                    <input type="text" placeholder="Player Name" class="enemy-player">
+                                    <div class="autocomplete-dropdown"></div>
+                                </div>
+                                <div class="autocomplete-wrapper">
+                                    <input type="text" placeholder="Hero" class="enemy-hero autocomplete-input">
+                                    <div class="autocomplete-dropdown"></div>
+                                </div>
+                            </div>
+                            <div class="player-row">
+                                <div class="autocomplete-wrapper">
+                                    <input type="text" placeholder="Player Name" class="enemy-player">
+                                    <div class="autocomplete-dropdown"></div>
+                                </div>
+                                <div class="autocomplete-wrapper">
+                                    <input type="text" placeholder="Hero" class="enemy-hero autocomplete-input">
+                                    <div class="autocomplete-dropdown"></div>
+                                </div>
+                            </div>
+                            <div class="player-row">
+                                <div class="autocomplete-wrapper">
+                                    <input type="text" placeholder="Player Name" class="enemy-player">
+                                    <div class="autocomplete-dropdown"></div>
+                                </div>
+                                <div class="autocomplete-wrapper">
+                                    <input type="text" placeholder="Hero" class="enemy-hero autocomplete-input">
+                                    <div class="autocomplete-dropdown"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Notes Section -->
+                <div class="notes-section">
+                    <h4>Match Notes (Optional)</h4>
+                    <textarea id="match-notes" placeholder="Add notes about this match... (e.g., why you won/lost, key moments, strategies used)" rows="4"></textarea>
+                </div>
+
+                <!-- Screenshot Section -->
+                <div class="screenshot-section">
+                    <h4>Attach Screenshots</h4>
+                    <input type="file" id="screenshot-input" class="screenshot-input" multiple accept="image/*" onchange="handleScreenshots(event)">
+                    <div id="screenshot-preview" class="screenshot-preview">
+                        <!-- Screenshot previews will appear here -->
+                    </div>
+                </div>
+
+                <button class="btn" onclick="addMatch()">Add Match</button>
+            </div>
+
+            <!-- Matches Display -->
+            <div class="matches-section">
+                <h2>Match History</h2>
+                <div class="matches-info" id="matches-info">
+                    <!-- Match count and pagination info will appear here -->
+                </div>
+                <div id="matches-container">
+                    <!-- Matches will be displayed here -->
+                </div>
+                <div class="pagination" id="pagination">
+                    <!-- Pagination controls will appear here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal for viewing screenshots -->
+    <div id="screenshot-modal" class="modal" onclick="closeModal()">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <img id="modal-image" src="" alt="Screenshot">
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

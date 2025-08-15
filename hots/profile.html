@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Player Profile - HotS Match Tracker</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="profile.css">
+
+</head>
+<body>
+    <div class="profile-container">
+        <a href="index.html" class="back-button">← Back to Match Tracker</a>
+        
+        <!-- Player Selection Section -->
+        <div class="player-selection-section">
+            <h3>Select Player to View Profile</h3>
+            <div class="autocomplete-wrapper">
+                <input type="text" id="player-search-input" placeholder="Type player name..." class="player-search">
+                <div class="autocomplete-dropdown"></div>
+            </div>
+            <button onclick="loadSelectedPlayer()" class="profile-view-button">View Profile</button>
+        </div>
+        
+        <div class="profile-main">
+            <!-- Profile Hero Section -->
+            <div class="profile-hero-section">
+                <div class="hero-portrait-container">
+                    <div class="hero-portrait-ring">
+                        <img id="profile-hero-icon" src="" alt="Most played hero" class="profile-hero-portrait">
+                    </div>
+                    <div class="most-played-text">
+                        <span id="profile-most-played-hero">Loading...</span>
+                        <div class="most-played-label">Most played hero</div>
+                    </div>
+                </div>
+                
+                <h1 class="profile-name" id="profile-player-name">Loading...</h1>
+                
+                <div class="compact-stats-row">
+                    <div class="compact-stat">
+                        <div class="compact-stat-value" id="total-matches-stat">0</div>
+                        <div class="compact-stat-label">Total Matches</div>
+                    </div>
+                    <div class="compact-stat">
+                        <div class="compact-stat-value" id="wins-stat">0</div>
+                        <div class="compact-stat-label">Wins</div>
+                    </div>
+                    <div class="compact-stat">
+                        <div class="compact-stat-value" id="losses-stat">0</div>
+                        <div class="compact-stat-label">Losses</div>
+                    </div>
+                    <div class="compact-stat">
+                        <div class="compact-stat-value" id="win-rate-stat">0%</div>
+                        <div class="compact-stat-label">Win Rate</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Profile Content -->
+            <div class="profile-content">
+                <!-- Player Notes and Role Preferences - Combined Section -->
+                <div class="section">
+                    <div class="notes-and-roles-container">
+                        <!-- Player Notes -->
+                        <div class="notes-column">
+                            <h3 class="subsection-title">Player Notes</h3>
+                            <div class="notes-section">
+                                <textarea id="player-notes" placeholder="Add notes about this player..." rows="3"></textarea>
+                                <button onclick="savePlayerNotesFromProfile()" class="save-notes-btn">Save Notes</button>
+                            </div>
+                        </div>
+                        
+                        <!-- Role Preferences -->
+                        <div class="roles-column">
+                            <h3 class="subsection-title">Role Preferences</h3>
+                            <div id="role-preferences">
+                                <!-- Role preferences will be populated here -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Hero Statistics -->
+                <div class="section">
+                    <div class="section-header">
+                        <h2 class="section-title">Hero Statistics</h2>
+                        <button class="collapse-btn" onclick="toggleSection('hero-stats-content')" title="Toggle section">−</button>
+                    </div>
+                    <div class="hero-stats-grid section-content" id="hero-stats-content">
+                        <div id="hero-stats-grid">
+                            <!-- Hero stats will be populated here -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Best and Worst Winrate -->
+                <div class="section">
+                    <div class="section-header">
+                        <h2 class="section-title">Performance Analysis</h2>
+                        <button class="collapse-btn" onclick="toggleSection('winrate-heroes-content')" title="Toggle section">−</button>
+                    </div>
+                    <div class="winrate-heroes-container section-content" id="winrate-heroes-content">
+                        <!-- Best Winrate -->
+                        <div class="winrate-column">
+                            <h3 class="subsection-title" style="color: #2ecc71;">Best Winrate</h3>
+                            <div id="best-winrate-hero" class="winrate-hero-display">
+                                <!-- Best winrate hero will be populated here -->
+                            </div>
+                        </div>
+                        
+                        <!-- Worst Winrate -->
+                        <div class="winrate-column">
+                            <h3 class="subsection-title" style="color: #e74c3c;">Worst Winrate</h3>
+                            <div id="worst-winrate-hero" class="winrate-hero-display">
+                                <!-- Worst winrate hero will be populated here -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Opponent Analysis -->
+                <div class="section">
+                    <div class="section-header">
+                        <h2 class="section-title">
+                            Opponent Analysis
+                            <div class="section-subtitle" id="opponent-subtitle">matches against</div>
+                        </h2>
+                        <button class="collapse-btn" onclick="toggleSection('opponent-analysis-content')" title="Toggle section">−</button>
+                    </div>
+                    <div class="section-content" id="opponent-analysis-content">
+                        <div class="opponent-stats">
+                            <div class="opponent-list" id="opponent-list">
+                                <!-- Opponent stats will be populated here -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Teammate Analysis -->
+                <div class="section">
+                    <div class="section-header">
+                        <h2 class="section-title">
+                            Teammate Analysis
+                            <div class="section-subtitle" id="teammate-subtitle">matches with</div>
+                        </h2>
+                        <button class="collapse-btn" onclick="toggleSection('teammate-analysis-content')" title="Toggle section">−</button>
+                    </div>
+                    <div class="section-content" id="teammate-analysis-content">
+                        <div class="teammate-stats">
+                            <div class="teammate-list" id="teammate-list">
+                                <!-- Teammate stats will be populated here -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Recent Matches -->
+                <div class="section">
+                    <div class="section-header">
+                        <h2 class="section-title">Recent Match History</h2>
+                        <button class="collapse-btn" onclick="toggleSection('recent-matches-content')" title="Toggle section">−</button>
+                    </div>
+                    <div class="section-content" id="recent-matches-content">
+                        <div id="recent-matches">
+                            <!-- Recent matches will be populated here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="script.js"></script>
+    <script src="profile.js"></script>
+</body>
+</html>

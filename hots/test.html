@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test - HotS Match Tracker</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background: #f0f0f0;
+        }
+        .test-section {
+            background: white;
+            padding: 20px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+        }
+        .autocomplete-wrapper {
+            position: relative;
+            display: inline-block;
+            margin: 10px;
+        }
+        .autocomplete-input {
+            width: 200px;
+            padding: 8px;
+            border: 2px solid #ddd;
+            border-radius: 4px;
+        }
+        .autocomplete-dropdown {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            max-height: 200px;
+            overflow-y: auto;
+            z-index: 1000;
+            display: none;
+        }
+        .autocomplete-dropdown.show {
+            display: block;
+        }
+        .autocomplete-item {
+            padding: 8px 12px;
+            cursor: pointer;
+            border-bottom: 1px solid #eee;
+        }
+        .autocomplete-item:hover {
+            background: #f0f0f0;
+        }
+    </style>
+</head>
+<body>
+    <h1>HotS Match Tracker - Test Page</h1>
+    
+    <div class="test-section">
+        <h2>Hero Autocomplete Test</h2>
+        <div class="autocomplete-wrapper">
+            <input type="text" placeholder="Type a hero name..." class="autocomplete-input" id="hero-test">
+            <div class="autocomplete-dropdown"></div>
+        </div>
+    </div>
+    
+    <div class="test-section">
+        <h2>Player Autocomplete Test</h2>
+        <div class="autocomplete-wrapper">
+            <input type="text" placeholder="Type a player name..." class="player-input" id="player-test">
+            <div class="autocomplete-dropdown"></div>
+        </div>
+    </div>
+    
+    <div class="test-section">
+        <h2>Debug Info</h2>
+        <button onclick="testFunctions()">Test All Functions</button>
+        <div id="debug-output"></div>
+    </div>
+    
+    <script>
+        // Basic heroes list
+        const heroes = [
+            "Abathur", "Alarak", "Alexstrasza", "Ana", "Anduin", "Anub'arak", "Artanis", "Arthas", "Auriel", "Azmodan",
+            "Blaze", "Brightwing", "Cassia", "Chen", "Cho", "Chromie", "D.Va", "Deathwing", "Deckard", "Dehaka", "Diablo",
+            "E.T.C.", "Falstad", "Fenix", "Gall", "Garrosh", "Gazlowe", "Genji", "Greymane", "Gul'dan", "Hanzo", "Hogger",
+            "Illidan", "Imperius", "Jaina", "Johanna", "Junkrat", "Kael'thas", "Kel'Thuzad", "Kerrigan", "Kharazim",
+            "Leoric", "Li Li", "Li-Ming", "Lt. Morales", "Lunara", "Lúcio", "Maiev", "Mal'Ganis", "Malfurion", "Malthael",
+            "Medivh", "Mei", "Mephisto", "Muradin", "Murky", "Nazeebo", "Nova", "Orphea", "Probius", "Qhira", "Ragnaros",
+            "Raynor", "Rehgar", "Rexxar", "Samuro", "Sgt. Hammer", "Sonya", "Stitches", "Stukov", "Sylvanas", "Tassadar",
+            "The Butcher", "The Lost Vikings", "Thrall", "Tracer", "Tyrael", "Tyrande", "Tychus", "Uther", "Valeera", "Valla", 
+            "Varian", "Whitemane", "Xul", "Yrel", "Zagara", "Zarya", "Zeratul", "Zul'jin"
+        ];
+        
+        // Sample players
+        const testPlayers = ["TestPlayer1", "TestPlayer2", "AnotherPlayer", "SampleGamer"];
+        
+        function setupSimpleAutocomplete(input, dataSource) {
+            const dropdown = input.parentElement.querySelector('.autocomplete-dropdown');
+            
+            input.addEventListener('input', function() {
+                const value = this.value.toLowerCase();
+                dropdown.innerHTML = '';
+                
+                if (value.length === 0) {
+                    dropdown.classList.remove('show');
+                    return;
+                }
+                
+                const matches = dataSource.filter(item => 
+                    item.toLowerCase().includes(value)
+                ).slice(0, 8);
+                
+                if (matches.length > 0) {
+                    matches.forEach(item => {
+                        const itemElement = document.createElement('div');
+                        itemElement.className = 'autocomplete-item';
+                        itemElement.textContent = item;
+                        itemElement.addEventListener('click', function() {
+                            input.value = item;
+                            dropdown.classList.remove('show');
+                        });
+                        dropdown.appendChild(itemElement);
+                    });
+                    dropdown.classList.add('show');
+                } else {
+                    dropdown.classList.remove('show');
+                }
+            });
+            
+            input.addEventListener('blur', function() {
+                setTimeout(() => {
+                    dropdown.classList.remove('show');
+                }, 150);
+            });
+        }
+        
+        function testFunctions() {
+            const output = document.getElementById('debug-output');
+            output.innerHTML = '<h3>Test Results:</h3>';
+            
+            // Test data availability
+            output.innerHTML += `<p>Heroes loaded: ${heroes.length}</p>`;
+            output.innerHTML += `<p>Test players: ${testPlayers.length}</p>`;
+            
+            // Test autocomplete setup
+            try {
+                setupSimpleAutocomplete(document.getElementById('hero-test'), heroes);
+                setupSimpleAutocomplete(document.getElementById('player-test'), testPlayers);
+                output.innerHTML += '<p>✅ Autocomplete setup successful</p>';
+            } catch (error) {
+                output.innerHTML += `<p>❌ Autocomplete setup failed: ${error.message}</p>`;
+            }
+        }
+        
+        // Initialize test page
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('Test page loaded');
+            testFunctions();
+        });
+    </script>
+</body>
+</html>
