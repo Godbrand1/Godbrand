@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>360° Sensitivity Calculator + Profiles</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    :root {
+      --bg:#111; --fg:#eee; --muted:#bbb; --panel:#1a1a1a; --border:#2b2b2b; --chip:#0e0e0e;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin:0; background:var(--bg); color:var(--fg); font-family: Arial, sans-serif;
+      display:flex; justify-content:center; align-items:flex-start; gap:60px; min-height:100vh; padding:40px 20px;
+    }
+    h1 { margin:0 0 6px; font-size:24px; text-align:center; }
+    p.note { margin:0 0 22px; color:var(--muted); text-align:center; }
+
+    /* Main box */
+    .main { max-width:520px; width:520px; }
+    .input-group, .results, .side-group, .profiles, .compare {
+      background:var(--panel); border:1px solid var(--border);
+      border-radius:12px; padding:18px;
+    }
+    .input-group { display:flex; flex-direction:column; gap:14px; }
+    label { display:block; margin-bottom:6px; font-size:14px; color:var(--muted); }
+    input[type="number"], input[type="text"] {
+      width:100%; padding:10px; border-radius:8px; border:1px solid var(--border);
+      background:#0e0e0e; color:var(--fg); font-size:15px;
+    }
+    .results { margin-top:16px; }
+    .results div { margin:4px 0; font-size:16px; }
+
+    /* Side panel */
+    aside { width:280px; }
+    aside h2 { font-size:16px; margin:0 0 10px; color:#ccc; text-align:center; }
+    .side-group { margin-bottom:18px; }
+    .chips { display:flex; flex-wrap:wrap; gap:6px; margin-top:6px; }
+    .chip { background:var(--chip); border:1px solid var(--border); color:var(--fg);
+      padding:4px 8px; border-radius:999px; cursor:pointer; font-size:11px; user-select:none; }
+    .chip:hover { background:#222; }
+
+    /* Profiles section */
+    .profiles, .compare { margin-top:16px; }
+    .row { display:flex; gap:10px; }
+    button {
+      padding:8px 12px; border:none; border-radius:8px; background:#333; color:#fff; cursor:pointer;
+    }
+    button.ghost { background:#242424; }
+    table { width:100%; border-collapse:collapse; margin-top:10px; font-size:13px; }
+    th, td { border:1px solid var(--border); padding:6px 8px; text-align:center; }
+    th { background:#1f1f1f; }
+    .pill { font-size:12px; padding:2px 6px; border-radius:999px; border:1px solid var(--border); }
+
+    .tag { color:#7ad1ff; }
+    .ok { color:#a3ffa3; }
+    .warn { color:#ffd17a; }
+  </style>
+</head>
+<body>
+  <!-- Main calculator -->
+  <div class="main">
+    <h1>360° Sensitivity Calculator</h1>
+    <p class="note">Focus on DPI and in-game sensitivity. Windows Multiplier and m_yaw live on the side.</p>
+
+    <div class="input-group">
+      <div>
+        <label for="dpi">Mouse DPI</label>
+        <input id="dpi" type="number" value="800" step="1" min="1">
+      </div>
+      <div>
+        <label for="sens">In-game Sensitivity</label>
+        <input id="sens" type="number" value="1.135" step="0.001" min="0.0001">
+      </div>
+    </div>
+
+    <div class="results" id="results"></div>
+
+    <!-- Save + Profiles -->
+    <div class="profiles">
+      <div class="row" style="align-items:flex-end;">
+        <div style="flex:1">
+          <label for="profName">Save as (name)</label>
+          <input id="profName" type="text" placeholder="e.g. CS2 800DPI 1.2 sens">
+        </div>
+        <div>
+          <button id="saveBtn">Save current</button>
+        </div>
+        <div>
+          <button id="clearAllBtn" class="ghost" title="Delete all saved profiles">Clear all</button>
+        </div>
+      </div>
+
+      <table id="profilesTable" aria-label="Saved profiles">
+        <thead>
+          <tr>
+            <th>Select</th>
+            <th>Name</th>
+            <th>DPI</th>
+            <th>Sens</th>
+            <th>in/360</th>
+            <th>cm/360</th>
+            <th>Load</th>
+            <th>Delete</th>
+          </tr>
+        </thead>
+        <tbody><!-- rows injected --></tbody>
+      </table>
+    </div>
+
+    <!-- Comparison -->
+    <div class="compare">
+      <div class="row" style="justify-content:space-between; align-items:center;">
+        <strong>Comparison</strong>
+        <button id="copyCsvBtn" class="ghost" title="Copy table as CSV">Copy CSV</button>
+      </div>
+      <table id="compareTable">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>DPI</th>
+            <th>Sens</th>
+            <th>deg/in</th>
+            <th>in/360</th>
+            <th>cm/360</th>
+          </tr>
+        </thead>
+        <tbody><!-- rows injected --></tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Side options -->
+  <aside>
+    <div class="side-group">
+      <label for="winmult">Windows Multiplier</label>
+      <input id="winmult" type="number" value="1" step="0.001" min="0.0001">
+      <div class="chips" id="quickWin">
+        <span class="chip" data-win="0.75">5/11</span>
+        <span class="chip" data-win="1">6/11</span>
+        <span class="chip" data-win="1.5">7/11</span>
+      </div>
+    </div>
+
+    <div class="side-group">
+      <label for="myaw">m_yaw (default 0.022)</label>
+      <input id="myaw" type="number" value="0.022" step="0.001" min="0.0001">
+    </div>
+
+    <div class="side-group">
+      <h2>Windows Sensitivity → Multiplier</h2>
+      <table>
+        <tr><th>Setting</th><th>Multiplier</th></tr>
+        <tr><td>1/11</td><td>0.0625</td></tr>
+        <tr><td>2/11</td><td>0.0125</td></tr>
+        <tr><td>3/11</td><td>0.25</td></tr>
+        <tr><td>4/11</td><td>0.5</td></tr>
+        <tr><td>5/11</td><td>0.75</td></tr>
+        <tr><td>6/11</td><td>1</td></tr>
+        <tr><td>7/11</td><td>1.5</td></tr>
+        <tr><td>8/11</td><td>2</td></tr>
+        <tr><td>9/11</td><td>2.5</td></tr>
+        <tr><td>10/11</td><td>3</td></tr>
+        <tr><td>11/11</td><td>3.5</td></tr>
+      </table>
+    </div>
+  </aside>
+
+  <script>
+    // Helpers
+    const $ = id => document.getElementById(id);
+    const out = $("results");
+    const inputs = ["dpi","sens","winmult","myaw"].map($);
+    const fmt = n => Number.isFinite(n) ? n.toFixed(2) : "0.00";
+
+    // Core math
+    function compute(dpi, win, sens, myaw) {
+      const degPerIn = dpi * win * sens * myaw;
+      const degPerCm = degPerIn / 2.54;
+      const inPer360 = 360 / degPerIn;
+      const cmPer360 = 360 / degPerCm;
+      return {degPerIn, degPerCm, inPer360, cmPer360};
+    }
+
+    function calc() {
+      const dpi  = parseFloat($("dpi").value);
+      const sens = parseFloat($("sens").value);
+      const win  = parseFloat($("winmult").value);
+      const myaw = parseFloat($("myaw").value);
+
+      if ([dpi,sens,win,myaw].some(v => !isFinite(v) || v <= 0)) {
+        out.innerHTML = "<div>Enter valid numbers.</div>";
+        return;
+      }
+
+      const r = compute(dpi, win, sens, myaw);
+      out.innerHTML = `
+        <div>Degrees per Inch: <strong>${fmt(r.degPerIn)}</strong></div>
+        <div>Degrees per Centimeter: <strong>${fmt(r.degPerCm)}</strong></div>
+        <div>Inches per 360°: <strong>${fmt(r.inPer360)}</strong></div>
+        <div>Centimeters per 360°: <strong>${fmt(r.cmPer360)}</strong></div>
+      `;
+      return r;
+    }
+
+    inputs.forEach(el => el.addEventListener("input", () => { calc(); renderProfiles(); renderCompare(); }));
+
+    // Quick set chips
+    $("quickWin").addEventListener("click", e => {
+      const v = e.target.getAttribute("data-win");
+      if (!v) return;
+      $("winmult").value = v;
+      calc(); renderProfiles(); renderCompare();
+    });
+
+    // Profiles storage
+    const KEY = "sensProfilesV1";
+    function loadProfiles() {
+      try { return JSON.parse(localStorage.getItem(KEY)) || []; }
+      catch { return []; }
+    }
+    function saveProfilesArr(arr) { localStorage.setItem(KEY, JSON.stringify(arr)); }
+
+    function saveCurrentProfile() {
+      const name = $("profName").value.trim() || `Profile ${new Date().toLocaleString()}`;
+      const dpi  = parseFloat($("dpi").value);
+      const sens = parseFloat($("sens").value);
+      const win  = parseFloat($("winmult").value);
+      const myaw = parseFloat($("myaw").value);
+      if ([dpi,sens,win,myaw].some(v => !isFinite(v) || v <= 0)) return;
+
+      const r = compute(dpi, win, sens, myaw);
+      const id = Math.random().toString(36).slice(2);
+      const p = { id, name, dpi, sens, win, myaw, ...r, selected:false };
+
+      const arr = loadProfiles();
+      arr.push(p);
+      saveProfilesArr(arr);
+      $("profName").value = "";
+      renderProfiles(); renderCompare();
+    }
+
+    function deleteProfile(id) {
+      const arr = loadProfiles().filter(p => p.id !== id);
+      saveProfilesArr(arr);
+      renderProfiles(); renderCompare();
+    }
+
+    function toggleSelect(id, checked) {
+      const arr = loadProfiles().map(p => p.id === id ? {...p, selected: checked} : p);
+      saveProfilesArr(arr);
+      renderCompare();
+    }
+
+    function loadIntoInputs(p) {
+      $("dpi").value = p.dpi;
+      $("sens").value = p.sens;
+      $("winmult").value = p.win;
+      $("myaw").value = p.myaw;
+      calc(); renderCompare();
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    function clearAllProfiles() {
+      if (!confirm("Delete all saved profiles?")) return;
+      saveProfilesArr([]);
+      renderProfiles(); renderCompare();
+    }
+
+    function renderProfiles() {
+      const tbody = $("profilesTable").querySelector("tbody");
+      const arr = loadProfiles();
+      tbody.innerHTML = arr.map(p => `
+        <tr>
+          <td><input type="checkbox" ${p.selected ? "checked": ""} data-select="${p.id}"></td>
+          <td style="text-align:left">${p.name}</td>
+          <td>${p.dpi}</td>
+          <td>${Number(p.sens).toFixed(3)}</td>
+          <td>${fmt(p.inPer360)}</td>
+          <td>${fmt(p.cmPer360)}</td>
+          <td><button data-load="${p.id}">Load</button></td>
+          <td><button class="ghost" data-del="${p.id}">Delete</button></td>
+        </tr>
+      `).join("");
+
+      tbody.querySelectorAll("button[data-load]").forEach(b =>
+        b.addEventListener("click", () => {
+          const id = b.getAttribute("data-load");
+          const p = loadProfiles().find(x => x.id === id);
+          if (p) loadIntoInputs(p);
+        })
+      );
+      tbody.querySelectorAll("button[data-del]").forEach(b =>
+        b.addEventListener("click", () => deleteProfile(b.getAttribute("data-del")))
+      );
+      tbody.querySelectorAll("input[data-select]").forEach(ch =>
+        ch.addEventListener("change", () => toggleSelect(ch.getAttribute("data-select"), ch.checked))
+      );
+    }
+
+    function renderCompare() {
+      const tbody = $("compareTable").querySelector("tbody");
+      const arr = loadProfiles().filter(p => p.selected);
+      if (!arr.length) { tbody.innerHTML = `<tr><td colspan="6" style="text-align:left;color:${getComputedStyle(document.body).getPropertyValue('--muted')}">Select profiles above to compare.</td></tr>`; return; }
+
+      // Optional simple highlight: shortest in/360 is often preferred for high sens, longest for low sens
+      const minIn = Math.min(...arr.map(p => p.inPer360));
+      const maxIn = Math.max(...arr.map(p => p.inPer360));
+
+      tbody.innerHTML = arr.map(p => `
+        <tr>
+          <td style="text-align:left">${p.name}</td>
+          <td>${p.dpi}</td>
+          <td>${Number(p.sens).toFixed(3)}</td>
+          <td>${fmt(p.degPerIn)}</td>
+          <td class="${p.inPer360 === minIn ? "ok" : p.inPer360 === maxIn ? "warn" : ""}">${fmt(p.inPer360)}</td>
+          <td>${fmt(p.cmPer360)}</td>
+        </tr>
+      `).join("");
+    }
+
+    function copyCompareCSV() {
+      const arr = loadProfiles().filter(p => p.selected);
+      if (!arr.length) return;
+      const header = ["Name","DPI","Sensitivity","Windows Mult","m_yaw","deg/in","in/360","cm/360"];
+      const rows = arr.map(p => [p.name,p.dpi,p.sens,p.win,p.myaw,p.degPerIn,p.inPer360,p.cmPer360]);
+      const csv = [header, ...rows].map(r => r.join(",")).join("\n");
+      navigator.clipboard.writeText(csv).then(() => {
+        $("copyCsvBtn").textContent = "Copied";
+        setTimeout(() => $("copyCsvBtn").textContent = "Copy CSV", 1200);
+      });
+    }
+
+    // Wire up buttons
+    $("saveBtn").addEventListener("click", saveCurrentProfile);
+    $("clearAllBtn").addEventListener("click", clearAllProfiles);
+    $("copyCsvBtn").addEventListener("click", copyCompareCSV);
+
+    // Initial render
+    calc();
+    renderProfiles();
+    renderCompare();
+  </script>
+</body>
+</html>
