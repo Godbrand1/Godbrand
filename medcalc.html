@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>30-Day Date Calculator</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #0f172a;
+      color: #f1f5f9;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .container {
+      background: #1e293b;
+      padding: 30px;
+      border-radius: 12px;
+      text-align: center;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    }
+
+    input {
+      padding: 10px;
+      font-size: 16px;
+      margin-top: 10px;
+      border-radius: 6px;
+      border: none;
+    }
+
+    button {
+      margin-top: 15px;
+      padding: 10px 20px;
+      font-size: 16px;
+      border: none;
+      border-radius: 6px;
+      background: #3b82f6;
+      color: white;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #2563eb;
+    }
+
+    .result {
+      margin-top: 20px;
+      font-size: 18px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <h2>Medicine Pickup Date</h2>
+  <p>Select your last pickup date:</p>
+  
+  <input type="date" id="dateInput">
+  <br>
+  <button onclick="calculate()">Calculate +30 Days</button>
+
+  <div class="result" id="result"></div>
+</div>
+
+<script>
+  function calculate() {
+    const input = document.getElementById("dateInput").value;
+    if (!input) {
+      document.getElementById("result").innerText = "Please select a date.";
+      return;
+    }
+
+    const date = new Date(input);
+    date.setDate(date.getDate() + 30);
+
+    const options = { year: 'numeric', month: 'long', day: 'numeric' };
+    const formatted = date.toLocaleDateString(undefined, options);
+
+    document.getElementById("result").innerText = 
+      "Next pickup date: " + formatted;
+  }
+</script>
+
+</body>
+</html>
